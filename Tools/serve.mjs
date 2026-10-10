@@ -14,7 +14,8 @@ http.createServer((request, response) => {
   } catch { response.writeHead(400); response.end('Invalid path'); return; }
   fs.stat(file, (error, stat) => {
     if (error || !stat.isFile()) { response.writeHead(404); response.end('Not found'); return; }
-    response.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Content-Length': stat.size, 'Cache-Control': 'no-store' });
+    const zipped=file.endsWith('.gz');
+    response.writeHead(200, { 'Content-Type': types[path.extname(zipped?file.slice(0,-3):file)] || 'application/octet-stream', 'Content-Length': stat.size, 'Cache-Control': 'no-store',...(zipped?{'Content-Encoding':'gzip'}:{}) });
     fs.createReadStream(file).pipe(response);
   });
 }).listen(43827, '127.0.0.1', () => process.stdout.write('Hushwake local Web build: http://127.0.0.1:43827\n'));

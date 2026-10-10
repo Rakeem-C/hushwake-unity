@@ -14,6 +14,7 @@ namespace Hushwake.Editor
         public static void Run()
         {
             Audit.Run();
+            ArtAudit.Run();
             if (AssetDatabase.LoadAssetAtPath<Material>("Assets/Resources/HushwakeStandard.mat") == null)
                 AssetDatabase.CreateAsset(new Material(Shader.Find("Standard")), "Assets/Resources/HushwakeStandard.mat");
             Directory.CreateDirectory("Assets/Scenes");
@@ -29,7 +30,7 @@ namespace Hushwake.Editor
             // Runtime-created primitives and IMGUI's built-in skin need native types not visible to static scene analysis.
             PlayerSettings.stripEngineCode = false;
             PlayerSettings.SetManagedStrippingLevel(NamedBuildTarget.WebGL, ManagedStrippingLevel.Low);
-            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
+            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Gzip;
             PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.template = "PROJECT:Hushwake";
             PlayerSettings.WebGL.exceptionSupport = WebGLExceptionSupport.ExplicitlyThrownExceptionsOnly;

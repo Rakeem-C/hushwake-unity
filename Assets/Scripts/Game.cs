@@ -67,14 +67,15 @@ namespace Hushwake
             Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 0;
             QualitySettings.shadows = ShadowQuality.All;
-            QualitySettings.shadowDistance = 45;
+            QualitySettings.shadowDistance = 70;QualitySettings.shadowResolution=ShadowResolution.High;QualitySettings.shadowCascades=4;QualitySettings.antiAliasing=4;QualitySettings.pixelLightCount=2;
             view = new GameObject("Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>();
-            view.tag = "MainCamera"; view.fieldOfView = 48; view.nearClipPlane = .1f; view.farClipPlane = 150;
+            view.tag = "MainCamera"; view.fieldOfView = 52; view.nearClipPlane = .1f; view.farClipPlane = 200;view.gameObject.AddComponent<VisualFinish>();
             sun = new GameObject("Evening sun", typeof(Light)).GetComponent<Light>(); sun.type = LightType.Directional; sun.intensity = 1.15f; sun.shadows = LightShadows.Soft;
             sun.transform.rotation = Quaternion.Euler(48, -30, 0);
-            RenderSettings.fog = true; RenderSettings.fogMode = FogMode.ExponentialSquared; RenderSettings.fogDensity = .013f;
+            RenderSettings.fog = true; RenderSettings.fogMode = FogMode.ExponentialSquared; RenderSettings.fogDensity = .008f;RenderSettings.skybox=new Material(Shader.Find("Hushwake/Sky"));RenderSettings.ambientMode=UnityEngine.Rendering.AmbientMode.Trilight;
             RenderSettings.ambientLight = new Color(.42f, .52f, .53f);
             player = WorldArt.Character(transform, Vector3.zero, new Color(.82f, .43f, .24f), "Nera");
+            player.rotation=Quaternion.Euler(0,180,0);
             BuildWorld(Vector3.zero); RealmVisuals();
             saveAt = Time.unscaledTime + 20;
         }
@@ -89,8 +90,8 @@ namespace Hushwake
         Target Marker(string id, string title, string kind, Vector3 position, Color color)
         {
             var body = new GameObject(title).transform; body.SetParent(environment, false); body.localPosition = position;
-            WorldArt.Shape(body, PrimitiveType.Cylinder, Vector3.up * .25f, new Vector3(1.1f, .25f, 1.1f), new Color(.42f, .46f, .4f), "plinth");
-            WorldArt.Shape(body, PrimitiveType.Sphere, Vector3.up * 1.1f, Vector3.one * .42f, color, "signal");
+            var instrument=WorldArt.Original(kind=="camp"?"lantern":"prop-copper",body,Vector3.zero);instrument.localScale=Vector3.one*.4f;
+            WorldArt.Shape(body, PrimitiveType.Sphere, Vector3.up * 1.1f, Vector3.one * .22f, color, "signal");
             WorldArt.Ring(body, Vector3.up * .03f, .85f, color);
             var label = WorldArt.Label(body, Vector3.up * 2.4f, title, new Color(.88f, .92f, .8f)); labels.Add(label);
             var target = new Target { id = id, name = title, kind = kind, body = body }; targets.Add(target); return target;
@@ -115,7 +116,8 @@ namespace Hushwake
                     else WorldArt.Tree(environment, location, 2.4f + (float)random.NextDouble() * 2.5f, color);
                 }
                 var town = Atlas(region.settlement.x, region.settlement.z);
-                foreach (var h in houses[region.id]) WorldArt.House(environment, h, Color.Lerp(color, new Color(.7f, .35f, .16f), .65f));
+                for(int i=0;i<houses[region.id].Count;i++) WorldArt.House(environment, houses[region.id][i], color,region.id,i);
+                WorldDetail.Settlement(environment,town,houses[region.id]);WorldDetail.Meadow(environment,town,reserved,houses[region.id],region.id.GetHashCode());
                 var townLabel = WorldArt.Label(environment, town + Vector3.up * 6, region.settlement.name.ToUpperInvariant(), new Color(.96f, .76f, .38f)); labels.Add(townLabel);
                 Marker("camp:" + region.id, "Rest • " + region.settlement.name, "camp", town + Vector3.right * 5, new Color(1, .63f, .24f));
                 foreach (var site in region.sites)
@@ -132,7 +134,7 @@ namespace Hushwake
             {
                 var pos = Atlas(npc.x, npc.z);
                 // The source stores NPC coordinates in world space; retaining them keeps each person in their own settlement.
-                var body = WorldArt.Character(environment, pos, RegionColor(npc.region), npc.name);
+                var body = WorldArt.Character(environment, pos, RegionColor(npc.region), npc.name,npc.id);
                 var label = WorldArt.Label(body, Vector3.up * 2.7f, npc.name, new Color(.97f, .79f, .49f)); labels.Add(label);
                 targets.Add(new Target { id = npc.id, name = npc.name, kind = "npc", body = body, npc = npc });
             }
@@ -148,7 +150,7 @@ namespace Hushwake
                 var pos = Atlas(region.center.x + 60, region.center.z - 40);
                 SpawnFoe("wild:" + region.id, "Hush scavenger", pos, false, false, 45);
             }
-            player.position = WorldArt.Ground(position.x, position.z); cameraDistance = 19;
+            player.position = WorldArt.Ground(position.x, position.z); cameraDistance = 10;
             DetectRegion(); CameraSnap(); RealmVisuals();
         }
         static Color RegionColor(string id)
@@ -176,7 +178,7 @@ namespace Hushwake
         {
             room = dungeon.rooms.First(r => r.id == id); progress.State.room = id; ClearEnvironment();
             var hue = RegionColor(dungeon.region);
-            WorldArt.Shape(environment, PrimitiveType.Cube, new Vector3(0, -.3f, 0), new Vector3(26, .6f, 26), Color.Lerp(hue, new Color(.21f, .28f, .31f), .55f), "chamber floor");
+            WorldDetail.Chamber(environment,hue);
             for (var i = 0; i < 4; i++)
             {
                 var angle = i * Mathf.PI * .5f;
@@ -219,7 +221,7 @@ namespace Hushwake
                 SpawnFoe(dungeon.miniboss.id, Pretty(dungeon.miniboss.archetype), new Vector3(0, 0, 4), false, true, 110);
             if (dungeon.boss.roomId == id && !progress.State.bosses.Contains(dungeon.boss.id)) SpawnFoe(dungeon.boss.id, dungeon.boss.name, new Vector3(0, 0, 5), true, false, 220);
             if (dungeon.id == "hush-engine" && progress.State.bosses.Contains(dungeon.boss.id) && !progress.State.flags.Contains("ending-decided")) Marker("ending", "The unfinished vote", "ending", new Vector3(0, 0, 5), new Color(.97f, .8f, .49f));
-            player.position = new Vector3(0, 0, -6); cameraDistance = 21; CameraSnap(); RealmVisuals();
+            player.position = new Vector3(0, 0, -6); cameraDistance = 14; CameraSnap(); RealmVisuals();
             RefreshDoors();
             Tell(room.description, 7); progress.UpdateQuests(catalog);
         }
@@ -228,7 +230,7 @@ namespace Hushwake
         {
             Time.timeScale = started && !dead && string.IsNullOrEmpty(panel) ? 1 : 0;
             frameCount++; frameTime += Time.unscaledDeltaTime; if (frameTime >= 1) { fps = frameCount / frameTime; frameCount = 0; frameTime = 0; }
-            foreach (var label in labels) if (label != null) { label.rotation = view.transform.rotation; label.gameObject.SetActive(Vector3.Distance(player.position, label.position) < 26); }
+            foreach (var label in labels) if (label != null) { label.rotation = view.transform.rotation; label.gameObject.SetActive(Vector3.Distance(player.position, label.position) < 13); }
             if (!started || dead || !string.IsNullOrEmpty(panel)) { if (started && Input.GetKeyDown(KeyCode.Escape)) panel = ""; FollowCamera(); return; }
             if (Input.GetKeyDown(KeyCode.Escape)) { panel = "pause"; return; }
             if (Input.GetKeyDown(KeyCode.M)) { panel = "map"; return; }
@@ -242,7 +244,7 @@ namespace Hushwake
             var pos = player.position + movement * (speed * Time.deltaTime);
             var bound = dungeon == null ? 119 : 11.2f; pos.x = Mathf.Clamp(pos.x, -bound, bound); pos.z = Mathf.Clamp(pos.z, -bound, bound); pos.y = dungeon == null ? WorldArt.Height(pos.x, pos.z) : 0; player.position = pos;
             if (movement.sqrMagnitude > .01f) player.rotation = Quaternion.Slerp(player.rotation, Quaternion.LookRotation(movement), Time.deltaTime * 14);
-            player.GetChild(0).localRotation = Quaternion.Euler(movement.magnitude * Mathf.Sin(Time.time * 12) * 6, 0, 0);
+            // Imported character pivots animate independently; never rotate only the first body part.
             nearest = targets.Where(t => t.body != null).OrderBy(t => Vector3.Distance(player.position, t.body.position)).FirstOrDefault();
             if (nearest != null && Vector3.Distance(player.position, nearest.body.position) > 3.1f) nearest = null;
             if (Input.GetKeyDown(KeyCode.Q)) { progress.State.realm = progress.State.realm == "wake" ? "hush" : "wake"; RealmVisuals(); Burst(player.position, new Color(.65f, .72f, .96f), 3); Tell("The world turns into " + Pretty(progress.State.realm) + "."); }
@@ -257,7 +259,7 @@ namespace Hushwake
             var hush = progress.State.realm == "hush";
             view.backgroundColor = hush ? new Color(.075f, .07f, .15f) : new Color(.26f, .42f, .48f);
             RenderSettings.fogColor = view.backgroundColor;
-            RenderSettings.ambientLight = hush ? new Color(.33f, .31f, .52f) : new Color(.44f, .55f, .52f);
+            RenderSettings.ambientSkyColor=hush?new Color(.22f,.25f,.40f):new Color(.58f,.66f,.67f);RenderSettings.ambientEquatorColor=hush?new Color(.18f,.22f,.29f):new Color(.39f,.46f,.42f);RenderSettings.ambientGroundColor=new Color(.19f,.20f,.16f);RenderSettings.skybox.SetFloat("_Hush",hush?1:0);
             sun.color = hush ? new Color(.67f, .68f, 1) : new Color(1, .87f, .64f); sun.intensity = hush ? .7f : 1.1f;
         }
         void DetectRegion()
@@ -268,12 +270,12 @@ namespace Hushwake
             progress.Event("enter-region", region.id); if (!progress.State.visited.Contains(region.id)) progress.State.visited.Add(region.id);
             if (region.id == "crown") progress.Flag("at-crown");
         }
-        void CameraSnap() { view.transform.position = player.position + new Vector3(0, cameraDistance * .8f, -cameraDistance); view.transform.LookAt(player.position + Vector3.up); }
+        void CameraSnap() { view.transform.position = player.position + new Vector3(0, cameraDistance * (dungeon==null?.42f:.66f), -cameraDistance); view.transform.LookAt(player.position + Vector3.up*1.2f); }
         void FollowCamera()
         {
-            cameraDistance = Mathf.Clamp(cameraDistance - Input.mouseScrollDelta.y * 1.2f, 13, 26);
-            view.transform.position = Vector3.Lerp(view.transform.position, player.position + new Vector3(0, cameraDistance * .8f, -cameraDistance), Time.unscaledDeltaTime * 6);
-            view.transform.LookAt(player.position + Vector3.up);
+            cameraDistance = Mathf.Clamp(cameraDistance - Input.mouseScrollDelta.y * 1.2f, 7, 26);
+            view.transform.position = Vector3.Lerp(view.transform.position, player.position + new Vector3(0, cameraDistance * (dungeon==null?.42f:.66f), -cameraDistance), Time.unscaledDeltaTime * 6);
+            view.transform.LookAt(player.position + Vector3.up*1.2f);
         }
         void Interact(Target target, string verb)
         {
@@ -347,7 +349,7 @@ namespace Hushwake
         }
         void SpawnFoe(string id, string name, Vector3 position, bool boss, bool mini, float health)
         {
-            var body = WorldArt.Character(environment, position, boss ? new Color(.37f, .24f, .5f) : new Color(.34f, .28f, .3f), name);
+            var body = WorldArt.Character(environment, position, Color.white, name,boss?"sentinel":mini?"brute":name.ToLowerInvariant().Contains("eel")?"gate-eel":name.ToLowerInvariant().Contains("rat")?"thread-rat":"sentinel");
             if (boss || mini) body.localScale = Vector3.one * (boss ? 2 : 1.5f);
             if (boss) WorldArt.Ring(body, Vector3.up * 2.5f, 1.5f, new Color(.9f, .63f, .26f));
             var label = WorldArt.Label(body, Vector3.up * 2.8f, name, new Color(.99f, .61f, .4f)); labels.Add(label);

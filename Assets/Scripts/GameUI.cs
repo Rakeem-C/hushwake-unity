@@ -8,14 +8,17 @@ namespace Hushwake
     {
         GUIStyle heading, title, body, small, button;
         bool uiReady;
+        Texture2D Solid(Color color){var t=new Texture2D(1,1);t.SetPixel(0,0,color);t.Apply();return t;}
         void InitUI()
         {
             if (uiReady) return;
             heading = new GUIStyle(GUI.skin.label) { fontSize = 25, fontStyle = FontStyle.Bold, wordWrap = true }; heading.normal.textColor = new Color(.96f, .81f, .5f);
-            title = new GUIStyle(heading) { fontSize = 68, alignment = TextAnchor.MiddleCenter };
+            title = new GUIStyle(heading) { fontSize = 74, alignment = TextAnchor.MiddleLeft };title.normal.textColor=new Color(.94f,.91f,.80f);
+            var serif=Resources.Load<Font>("Typography/CormorantGaramond");if(serif!=null){title.font=serif;heading.font=serif;}
             body = new GUIStyle(GUI.skin.label) { fontSize = 17, wordWrap = true }; body.normal.textColor = new Color(.9f, .92f, .85f);
             small = new GUIStyle(body) { fontSize = 13 };
             button = new GUIStyle(GUI.skin.button) { fontSize = 17, wordWrap = true, padding = new RectOffset(12, 12, 9, 9) };
+            button.normal.background=Solid(new Color(.10f,.17f,.18f,.96f));button.hover.background=Solid(new Color(.63f,.54f,.36f,1));button.active.background=Solid(new Color(.78f,.67f,.45f,1));button.normal.textColor=new Color(.94f,.90f,.77f);button.hover.textColor=new Color(.98f,.96f,.88f);button.active.textColor=Color.white;
             uiReady = true;
         }
         void Backdrop(Rect rect, float alpha = .93f)
@@ -30,15 +33,16 @@ namespace Hushwake
             if (catalog == null) { Backdrop(new Rect(0, 0, width, height)); GUI.Label(new Rect(40, 40, width - 80, 200), saveError, heading); return; }
             if (!started)
             {
-                Backdrop(new Rect(0, 0, width, height), .7f);
-                GUI.Label(new Rect(width / 2 - 420, height * .14f, 840, 100), "HUSHWAKE", title);
-                GUI.Label(new Rect(width / 2 - 260, height * .31f, 520, 70), "A thread between two worlds\nExplore lost records. Restore the instruments. Return the choice.", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter });
-                var x = width / 2 - 145; var y = height * .48f;
-                if (GUI.Button(new Rect(x, y, 290, 50), "Begin a new journey", button)) { if (PlayerPrefs.HasKey(SaveKey)) panel = "replace"; else StartJourney(false); }
+                Backdrop(new Rect(0, 0, width, height), .20f);Backdrop(new Rect(0,0,540,height),.64f);
+                GUI.Label(new Rect(55,85,450,28),"A WORLD BETWEEN THE HELD NOTES",small);
+                GUI.Label(new Rect(50,135,640,105), "HUSHWAKE", title);
+                GUI.Label(new Rect(55,255,390,80), "Follow the sound\nthat should have faded.", new GUIStyle(body) { fontSize=25,fontStyle=FontStyle.Italic });
+                var x = 55f; var y = height * .56f;
+                if (GUI.Button(new Rect(x, y, 390, 50), "Begin a new journey     →", button)) { if (PlayerPrefs.HasKey(SaveKey)) panel = "replace"; else StartJourney(false); }
                 GUI.enabled = PlayerPrefs.HasKey(SaveKey);
-                if (GUI.Button(new Rect(x, y + 62, 290, 50), "Continue your journey", button)) StartJourney(true);
+                if (GUI.Button(new Rect(x, y + 62, 390, 50), "Continue your journey", button)) StartJourney(true);
                 GUI.enabled = true;
-                GUI.Label(new Rect(width / 2 - 400, height - 115, 800, 90), "WASD / arrows  Move     Shift  Run     Space  Dodge\nE  Interact     F / click  Threadblade     R  Instrument     Q  Wake / Hush\n1–7  Select instrument     M  Map     J  Journal     I  Inventory     Esc  Pause", new GUIStyle(small) { alignment = TextAnchor.MiddleCenter });
+                GUI.Label(new Rect(55,height-140,400,100),"Explore lost records. Restore the instruments.\nReturn the choice.\n\nKeyboard and mouse · Your journey saves here.",small);
                 if (!string.IsNullOrEmpty(saveError)) GUI.Label(new Rect(40, height - 190, width - 80, 70), saveError, body);
                 if (panel == "replace")
                 {

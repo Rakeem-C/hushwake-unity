@@ -24,11 +24,17 @@ namespace Hushwake
             var collider = obj.GetComponent<Collider>(); if (collider != null) Object.Destroy(collider);
             return obj;
         }
-        public static float Height(float x, float z) => Mathf.Sin(x * .063f) * .6f + Mathf.Cos(z * .083f) * .45f + Mathf.Sin((x + z) * .13f) * .18f;
+        static float[] heights;
+        public static float Height(float x, float z)
+        {
+            if(heights==null){var bytes=Resources.Load<TextAsset>("OriginalHeight").bytes;heights=new float[257*257];System.Buffer.BlockCopy(bytes,0,heights,0,bytes.Length);}
+            var gx=Mathf.Clamp((x+125)/250*256,0,255.999f);var gz=Mathf.Clamp((z+125)/250*256,0,255.999f);int ix=(int)gx,iz=(int)gz;
+            return Mathf.Lerp(Mathf.Lerp(heights[iz*257+ix],heights[iz*257+ix+1],gx-ix),Mathf.Lerp(heights[(iz+1)*257+ix],heights[(iz+1)*257+ix+1],gx-ix),gz-iz);
+        }
         public static Vector3 Ground(float x, float z) => new Vector3(x, Height(x, z), z);
         public static Mesh TerrainMesh()
         {
-            const int size = 100; const float cell = 2.5f;
+            const int size = 256; const float cell = 250f/256;
             var vertices = new List<Vector3>(); var colors = new List<Color>(); var triangles = new List<int>();
             for (var z = 0; z < size; z++) for (var x = 0; x < size; x++)
             {
@@ -38,7 +44,7 @@ namespace Hushwake
                 {
                     var v = corners[i]; v.y = Height(v.x, v.z); vertices.Add(v);
                     var hue = Mathf.PerlinNoise(v.x * .035f + 100, v.z * .035f + 100);
-                    colors.Add(Color.Lerp(new Color(.14f, .29f, .27f), new Color(.36f, .48f, .34f), hue));
+                    colors.Add(Color.Lerp(new Color(.37f, .43f, .25f), new Color(.60f, .62f, .39f), hue));
                     triangles.Add(triangles.Count);
                 }
             }
@@ -49,33 +55,22 @@ namespace Hushwake
         {
             var obj = new GameObject("Landscape", typeof(MeshFilter), typeof(MeshRenderer)); obj.transform.SetParent(parent, false);
             obj.GetComponent<MeshFilter>().sharedMesh = TerrainMesh();
-            obj.GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Hushwake/Landscape"));
+            var mat=new Material(Shader.Find("Hushwake/Landscape"));mat.SetTexture("_Substrate",Resources.Load<Texture2D>("OriginalArt/substrate"));obj.GetComponent<MeshRenderer>().sharedMaterial=mat;
             return obj;
         }
         public static void Tree(Transform parent, Vector3 position, float height, Color leaves)
         {
-            Shape(parent, PrimitiveType.Cylinder, position + Vector3.up * height * .35f, new Vector3(.28f, height * .35f, .28f), new Color(.22f, .18f, .16f), "trunk");
-            var crown = Shape(parent, PrimitiveType.Sphere, position + Vector3.up * height * .8f, new Vector3(height * .6f, height * .7f, height * .6f), leaves, "canopy");
-            crown.transform.rotation = Quaternion.Euler(13, position.x * 19, 7);
+            var art=Original("tree-"+Mathf.Abs(Mathf.RoundToInt(position.x*3+position.z))%6,parent,position);art.localScale=Vector3.one*(height/11f);art.localRotation=Quaternion.Euler(0,position.x*23,0);return;
         }
-        public static void House(Transform parent, Vector3 position, Color roof)
+        public static void House(Transform parent, Vector3 position, Color roof,string region="hearth",int variant=0)
         {
-            Shape(parent, PrimitiveType.Cube, position + Vector3.up * 1.5f, new Vector3(4, 3, 3), new Color(.69f, .69f, .53f), "limestone house");
-            var top = Shape(parent, PrimitiveType.Cube, position + Vector3.up * 3.4f, new Vector3(4.8f, .55f, 3.8f), roof, "copper roof"); top.transform.rotation = Quaternion.Euler(0, 0, -7);
-            Shape(parent, PrimitiveType.Cube, position + new Vector3(0, 1.25f, -1.52f), new Vector3(.9f, 2.5f, .1f), new Color(.13f, .19f, .22f), "door");
-            Shape(parent, PrimitiveType.Cube, position + new Vector3(-1.25f, 1.7f, -1.56f), new Vector3(.55f, .8f, .15f), new Color(.95f, .66f, .28f), "warm window");
+            var art=Original("house-"+region+"-"+variant%3,parent,position);art.localScale=Vector3.one*.66f;return;
         }
-        public static Transform Character(Transform parent, Vector3 position, Color coat, string name)
+        public static Transform Character(Transform parent, Vector3 position, Color coat, string name,string artKey="")
         {
-            var root = new GameObject(name).transform; root.SetParent(parent, false); root.localPosition = position;
-            Shape(root, PrimitiveType.Capsule, new Vector3(0, .95f, 0), new Vector3(.58f, .62f, .45f), coat, "coat");
-            Shape(root, PrimitiveType.Sphere, new Vector3(0, 1.68f, 0), new Vector3(.44f, .48f, .44f), new Color(.74f, .52f, .36f), "face");
-            Shape(root, PrimitiveType.Sphere, new Vector3(0, 1.86f, -.05f), new Vector3(.49f, .22f, .49f), new Color(.15f, .14f, .22f), "hair");
-            Shape(root, PrimitiveType.Capsule, new Vector3(-.17f, .32f, 0), new Vector3(.19f, .33f, .21f), new Color(.13f, .19f, .22f), "left boot");
-            Shape(root, PrimitiveType.Capsule, new Vector3(.17f, .32f, 0), new Vector3(.19f, .33f, .21f), new Color(.13f, .19f, .22f), "right boot");
-            Shape(root, PrimitiveType.Cube, new Vector3(.44f, .84f, .12f), new Vector3(.07f, .9f, .12f), new Color(.6f, .89f, .86f), "threadblade");
-            return root;
+            var model=Original(string.IsNullOrEmpty(artKey)?"nera":artKey,parent,position);model.name=name;model.localScale=Vector3.one*.82f;model.gameObject.AddComponent<ArtMotion>();return model;
         }
+        public static Transform Original(string key,Transform parent,Vector3 position){var prefab=Resources.Load<GameObject>("OriginalArt/"+key);if(prefab==null)throw new System.InvalidOperationException("Missing original art: "+key);var result=Object.Instantiate(prefab,parent).transform;result.localPosition=position;return result;}
         public static Transform Label(Transform parent, Vector3 position, string text, Color color)
         {
             var obj = new GameObject("label", typeof(TextMesh)); obj.transform.SetParent(parent, false); obj.transform.localPosition = position;
@@ -84,11 +79,7 @@ namespace Hushwake
         }
         public static void Ring(Transform parent, Vector3 position, float radius, Color color)
         {
-            for (var i = 0; i < 24; i++)
-            {
-                var angle = i * Mathf.PI * 2 / 24;
-                Shape(parent, PrimitiveType.Cube, position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius, new Vector3(.18f, .07f, .18f), color, "ring");
-            }
+            var obj=new GameObject("ring",typeof(MeshFilter),typeof(MeshRenderer));obj.transform.SetParent(parent,false);obj.transform.localPosition=position;var p=new Vector3[130];var tris=new int[384];for(int i=0;i<=64;i++){float a=i*Mathf.PI*2/64;p[i*2]=new Vector3(Mathf.Cos(a),0,Mathf.Sin(a))*(radius-.035f);p[i*2+1]=new Vector3(Mathf.Cos(a),0,Mathf.Sin(a))*(radius+.035f);if(i<64){int n=i*2,j=i*6;tris[j]=n;tris[j+1]=n+2;tris[j+2]=n+1;tris[j+3]=n+1;tris[j+4]=n+2;tris[j+5]=n+3;}}var mesh=new Mesh{vertices=p,triangles=tris};mesh.RecalculateNormals();obj.GetComponent<MeshFilter>().sharedMesh=mesh;obj.GetComponent<MeshRenderer>().sharedMaterial=Material(color);obj.AddComponent<GeneratedMeshLifetime>();
         }
     }
 }
