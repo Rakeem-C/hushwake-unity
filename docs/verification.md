@@ -11,6 +11,7 @@
 - Browser candidate `deeffde88eaf5bcb3bf5d246624b71c7306b0035`: normal-input start, Mara dialogue/choice, three-station bell completion, realm change, Tidemark entry, first station and rejected out-of-order action worked. Publication was withheld because the console reported stripped `BoxCollider`, `SphereCollider`, and `CapsuleCollider` components; a house also hid the third bell station. Fixes: `Assets/link.xml`, shared `WorldLayout` exclusion points and regression assertions, larger world labels, and immediate passage status refresh. These fixes require a new Web browser replay.
 
 Unity documents runtime primitive stripping dependencies in its [CreatePrimitive reference](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/GameObject.CreatePrimitive.html).
+- Candidate `d926a8487e3339f5b15c75c33b4fd8c51dcd5551` removed the primitive collider errors and cleared the bell stations, but a clean-origin browser replay found native class 115 stripping errors and missing default menu button styling. Publication remains withheld. The build now disables native engine stripping and uses Low managed stripping; a new browser replay is required. Unity's [stripEngineCode reference](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/PlayerSettings-stripEngineCode.html) documents the native/managed distinction.
 
 ## Browser acceptance checklist
 

@@ -9,6 +9,7 @@
 - Paused menus freeze combat timers as well as movement. They must not expose the player to a delayed hit immediately after resuming.
 - Save data is versioned. Reject unsupported or incomplete saves and keep the existing browser data until the user explicitly starts a replacement journey.
 - Runtime primitive creation requires explicit linker preservation of BoxCollider, SphereCollider, and CapsuleCollider even when decorative colliders are immediately removed. A successful Editor compile cannot verify Web stripping behavior; replay world creation in a Web player and scan its console.
+- This runtime-created scene uses native types in IMGUI's default skin that static scene analysis missed. Keep `stripEngineCode` disabled for the initial release and managed stripping at Low. Any later optimization must replay menu rendering and world creation in a fresh Web browser before release.
 - Procedural settlement buildings must leave at least five meters around every authored station, NPC, dungeon entrance, and rest point. Scenery must not hide the third bell station inside a house. Use the same station positions for placement exclusion, interaction, and regression checks.
 - Refresh door labels and signal colors immediately after puzzle or guardian progress changes; the visible locked state must match `Progress.LinkOpen`.
 
