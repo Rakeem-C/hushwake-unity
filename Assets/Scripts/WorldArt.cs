@@ -79,7 +79,7 @@ namespace Hushwake
         public static Transform Label(Transform parent, Vector3 position, string text, Color color)
         {
             var obj = new GameObject("label", typeof(TextMesh)); obj.transform.SetParent(parent, false); obj.transform.localPosition = position;
-            var label = obj.GetComponent<TextMesh>(); label.text = text; label.fontSize = 36; label.characterSize = .055f; label.anchor = TextAnchor.MiddleCenter; label.alignment = TextAlignment.Center; label.color = color;
+            var label = obj.GetComponent<TextMesh>(); label.text = text; label.fontSize = 36; label.characterSize = .085f; label.anchor = TextAnchor.MiddleCenter; label.alignment = TextAlignment.Center; label.color = color;
             return obj.transform;
         }
         public static void Ring(Transform parent, Vector3 position, float radius, Color color)

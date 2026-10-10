@@ -14,6 +14,8 @@ namespace Hushwake.Editor
             checks = 0;
             var catalog = Content.Load();
             Check(catalog.regions.Length == 8 && catalog.dungeons.Length == 7, "complete source catalog");
+            var reserved = WorldLayout.InteractionPoints(catalog, .17f);
+            foreach (var house in WorldLayout.Houses(catalog, .17f).Values.SelectMany(h => h)) Check(reserved.All(point => WorldLayout.Distance(point, house) >= 5), "settlement geometry leaves all authored interaction points clear");
             var p = new Progress();
             Check(p.Meets("ability:pulse") && !p.Meets("ability:flow"), "initial abilities");
             Check(p.Meets("not:ability:flow"), "negative requirement");

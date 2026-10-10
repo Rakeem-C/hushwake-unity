@@ -100,6 +100,8 @@ namespace Hushwake
             dungeon = null; room = null; progress.State.dungeon = ""; progress.State.room = "";
             ClearEnvironment(); WorldArt.Landscape(environment);
             var random = new System.Random(42109);
+            var reserved = WorldLayout.InteractionPoints(catalog, AtlasScale);
+            var houses = WorldLayout.Houses(catalog, AtlasScale);
             foreach (var region in catalog.regions)
             {
                 var center = Atlas(region.center.x, region.center.z);
@@ -108,15 +110,12 @@ namespace Hushwake
                 {
                     var angle = (float)random.NextDouble() * Mathf.PI * 2; var radius = 9 + (float)random.NextDouble() * 15;
                     var location = center + new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * radius; location.y = WorldArt.Height(location.x, location.z);
+                    if (reserved.Any(p => WorldLayout.Distance(p, location) < 3)) continue;
                     if (i % 3 == 0) WorldArt.Shape(environment, PrimitiveType.Sphere, location + Vector3.up * .6f, new Vector3(1.8f, 1.2f, 1.5f), Color.Lerp(color, Color.gray, .4f), "weathered rock");
                     else WorldArt.Tree(environment, location, 2.4f + (float)random.NextDouble() * 2.5f, color);
                 }
                 var town = Atlas(region.settlement.x, region.settlement.z);
-                for (var i = 0; i < 5; i++)
-                {
-                    var h = town + new Vector3((i % 3 - 1) * 6, 0, (i / 3) * 7 + 6); h.y = WorldArt.Height(h.x, h.z);
-                    WorldArt.House(environment, h, Color.Lerp(color, new Color(.7f, .35f, .16f), .65f));
-                }
+                foreach (var h in houses[region.id]) WorldArt.House(environment, h, Color.Lerp(color, new Color(.7f, .35f, .16f), .65f));
                 var townLabel = WorldArt.Label(environment, town + Vector3.up * 6, region.settlement.name.ToUpperInvariant(), new Color(.96f, .76f, .38f)); labels.Add(townLabel);
                 Marker("camp:" + region.id, "Rest • " + region.settlement.name, "camp", town + Vector3.right * 5, new Color(1, .63f, .24f));
                 foreach (var site in region.sites)
@@ -124,7 +123,7 @@ namespace Hushwake
                     var mechanism = catalog.siteMechanisms.First(s => s.id == site.id);
                     for (var i = 0; i < mechanism.steps.Length; i++)
                     {
-                        var point = Atlas(site.x, site.z) + new Vector3((i - 1) * 3.2f, 0, i % 2 * 3.2f); point.y = WorldArt.Height(point.x, point.z);
+                        var point = WorldLayout.SiteStation(site, i, AtlasScale);
                         var station = Marker(site.id, site.name + " · " + (i + 1), "site", point, new Color(.62f, .83f, .81f)); station.site = site; station.mechanism = mechanism; station.step = i;
                     }
                 }
@@ -221,6 +220,7 @@ namespace Hushwake
             if (dungeon.boss.roomId == id && !progress.State.bosses.Contains(dungeon.boss.id)) SpawnFoe(dungeon.boss.id, dungeon.boss.name, new Vector3(0, 0, 5), true, false, 220);
             if (dungeon.id == "hush-engine" && progress.State.bosses.Contains(dungeon.boss.id) && !progress.State.flags.Contains("ending-decided")) Marker("ending", "The unfinished vote", "ending", new Vector3(0, 0, 5), new Color(.97f, .8f, .49f));
             player.position = new Vector3(0, 0, -6); cameraDistance = 21; CameraSnap(); RealmVisuals();
+            RefreshDoors();
             Tell(room.description, 7); progress.UpdateQuests(catalog);
         }
 
@@ -281,7 +281,7 @@ namespace Hushwake
             {
                 var step = target.puzzle.steps[target.step]; var used = verb;
                 if ((step.verb == "wake" || step.verb == "hush") && verb == "interact") used = progress.State.realm;
-                if (progress.SolveStep(target.puzzle, target.step, used)) { Tell(target.puzzle.title + ": " + Pretty(step.target) + " answers."); Burst(target.body.position, new Color(.42f, .85f, .7f), 2); Save(); }
+                if (progress.SolveStep(target.puzzle, target.step, used)) { Tell(target.puzzle.title + ": " + Pretty(step.target) + " answers."); Burst(target.body.position, new Color(.42f, .85f, .7f), 2); RefreshDoors(); Save(); }
                 else Tell(target.puzzle.clue + "  Next: " + NextPuzzleHint(target.puzzle), 10);
                 return;
             }
@@ -321,6 +321,17 @@ namespace Hushwake
             var index = progress.PuzzleStep(puzzle); if (index >= puzzle.steps.Length) return "Complete";
             var step = puzzle.steps[index]; var where = dungeon.rooms.FirstOrDefault(r => r.id == (string.IsNullOrEmpty(step.roomId) ? puzzle.roomId : step.roomId));
             return Pretty(step.verb) + " at " + Pretty(step.target) + " (" + where?.name + ")";
+        }
+        void RefreshDoors()
+        {
+            if (dungeon == null) return;
+            foreach (var target in targets.Where(t => t.kind == "door"))
+            {
+                var open = progress.LinkOpen(dungeon, target.link);
+                target.name = dungeon.rooms.First(r => r.id == target.destination).name + (open ? "" : " · Locked");
+                target.body.Find("label").GetComponent<TextMesh>().text = target.name;
+                target.body.Find("signal").GetComponent<Renderer>().sharedMaterial = WorldArt.Material(open ? new Color(.35f, .85f, .64f) : new Color(.87f, .4f, .27f));
+            }
         }
         static string Pretty(string text) => string.IsNullOrEmpty(text) ? "" : System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(text.Replace('-', ' '));
         static string Friendly(string text) => Pretty(text.Replace(':', ' '));
@@ -364,6 +375,7 @@ namespace Hushwake
                 }
                 else if (foe.mini) { progress.Flag("enemy:" + dungeon.id + ":" + foe.id); Tell("The guardian releases the passage."); }
                 if (dungeon != null && foes.Count == 0) progress.Flag("cleared:" + dungeon.id + ":" + room.id);
+                RefreshDoors();
                 progress.State.health = Mathf.Min(100, progress.State.health + 12); Save();
             }
         }

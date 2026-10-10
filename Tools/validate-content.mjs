@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const catalog = JSON.parse(readFileSync(new URL('../Assets/Resources/game-content.json', import.meta.url), 'utf8'));
+const linker = readFileSync(new URL('../Assets/link.xml', import.meta.url), 'utf8');
+for (const collider of ['BoxCollider', 'SphereCollider', 'CapsuleCollider']) assert.ok(linker.includes(`fullname="UnityEngine.${collider}" preserve="all"`), `${collider} preserved for runtime primitive creation`);
 assert.equal(catalog.schema, 1);
 assert.equal(catalog.sourceCommit, 'ac071c727210da99b34d654be92b38311698c58d');
 const identifiers = {};

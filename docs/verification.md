@@ -7,6 +7,10 @@
 - `Hushwake.Editor.Audit.Run`: passed, 230 assertions. Covered authored dungeon prerequisites and reachable boss rooms, all 21 instrument puzzles, rejected wrong/out-of-order puzzle actions, idempotent rewards, campaign completion, save round trip, and unsupported save version rejection.
 - These are model and compile checks. Browser gameplay and Web deployment are pending; the audit does not prove a full campaign played through the browser.
 - Initial Web export succeeded: 19,741,880 bytes. A final export is required after the subsequent outdoor mechanism and pause-timer improvements.
+- Expanded progression/placement audit: passed, 543 assertions, including 24 ordered outdoor mechanisms and clearance around every authored interaction point.
+- Browser candidate `deeffde88eaf5bcb3bf5d246624b71c7306b0035`: normal-input start, Mara dialogue/choice, three-station bell completion, realm change, Tidemark entry, first station and rejected out-of-order action worked. Publication was withheld because the console reported stripped `BoxCollider`, `SphereCollider`, and `CapsuleCollider` components; a house also hid the third bell station. Fixes: `Assets/link.xml`, shared `WorldLayout` exclusion points and regression assertions, larger world labels, and immediate passage status refresh. These fixes require a new Web browser replay.
+
+Unity documents runtime primitive stripping dependencies in its [CreatePrimitive reference](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/GameObject.CreatePrimitive.html).
 
 ## Browser acceptance checklist
 
