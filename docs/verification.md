@@ -39,3 +39,4 @@ Full seven-dungeon browser playthrough, each boss phase, every optional quest/di
 - Public `build-info.json` matched source commit `17f0848cd1a1c7d4607863dde01c21dc91d553ef`; WebAssembly response returned HTTP 200 and `application/wasm`.
 - Public browser opened without sign-in; title, new journey, Mara dialogue/response, normal movement and bell Pulse quest progression passed at approximately 59 fps. Browser console error scan was empty.
 - Local evidence: `.qa/public-hushwake.png` and `.qa/save-reload.png` (excluded from source control).
+- Public save/reload/Continue also passed: the bell Pulse quest stage and 100 health remained after a full page reload.
