@@ -23,7 +23,7 @@ namespace Hushwake
         }
         void Backdrop(Rect rect, float alpha = .93f)
         {
-            var previous = GUI.color; GUI.color = new Color(.055f, .095f, .13f, alpha); GUI.DrawTexture(rect, Texture2D.whiteTexture); GUI.color = previous;
+            var previous = GUI.color; GUI.color = new Color(.018f, .040f, .045f, alpha); GUI.DrawTexture(rect, Texture2D.whiteTexture); GUI.color = previous;
         }
         void OnGUI()
         {
@@ -33,7 +33,7 @@ namespace Hushwake
             if (catalog == null) { Backdrop(new Rect(0, 0, width, height)); GUI.Label(new Rect(40, 40, width - 80, 200), saveError, heading); return; }
             if (!started)
             {
-                Backdrop(new Rect(0, 0, width, height), .20f);Backdrop(new Rect(0,0,540,height),.64f);
+                Backdrop(new Rect(0, 0, width, height), .20f);Backdrop(new Rect(0,0,540,height),.92f);
                 GUI.Label(new Rect(55,85,450,28),"A WORLD BETWEEN THE HELD NOTES",small);
                 GUI.Label(new Rect(50,135,640,105), "HUSHWAKE", title);
                 GUI.Label(new Rect(55,255,390,80), "Follow the sound\nthat should have faded.", new GUIStyle(body) { fontSize=25,fontStyle=FontStyle.Italic });
@@ -54,17 +54,17 @@ namespace Hushwake
                 return;
             }
 
-            Backdrop(new Rect(18, 18, 350, 95), .8f);
+            Backdrop(new Rect(18, 18, 350, 95), .87f);
             var location = dungeon == null ? catalog.regions.First(r => r.id == progress.State.region).name : dungeon.title + " · " + room.name;
             GUI.Label(new Rect(32, 23, 325, 28), "NERA  /  " + progress.State.realm.ToUpperInvariant(), heading);
             GUI.Label(new Rect(32, 62, 320, 38), location, small);
             var healthRect = new Rect(32, 103, 320, 7); GUI.color = new Color(.2f, .25f, .26f); GUI.DrawTexture(healthRect, Texture2D.whiteTexture); GUI.color = new Color(.8f, .45f, .28f); GUI.DrawTexture(new Rect(healthRect.x, healthRect.y, healthRect.width * Mathf.Clamp01(progress.State.health / 100), healthRect.height), Texture2D.whiteTexture); GUI.color = Color.white;
-            Backdrop(new Rect(width - 232, 18, 214, 62), .8f); GUI.Label(new Rect(width - 218, 27, 190, 45), Pretty(selected) + "  [R]\n" + progress.State.health.ToString("0") + " health  ·  " + fps.ToString("0") + " fps", small);
+            Backdrop(new Rect(width - 232, 18, 214, 62), .87f); GUI.Label(new Rect(width - 218, 27, 190, 45), Pretty(selected) + "  [R]\n" + progress.State.health.ToString("0") + " health  ·  " + fps.ToString("0") + " fps", small);
             var main = catalog.quests.FirstOrDefault(q => q.kind == "main" && progress.MeetsAll(q.requires) && progress.QuestStep(q) < q.stages.Length);
             if (main != null)
             {
-                Backdrop(new Rect(18, 133, 350, 107), .76f); GUI.Label(new Rect(32, 144, 320, 26), main.title, body);
-                GUI.Label(new Rect(32, 176, 318, 55), main.stages[progress.QuestStep(main)].text + "  [J]", small);
+                Backdrop(new Rect(width-368, 108, 350, 107), .87f); GUI.Label(new Rect(width-354, 119, 320, 26), main.title, body);
+                GUI.Label(new Rect(width-354, 151, 318, 55), main.stages[progress.QuestStep(main)].text + "  [J]", small);
             }
             if (nearest != null && string.IsNullOrEmpty(panel))
             {
@@ -87,7 +87,7 @@ namespace Hushwake
             {
                 Backdrop(new Rect(width / 2 - 365, height - 230, 730, 83), .9f); GUI.Label(new Rect(width / 2 - 348, height - 222, 696, 70), notice, body);
             }
-            GUI.Label(new Rect(20, height - 45, width - 40, 32), "WASD Move  ·  E Interact  ·  F Blade  ·  R Instrument  ·  Q Realm  ·  Space Dodge  ·  1–7 Select  ·  M Map  ·  J Journal  ·  I Inventory  ·  Esc Pause", small);
+            GUI.Label(new Rect(20, height - 38, width - 40, 28), "E  Interact    R  Instrument    Q  Wake / Hush                 M  Map    J  Journal    I  Inventory    Esc  Pause", small);
             foreach (var foe in foes.Where(f => f.boss))
             {
                 Backdrop(new Rect(width / 2 - 260, 20, 520, 72), .86f); GUI.Label(new Rect(width / 2 - 248, 28, 496, 25), foe.name, new GUIStyle(body) { alignment = TextAnchor.MiddleCenter });

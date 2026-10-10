@@ -13,6 +13,10 @@ const surfaces=await load('src/assets/authored-surfaces.ts');
 const {REGIONS}=await load('src/world/regions.ts');
 const terrain=await load('src/engine/terrain.ts');
 const detail=await load('src/render/environment-detail.ts');
+const dungeonArt=await load('src/dungeons/visuals.ts');
+const bossArt=await load('src/assets/boss-art.ts');
+const {DUNGEONS}=await load('src/content/dungeons.ts');
+const {ENEMY_PROFILES}=await load('src/gameplay/enemies.ts');
 fs.mkdirSync(output,{recursive:true});
 const meshes:any[]=[], materials:any[]=[], textures:any[]=[], models:any[]=[];
 const meshIds=new Map(),matIds=new Map(),texIds=new Map();
@@ -54,6 +58,15 @@ for(let i=0;i<6;i++)model(`tree-${i}`,trees.createCanopyTree(i));
 model('lantern',trees.createLanternStone());
 for(const kind of ['reed','braziers','copper','crate','keg'])model(`prop-${kind}`,props.createSystemicPropArt(kind).group);
 for(const [name,role,color] of [['thread-rat','pack',0x786349],['gate-eel','hunter',0x547477],['sentinel','sentinel',0x677784],['brute','brute',0x9b6b43],['wisp','wisp',0x76c2d2]])model(name as string,enemies.createEnemyArt({name,role,color,element:'water',scale:1},name).group);
+for(const [id,profile] of Object.entries(ENEMY_PROFILES))model(`enemy-${id}`,enemies.createEnemyArt(profile,id).group);
+for(const d of DUNGEONS){
+ model(`boss-${d.id}`,bossArt.createBossArt(d));
+ if(d.miniboss)model(`mini-${d.id}`,enemies.createEnemyArt(ENEMY_PROFILES[d.miniboss.archetype]||ENEMY_PROFILES['brass-warden'],d.miniboss.archetype,{miniboss:true}).group);
+ const kit=new dungeonArt.DungeonVisualKit(dungeonArt.dungeonPresentation(d).palette,d);
+ model(`portal-${d.id}`,dungeonArt.buildDungeonPortalFrame(kit));
+ for(const room of d.rooms){const group=new THREE.Group();dungeonArt.buildRoomArchitecture(d,room,group,kit);model(`room-${d.id}-${room.id}`,group);}
+ for(const puzzle of d.puzzles)for(let i=0;i<puzzle.steps.length;i++)model(`station-${puzzle.id}-${i}`,dungeonArt.buildResonanceStation(d,puzzle,i,{x:0,y:0,z:0},kit));
+}
 // The original authored surface maps also cover terrain paths and dungeon masonry.
 for(const type of ['cobble','limestone','courtstone','fieldstone']){
  const pixels=surfaces.authoredSurfacePixels(type,256);
@@ -64,6 +77,8 @@ for(const type of ['cobble','limestone','courtstone','fieldstone']){
 }
 for(const [name,build] of [['substrate',detail.createGroundSubstrateTexture],['macro',detail.createGroundMacroTexture],['meadow',detail.createMeadowLeafTexture]]){const t=build();const id=texture(t);textures[id].file=name+'.rgba';fs.writeFileSync(path.join(output,name+'.rgba'),Buffer.from(t.image.data));}
 const heights=Buffer.alloc(257*257*4);for(let z=0;z<257;z++)for(let x=0;x<257;x++)heights.writeFloatLE(terrain.heightAt((x/256*250-125)/.17,(z/256*250-125)/.17)*.17,(z*257+x)*4);
-fs.mkdirSync(path.join(path.dirname(output),'Assets/Resources'),{recursive:true});fs.writeFileSync(path.join(path.dirname(output),'Assets/Resources/OriginalHeight.bytes'),heights);
+const water=Buffer.alloc(257*257*4);for(let z=0;z<257;z++)for(let x=0;x<257;x++){const value=terrain.waterAt((x/256*250-125)/.17,(z/256*250-125)/.17);water.writeFloatLE(value==null?-999:value*.17,(z*257+x)*4);}
+fs.writeFileSync(path.join(output,'OriginalHeight.bytes'),heights);
+fs.writeFileSync(path.join(output,'OriginalWater.bytes'),water);
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify({version:1,sourceCommit:'ac071c727210da99b34d654be92b38311698c58d',meshes,materials,textures,models}));
 console.log(JSON.stringify({models:models.length,meshes:meshes.length,materials:materials.length,textures:textures.length,vertices:meshes.reduce((sum,m)=>sum+m.vertices,0)}));

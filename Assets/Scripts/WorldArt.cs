@@ -44,7 +44,7 @@ namespace Hushwake
                 {
                     var v = corners[i]; v.y = Height(v.x, v.z); vertices.Add(v);
                     var hue = Mathf.PerlinNoise(v.x * .035f + 100, v.z * .035f + 100);
-                    colors.Add(Color.Lerp(new Color(.37f, .43f, .25f), new Color(.60f, .62f, .39f), hue));
+                    colors.Add(Color.Lerp(new Color(.19f, .29f, .15f), new Color(.35f, .43f, .23f), hue));
                     triangles.Add(triangles.Count);
                 }
             }
