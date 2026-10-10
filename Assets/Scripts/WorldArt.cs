@@ -34,7 +34,7 @@ namespace Hushwake
         public static Vector3 Ground(float x, float z) => new Vector3(x, Height(x, z), z);
         public static Mesh TerrainMesh()
         {
-            const int size = 256; const float cell = 250f/256;
+            const int size = 128; const float cell = 250f/size;
             var vertices = new List<Vector3>(); var colors = new List<Color>(); var triangles = new List<int>();
             for (var z = 0; z < size; z++) for (var x = 0; x < size; x++)
             {
@@ -55,6 +55,7 @@ namespace Hushwake
         {
             var obj = new GameObject("Landscape", typeof(MeshFilter), typeof(MeshRenderer)); obj.transform.SetParent(parent, false);
             obj.GetComponent<MeshFilter>().sharedMesh = TerrainMesh();
+            obj.GetComponent<MeshRenderer>().shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;
             var mat=new Material(Shader.Find("Hushwake/Landscape"));mat.SetTexture("_Substrate",Resources.Load<Texture2D>("OriginalArt/substrate"));obj.GetComponent<MeshRenderer>().sharedMaterial=mat;
             return obj;
         }
@@ -68,7 +69,12 @@ namespace Hushwake
         }
         public static Transform Character(Transform parent, Vector3 position, Color coat, string name,string artKey="")
         {
-            var model=Original(string.IsNullOrEmpty(artKey)?"nera":artKey,parent,position);model.name=name;model.localScale=Vector3.one*.82f;model.gameObject.AddComponent<ArtMotion>();return model;
+            var model=Original(string.IsNullOrEmpty(artKey)?"nera":artKey,parent,position);model.name=name;model.localScale=Vector3.one*.82f;model.gameObject.AddComponent<ArtMotion>();ContactShadow(model);return model;
+        }
+        static Mesh shadowMesh;static Material shadowMaterial;
+        static void ContactShadow(Transform model){
+            if(shadowMesh==null){shadowMesh=new Mesh{name="Soft character contact"};shadowMesh.vertices=new[]{new Vector3(-.85f,0,-.85f),new Vector3(.85f,0,-.85f),new Vector3(-.85f,0,.85f),new Vector3(.85f,0,.85f)};shadowMesh.uv=new[]{Vector2.zero,Vector2.right,Vector2.up,Vector2.one};shadowMesh.triangles=new[]{0,2,1,1,2,3};shadowMesh.RecalculateBounds();shadowMaterial=new Material(Shader.Find("Hushwake/ContactShadow"));}
+            var obj=new GameObject("Soft foot contact",typeof(MeshFilter),typeof(MeshRenderer));obj.transform.SetParent(model,false);obj.transform.localPosition=Vector3.up*.025f;obj.GetComponent<MeshFilter>().sharedMesh=shadowMesh;var renderer=obj.GetComponent<MeshRenderer>();renderer.sharedMaterial=shadowMaterial;renderer.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;renderer.receiveShadows=false;
         }
         public static Transform Original(string key,Transform parent,Vector3 position){var prefab=Resources.Load<GameObject>("OriginalArt/"+key);if(prefab==null)throw new System.InvalidOperationException("Missing original art: "+key);var result=Object.Instantiate(prefab,parent).transform;result.localPosition=position;ModelBatching.Optimize(key,result);return result;}
         public static Transform Label(Transform parent, Vector3 position, string text, Color color)

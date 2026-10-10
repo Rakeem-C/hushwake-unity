@@ -32,6 +32,7 @@ namespace Hushwake
         Vector2 journalScroll;
         int frameCount;
         float frameTime, fps;
+        bool detailedLighting=true;int slowLightingWindows;float lightingWarmup;
 
         sealed class Target
         {
@@ -69,7 +70,7 @@ namespace Hushwake
             Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 0;
             QualitySettings.shadows = ShadowQuality.All;
-            QualitySettings.shadowDistance = 45;QualitySettings.shadowResolution=ShadowResolution.High;QualitySettings.shadowCascades=2;QualitySettings.antiAliasing=4;QualitySettings.pixelLightCount=2;
+            QualitySettings.shadowDistance = 40;QualitySettings.shadowResolution=ShadowResolution.Medium;QualitySettings.shadowCascades=2;QualitySettings.antiAliasing=2;QualitySettings.pixelLightCount=1;
             view = new GameObject("Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>();
             view.tag = "MainCamera"; view.fieldOfView = 52; view.nearClipPlane = .1f; view.farClipPlane = 200;view.gameObject.AddComponent<VisualFinish>();
             visibility=view.gameObject.AddComponent<CameraVisibility>();
@@ -83,6 +84,7 @@ namespace Hushwake
             var weather=new GameObject("Weather");weather.transform.SetParent(player,false);rain=weather.AddComponent<RainAtmosphere>();
             BuildWorld(Vector3.zero); RealmVisuals();
             saveAt = Time.unscaledTime + 20;
+            lightingWarmup=Time.unscaledTime+8;
         }
 
         Vector3 Atlas(float x, float z) => WorldArt.Ground(x * AtlasScale, z * AtlasScale);
@@ -223,7 +225,9 @@ namespace Hushwake
         void Update()
         {
             Time.timeScale = started && !dead && string.IsNullOrEmpty(panel) ? 1 : 0;
-            frameCount++; frameTime += Time.unscaledDeltaTime; if (frameTime >= 1) { fps = frameCount / frameTime; frameCount = 0; frameTime = 0; }
+            frameCount++; frameTime += Time.unscaledDeltaTime; if (frameTime >= 1) { fps = frameCount / frameTime; frameCount = 0; frameTime = 0;
+                if(detailedLighting&&started&&string.IsNullOrEmpty(panel)&&Application.isFocused&&Time.unscaledTime>lightingWarmup&&Time.unscaledDeltaTime<.2f){slowLightingWindows=fps<25?slowLightingWindows+1:0;if(slowLightingWindows>=3)ConfigureGraphics("balanced");}
+            }
             foreach (var label in labels) if (label != null) { label.rotation = view.transform.rotation; label.gameObject.SetActive(Vector3.Distance(player.position, label.position) < 13); }
             if (!started || dead || !string.IsNullOrEmpty(panel)) { if (started && Input.GetKeyDown(KeyCode.Escape)) panel = ""; FollowCamera(); return; }
             if (Input.GetKeyDown(KeyCode.Escape)) { panel = "pause"; return; }
@@ -256,7 +260,12 @@ namespace Hushwake
             RenderSettings.fogColor = view.backgroundColor;
             RenderSettings.ambientSkyColor=hush?new Color(.22f,.25f,.40f):new Color(.42f,.51f,.53f);RenderSettings.ambientEquatorColor=hush?new Color(.18f,.22f,.29f):new Color(.28f,.36f,.33f);RenderSettings.ambientGroundColor=new Color(.15f,.18f,.13f);RenderSettings.skybox.SetFloat("_Hush",hush?1:0);
             sun.color = hush ? new Color(.67f, .68f, 1) : new Color(1, .94f, .82f); sun.intensity = hush ? .7f : .9f;
+            // Runtime-created scenes need an explicit fill probe; their bake contains no sky lighting.
+            var fill=new UnityEngine.Rendering.SphericalHarmonicsL2();fill.AddAmbientLight(hush?new Color(.075f,.09f,.15f):new Color(.10f,.135f,.115f));RenderSettings.ambientProbe=fill;
+            view.clearFlags=dungeon==null?CameraClearFlags.Skybox:CameraClearFlags.SolidColor;
+            if(dungeon!=null){view.backgroundColor=hush?new Color(.075f,.10f,.15f):new Color(.13f,.18f,.20f);RenderSettings.fogColor=view.backgroundColor;}
         }
+        public void ConfigureGraphics(string profile){detailedLighting=profile!="balanced";slowLightingWindows=0;lightingWarmup=Time.unscaledTime+8;QualitySettings.shadows=detailedLighting?ShadowQuality.All:ShadowQuality.Disable;QualitySettings.antiAliasing=detailedLighting?2:0;Debug.Log("HUSHWAKE_GRAPHICS_PROFILE "+(detailedLighting?"detailed":"balanced"));}
         void DetectRegion()
         {
             if (dungeon != null) return;

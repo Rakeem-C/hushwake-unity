@@ -109,7 +109,7 @@ namespace Hushwake
             Backdrop(new Rect(0, 0, width, height), .58f);
             var rect = new Rect(width / 2 - 430, 55, 860, height - 110); Backdrop(rect);
             GUILayout.BeginArea(new Rect(rect.x + 26, rect.y + 20, rect.width - 52, rect.height - 40));
-            GUILayout.BeginHorizontal(); GUILayout.Label(panel == "dialogue" ? dialogueTitle : Pretty(panel), heading); GUILayout.FlexibleSpace();
+            GUILayout.BeginHorizontal(); GUILayout.Label(panel == "dialogue" ? dialogueTitle : Pretty(panel), heading,GUILayout.MinWidth(500)); GUILayout.FlexibleSpace();
             if (GUILayout.Button("Close", button, GUILayout.Width(110))) panel = ""; GUILayout.EndHorizontal(); GUILayout.Space(18);
             journalScroll = GUILayout.BeginScrollView(journalScroll);
             switch (panel)
@@ -121,6 +121,7 @@ namespace Hushwake
                     if (GUILayout.Button("Journal", button)) panel = "journal";
                     if (GUILayout.Button("Inventory and instruments", button)) panel = "inventory";
                     if (GUILayout.Button("Save and return to title", button)) { Save(); started = false; panel = ""; }
+                    if (GUILayout.Button("Lighting: "+(detailedLighting?"detailed":"lighter")+" — change",button))ConfigureGraphics(detailedLighting?"balanced":"detailed");
                     GUILayout.Space(24); GUILayout.Label("Controls", heading);
                     GUILayout.Label("WASD / arrows: move • Shift: run • Space: dodge\nE: interact • F / left click: threadblade • R: selected instrument\nQ: turn Wake / Hush • Mouse wheel: zoom\n1 Pulse • 2 Flow • 3 Lift • 4 Witness • 5 Graft • 6 Counter • 7 Concord\nM Map • J Journal • I Inventory • Esc Pause", body); break;
                 case "dialogue":
