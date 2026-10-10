@@ -1,0 +1,11 @@
+{
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "headers": [
+    { "source": "/Build/(.*).wasm", "headers": [{ "key": "Content-Type", "value": "application/wasm" }] },
+    { "source": "/Build/(.*).data", "headers": [{ "key": "Content-Type", "value": "application/octet-stream" }] },
+    { "source": "/(.*)", "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }] }
+  ],
+  "git": { "deploymentEnabled": false }
+}

@@ -1,0 +1,4402 @@
+{
+  "schema": 1,
+  "sourceCommit": "ac071c727210da99b34d654be92b38311698c58d",
+  "regions": [
+    {
+      "id": "hearth",
+      "name": "Chalkmere Terraces",
+      "center": {
+        "x": 0,
+        "z": 0
+      },
+      "settlement": {
+        "name": "Harthwick",
+        "x": 0,
+        "z": 0
+      },
+      "visual": "Copper roofs and luminous limestone terraces above dark blue channels.",
+      "musicCue": "hearth-evening-copper",
+      "rumor": "The river has kept a second route hidden since the last flood.",
+      "sites": [
+        {
+          "id": "collapsed-bellpost",
+          "name": "Collapsed Bellpost",
+          "kind": "ruin",
+          "x": -55,
+          "z": 40,
+          "clue": "A bell answers from beneath the chalk.",
+          "challenge": "Strike the exposed bell, trace its reply underground, and open the covered keeper stair.",
+          "rewardItem": "waterkeeper-note",
+          "loreId": "lore-flood-vote"
+        },
+        {
+          "id": "chalk-cave",
+          "name": "Chalk Cave",
+          "kind": "cave",
+          "x": 70,
+          "z": 90,
+          "clue": "A cool mineral draft escapes a narrow crack.",
+          "challenge": "Follow the cool air through branching shelves; a short Hush shift reveals the return passage.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-first-thread"
+        },
+        {
+          "id": "terrace-watch",
+          "name": "Terrace Watch",
+          "kind": "tower",
+          "x": 30,
+          "z": -100,
+          "clue": "A lamp burns in an abandoned watchtower.",
+          "challenge": "Set two mirrors so the lamp illuminates the old spillway, then face the scavengers drawn by it.",
+          "rewardItem": "kite-thread",
+          "loreId": "lore-watch-oath"
+        }
+      ]
+    },
+    {
+      "id": "vale",
+      "name": "Copperwind Vale",
+      "center": {
+        "x": -220,
+        "z": 50
+      },
+      "settlement": {
+        "name": "Rillcross",
+        "x": -220,
+        "z": 50
+      },
+      "visual": "Open copper grass and wind towers above braided old roads.",
+      "musicCue": "vale-long-road",
+      "rumor": "Toll keepers once charged travelers for roads that moved at night.",
+      "sites": [
+        {
+          "id": "split-aqueduct",
+          "name": "Split Aqueduct",
+          "kind": "ruin",
+          "x": -260,
+          "z": 15,
+          "clue": "Two dry channels disagree about where the river went.",
+          "challenge": "Route Flow into each branch; the one that wets the old masonry exposes a maintenance crawl.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-two-rivers",
+          "requires": [
+            "ability:flow"
+          ]
+        },
+        {
+          "id": "dry-toll-arch",
+          "name": "Dry Toll Arch",
+          "kind": "vault",
+          "x": -130,
+          "z": 110,
+          "clue": "The tally marks continue under the road.",
+          "challenge": "Use Witness on the buried ledger and choose whose debt to clear before the vault opens.",
+          "rewardItem": "salt-key",
+          "loreId": "lore-toll-ledger",
+          "requires": [
+            "ability:witness"
+          ]
+        },
+        {
+          "id": "copper-moth-den",
+          "name": "Copper Moth Den",
+          "kind": "cave",
+          "x": -315,
+          "z": 100,
+          "clue": "At dusk, copper moths vanish into a hill with no opening.",
+          "challenge": "Follow their air current rather than the road; spare the nesting queen to learn the wind path.",
+          "rewardItem": "kite-thread",
+          "loreId": "lore-moth-road"
+        }
+      ]
+    },
+    {
+      "id": "fen",
+      "name": "Thistleback Fen",
+      "center": {
+        "x": -365,
+        "z": 275
+      },
+      "settlement": {
+        "name": "Brackenloft",
+        "x": -365,
+        "z": 275
+      },
+      "visual": "Verdant roots hold houses above mirrored black water.",
+      "musicCue": "fen-listening-wood",
+      "rumor": "A neighbor returned from the drowned census after fifty years and remembered tomorrow.",
+      "sites": [
+        {
+          "id": "drowned-census-hut",
+          "name": "Drowned Census Hut",
+          "kind": "ruin",
+          "x": -410,
+          "z": 220,
+          "clue": "Names can be read beneath the silt.",
+          "challenge": "Reconstruct three household entries with Witness to identify the missing sixth vote.",
+          "rewardItem": "sixth-ballot",
+          "loreId": "lore-sixth-seat",
+          "requires": [
+            "ability:witness"
+          ]
+        },
+        {
+          "id": "moth-shrine",
+          "name": "Moth Shrine",
+          "kind": "shrine",
+          "x": -300,
+          "z": 355,
+          "clue": "White moths gather on a root polished by hands.",
+          "challenge": "Cross by listening for the moths when the path disappears in Hush; a quiet offering changes their route.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-moth-oath"
+        },
+        {
+          "id": "reed-prison",
+          "name": "Reed Prison",
+          "kind": "vault",
+          "x": -460,
+          "z": 350,
+          "clue": "Reed cages sway without occupants.",
+          "challenge": "Graft two cage roots into an escape walkway and free the records sealed inside.",
+          "rewardItem": "waterkeeper-note",
+          "loreId": "lore-returned",
+          "requires": [
+            "item:graft-hook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scar",
+      "name": "Whitecap Scar",
+      "center": {
+        "x": 95,
+        "z": 330
+      },
+      "settlement": {
+        "name": "Keel Monastery",
+        "x": 95,
+        "z": 330
+      },
+      "visual": "Blue slate observatories rise above pale wind-carved ridges.",
+      "musicCue": "scar-sky-bells",
+      "rumor": "The monastery’s second north star follows travelers instead of the sky.",
+      "sites": [
+        {
+          "id": "glass-storm-cairn",
+          "name": "Glass Storm Cairn",
+          "kind": "shrine",
+          "x": 60,
+          "z": 420,
+          "clue": "A past storm burned the stone translucent.",
+          "challenge": "Align the glass after sunset; avoid the stormglass sentinels and read the shadow it casts.",
+          "rewardItem": "sky-proof",
+          "loreId": "lore-false-north"
+        },
+        {
+          "id": "echo-mine",
+          "name": "Echo Mine",
+          "kind": "cave",
+          "x": 190,
+          "z": 315,
+          "clue": "A second hammer answers each strike.",
+          "challenge": "Match the hammer echo to locate a hidden worker lift, then bring the trapped miners through.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-miners"
+        },
+        {
+          "id": "cloud-step",
+          "name": "Cloud Step",
+          "kind": "tower",
+          "x": 35,
+          "z": 260,
+          "clue": "A narrow tower is visible only from below its shadow.",
+          "challenge": "Use Lift to reach the upper stair and compare the Wake and Hush horizon marks.",
+          "rewardItem": "kite-thread",
+          "loreId": "lore-sky-contract",
+          "requires": [
+            "ability:lift"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shelf",
+      "name": "Riven Shelf",
+      "center": {
+        "x": 385,
+        "z": 130
+      },
+      "settlement": {
+        "name": "Ferrum Spoke",
+        "x": 385,
+        "z": 130
+      },
+      "visual": "Hoists and suspended lanes traverse warm stone quarries.",
+      "musicCue": "shelf-weight-song",
+      "rumor": "The oldest mine lifts were built to carry people out, not stone in.",
+      "sites": [
+        {
+          "id": "counterweight-quarry",
+          "name": "Counterweight Quarry",
+          "kind": "camp",
+          "x": 360,
+          "z": 200,
+          "clue": "A crane hangs level without its counterweight.",
+          "challenge": "Find the missing weight by tracing the chain underground; restore the workers’ safe route.",
+          "rewardItem": "surveyor-log",
+          "loreId": "lore-quarry-route"
+        },
+        {
+          "id": "old-pulley-hamlet",
+          "name": "Old Pulley Hamlet",
+          "kind": "ruin",
+          "x": 520,
+          "z": 90,
+          "clue": "Empty homes remain joined by a clever rope web.",
+          "challenge": "Move the mass dial between hoists to cross the hamlet without snapping the remaining line.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-pulley-families",
+          "requires": [
+            "item:mass-dial"
+          ]
+        },
+        {
+          "id": "hollow-ore",
+          "name": "Hollow Ore",
+          "kind": "vault",
+          "x": 465,
+          "z": 245,
+          "clue": "A seam of ore rings like an empty cup.",
+          "challenge": "Expose the cavity with Pulse and balance the old rescue cage to enter.",
+          "rewardItem": "kite-thread",
+          "loreId": "lore-stone-refuge"
+        }
+      ]
+    },
+    {
+      "id": "steppe",
+      "name": "Sableglass Steppe",
+      "center": {
+        "x": 345,
+        "z": -235
+      },
+      "settlement": {
+        "name": "Silt Quay",
+        "x": 345,
+        "z": -235
+      },
+      "visual": "A mirror bright salt plain preserves voices below its crust.",
+      "musicCue": "steppe-salt-hush",
+      "rumor": "A vanished caravan sold its own names to escape a census.",
+      "sites": [
+        {
+          "id": "salt-hymn-hollow",
+          "name": "Salt Hymn Hollow",
+          "kind": "shrine",
+          "x": 320,
+          "z": -330,
+          "clue": "Each footstep brings a different note from the salt.",
+          "challenge": "Cross on the tones of the old caravan’s walking rhythm and read the protected names.",
+          "rewardItem": "caravan-map",
+          "loreId": "lore-caravan"
+        },
+        {
+          "id": "buried-causeway",
+          "name": "Buried Causeway",
+          "kind": "ruin",
+          "x": 500,
+          "z": -200,
+          "clue": "An ancient road appears only at low light.",
+          "challenge": "Use Witness at the three exposed markers and trace the causeway into a sand chamber.",
+          "rewardItem": "salt-key",
+          "loreId": "lore-causeway",
+          "requires": [
+            "ability:witness"
+          ]
+        },
+        {
+          "id": "mirror-salt-well",
+          "name": "Mirror Salt Well",
+          "kind": "cave",
+          "x": 285,
+          "z": -175,
+          "clue": "A salt well reflects a traveler who has already left.",
+          "challenge": "Shift realms at each reflection, then return the stolen water to the quay.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-reflection-well"
+        }
+      ]
+    },
+    {
+      "id": "reach",
+      "name": "Windward Reach",
+      "center": {
+        "x": 10,
+        "z": -400
+      },
+      "settlement": {
+        "name": "Wren Station",
+        "x": 10,
+        "z": -400
+      },
+      "visual": "Kite masts and copper vanes rise over green sea cliffs.",
+      "musicCue": "reach-wind-kites",
+      "rumor": "The wind carries a distress signal from an empty sky.",
+      "sites": [
+        {
+          "id": "kite-nursery",
+          "name": "Kite Nursery",
+          "kind": "camp",
+          "x": -45,
+          "z": -495,
+          "clue": "Unattended kites tug toward a sheltered cliff.",
+          "challenge": "Reassemble a torn rescue kite, test it in a low gust, and follow it to its maker.",
+          "rewardItem": "kite-thread",
+          "loreId": "lore-kite-maker"
+        },
+        {
+          "id": "windwheel",
+          "name": "Windwheel",
+          "kind": "tower",
+          "x": -20,
+          "z": -330,
+          "clue": "A broken wheel points directly into the prevailing wind.",
+          "challenge": "Turn the wheel with Pulse and Flow, then take its inner ladder to a survey platform.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-weather-station",
+          "requires": [
+            "ability:flow"
+          ]
+        },
+        {
+          "id": "low-tide-vault",
+          "name": "Low Tide Vault",
+          "kind": "vault",
+          "x": 100,
+          "z": -510,
+          "clue": "A door below the cliff can be seen between waves.",
+          "challenge": "Divert the incoming water and Lift the old grate before the tide returns.",
+          "rewardItem": "salt-key",
+          "loreId": "lore-coast-refuge",
+          "requires": [
+            "ability:flow",
+            "ability:lift"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crown",
+      "name": "Hollow Crown",
+      "center": {
+        "x": -260,
+        "z": -240
+      },
+      "settlement": {
+        "name": "Vesper Crown",
+        "x": -260,
+        "z": -240
+      },
+      "visual": "Navy stone avenues and copper roofs remain frozen at twilight.",
+      "musicCue": "crown-unfinished",
+      "rumor": "The capital is not ruined; it is waiting for a decision.",
+      "sites": [
+        {
+          "id": "silent-market",
+          "name": "Silent Market",
+          "kind": "ruin",
+          "x": -340,
+          "z": -210,
+          "clue": "Coins lie beside stalls that never rotted.",
+          "challenge": "Read the receipts in both realms; return a merchant’s name to the civic ledger.",
+          "rewardItem": "citizen-record",
+          "loreId": "lore-market-debt",
+          "requires": [
+            "ability:witness"
+          ]
+        },
+        {
+          "id": "buried-council-vault",
+          "name": "Buried Council Vault",
+          "kind": "vault",
+          "x": -190,
+          "z": -350,
+          "clue": "A council seal glows under black paving.",
+          "challenge": "Combine Graft Hook, Mass Dial and Concord Crest to expose an alternate account of the vote.",
+          "rewardItem": "sixth-ballot",
+          "loreId": "lore-original-question",
+          "requires": [
+            "item:graft-hook",
+            "item:mass-dial",
+            "item:concord-crest"
+          ]
+        },
+        {
+          "id": "last-lamplighter",
+          "name": "Last Lamplighter",
+          "kind": "tower",
+          "x": -355,
+          "z": -330,
+          "clue": "One lamp lights itself before every false dawn.",
+          "challenge": "Follow the lamplighter’s route in Hush, then relight the six public lamps in Wake.",
+          "rewardItem": "emberglass",
+          "loreId": "lore-last-lamp"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "emberglass",
+      "name": "Emberglass",
+      "description": "Warm glass used to mend a field kit or trade for a small favor.",
+      "type": "material"
+    },
+    {
+      "id": "graft-hook",
+      "name": "Graft Hook",
+      "description": "A living hook that joins severed roots, ropes and old civic conduits.",
+      "type": "tool"
+    },
+    {
+      "id": "mass-dial",
+      "name": "Mass Dial",
+      "description": "A portable counterweight that shifts the load on marked machinery.",
+      "type": "tool"
+    },
+    {
+      "id": "concord-crest",
+      "name": "Concord Crest",
+      "description": "A paired bearing that holds two true directions at once.",
+      "type": "key"
+    },
+    {
+      "id": "waterkeeper-note",
+      "name": "Waterkeeper Note",
+      "description": "A waterkeeper’s testimony about the refuge gate.",
+      "type": "relic"
+    },
+    {
+      "id": "caravan-map",
+      "name": "Caravan Map",
+      "description": "The steppe road as it existed in both Wake and Hush.",
+      "type": "relic"
+    },
+    {
+      "id": "sixth-ballot",
+      "name": "Sixth Ballot",
+      "description": "A living record of the missing fen vote.",
+      "type": "relic"
+    },
+    {
+      "id": "surveyor-log",
+      "name": "Surveyor Log",
+      "description": "An evacuation diagram hidden in an ore ledger.",
+      "type": "relic"
+    },
+    {
+      "id": "sky-proof",
+      "name": "Sky Proof",
+      "description": "A monk’s measurements of the manufactured second north.",
+      "type": "relic"
+    },
+    {
+      "id": "citizen-record",
+      "name": "Citizen Record",
+      "description": "The original wording of Vesper Crown’s unfinished choice.",
+      "type": "relic"
+    },
+    {
+      "id": "kite-thread",
+      "name": "Kite Thread",
+      "description": "A braided line that carries a person’s weight.",
+      "type": "material"
+    },
+    {
+      "id": "salt-key",
+      "name": "Salt Key",
+      "description": "A crystal impression of a forgotten road marker.",
+      "type": "key"
+    },
+    {
+      "id": "reed-fiber",
+      "name": "Reed Fiber",
+      "description": "Tough fiber for field repairs and simple trade.",
+      "type": "material"
+    },
+    {
+      "id": "hush-silk",
+      "name": "Hush Silk",
+      "description": "A cool strand left by creatures in the held world.",
+      "type": "material"
+    },
+    {
+      "id": "moss-heart",
+      "name": "Moss Heart",
+      "description": "A living knot of fen moss that roots easily in damp ground.",
+      "type": "material"
+    },
+    {
+      "id": "wind-quill",
+      "name": "Wind Quill",
+      "description": "A hollow quill that sings when an aerial current shifts.",
+      "type": "material"
+    },
+    {
+      "id": "salt-coin",
+      "name": "Salt Coin",
+      "description": "An old caravan token whose marks survived the erased ledger.",
+      "type": "material"
+    },
+    {
+      "id": "storm-filament",
+      "name": "Storm Filament",
+      "description": "Conductive thread gathered from charged creatures.",
+      "type": "material"
+    },
+    {
+      "id": "brine-scale",
+      "name": "Brine Scale",
+      "description": "A hard translucent scale from a channel dweller.",
+      "type": "material"
+    },
+    {
+      "id": "glass-shard",
+      "name": "Glass Shard",
+      "description": "A safely wrapped piece of resonant stormglass.",
+      "type": "material"
+    },
+    {
+      "id": "iron-grit",
+      "name": "Iron Grit",
+      "description": "Fine filings from old civic machinery.",
+      "type": "material"
+    },
+    {
+      "id": "glint",
+      "name": "Glint",
+      "description": "The common trade mark accepted by wayhouses.",
+      "type": "material"
+    }
+  ],
+  "lore": [
+    {
+      "id": "lore-first-thread",
+      "title": "The First Thread",
+      "region": "hearth",
+      "source": "song",
+      "text": "Before there were roads, the people called the open sky a loom. They stitched a path by listening to one another breathe.",
+      "deduction": "The song describes a civic technology as a shared act, not a gift from rulers."
+    },
+    {
+      "id": "lore-flood-vote",
+      "title": "The Flood Vote",
+      "region": "hearth",
+      "source": "inscription",
+      "text": "When the river rose, the keepers opened the refuge gate against the council order. The names of those saved were struck from the gauge.",
+      "deduction": "The official water level was altered to hide an unauthorized rescue."
+    },
+    {
+      "id": "lore-watch-oath",
+      "title": "Watch Oath",
+      "region": "hearth",
+      "source": "letter",
+      "text": "Keep a lamp for the people below the chalk, even if the council calls the chamber empty."
+    },
+    {
+      "id": "lore-two-rivers",
+      "title": "Two Rivers",
+      "region": "vale",
+      "source": "mural",
+      "text": "A copper river runs toward the sea. A white river runs toward the city. Both have the same fish."
+    },
+    {
+      "id": "lore-toll-ledger",
+      "title": "Toll Ledger",
+      "region": "vale",
+      "source": "artifact",
+      "text": "The toll is not coin. Every traveler owes an account of the road they found."
+    },
+    {
+      "id": "lore-moth-road",
+      "title": "Moth Road",
+      "region": "vale",
+      "source": "song",
+      "text": "Follow the moth that flies into wind; it knows which hill has a door."
+    },
+    {
+      "id": "lore-sixth-seat",
+      "title": "The Sixth Seat",
+      "region": "fen",
+      "source": "inscription",
+      "text": "Five seats for those who remained. One seat for those the water returned."
+    },
+    {
+      "id": "lore-moth-oath",
+      "title": "Moth Oath",
+      "region": "fen",
+      "source": "artifact",
+      "text": "If a thing changes and still finds home, it is not a stranger."
+    },
+    {
+      "id": "lore-returned",
+      "title": "The Returned",
+      "region": "fen",
+      "source": "letter",
+      "text": "Do not cure us of the years we lived below. Ask us what we saw."
+    },
+    {
+      "id": "lore-false-north",
+      "title": "The Other North",
+      "region": "scar",
+      "source": "mural",
+      "text": "A second star was hung above the Crown so every road would lead home during the long evacuation."
+    },
+    {
+      "id": "lore-miners",
+      "title": "Below the Hammer",
+      "region": "scar",
+      "source": "letter",
+      "text": "If the echo answers before the hammer lands, leave the shaft. Something remembers tomorrow."
+    },
+    {
+      "id": "lore-sky-contract",
+      "title": "Sky Contract",
+      "region": "scar",
+      "source": "inscription",
+      "text": "The star guides the lost. When the lost are home, lower the star."
+    },
+    {
+      "id": "lore-quarry-route",
+      "title": "Evacuation Lift",
+      "region": "shelf",
+      "source": "artifact",
+      "text": "Four people to a cage; no measure of ore outranks a living body."
+    },
+    {
+      "id": "lore-pulley-families",
+      "title": "Rope Families",
+      "region": "shelf",
+      "source": "song",
+      "text": "One line holds one house. Two lines hold a street."
+    },
+    {
+      "id": "lore-stone-refuge",
+      "title": "Refuge in Stone",
+      "region": "shelf",
+      "source": "inscription",
+      "text": "This quarry was a stair while the city forgot the ground."
+    },
+    {
+      "id": "lore-caravan",
+      "title": "The Nameless Caravan",
+      "region": "steppe",
+      "source": "artifact",
+      "text": "They erased our names from the road. We learned to leave footsteps in salt."
+    },
+    {
+      "id": "lore-causeway",
+      "title": "Moving Causeway",
+      "region": "steppe",
+      "source": "mural",
+      "text": "Two maps can both be honest if the world between them has moved."
+    },
+    {
+      "id": "lore-reflection-well",
+      "title": "The Well That Waits",
+      "region": "steppe",
+      "source": "song",
+      "text": "Give water to the one whose reflection reaches you first."
+    },
+    {
+      "id": "lore-kite-maker",
+      "title": "Kite Maker’s Note",
+      "region": "reach",
+      "source": "letter",
+      "text": "A tether is a promise that the person in the sky can come home."
+    },
+    {
+      "id": "lore-weather-station",
+      "title": "Wind Station",
+      "region": "reach",
+      "source": "inscription",
+      "text": "We did not command the storm. We made a place for people to cross it."
+    },
+    {
+      "id": "lore-coast-refuge",
+      "title": "Coast Refuge",
+      "region": "reach",
+      "source": "mural",
+      "text": "The first refugees came by sea, before anyone thought to count them."
+    },
+    {
+      "id": "lore-market-debt",
+      "title": "Market Debt",
+      "region": "crown",
+      "source": "artifact",
+      "text": "The Crown owes its citizens a morning. The citizens owe the Crown nothing."
+    },
+    {
+      "id": "lore-original-question",
+      "title": "The Unfinished Question",
+      "region": "crown",
+      "source": "inscription",
+      "text": "Shall we be held until the danger passes, and asked again when we can answer?"
+    },
+    {
+      "id": "lore-last-lamp",
+      "title": "Last Lamp",
+      "region": "crown",
+      "source": "letter",
+      "text": "If a dawn comes while I sleep, let someone else decide which lamps remain lit."
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mara",
+      "name": "Mara Vale",
+      "occupation": "Harthwick waterkeeper and Nera’s guardian",
+      "region": "hearth",
+      "x": 8,
+      "z": 5,
+      "homeX": 12,
+      "homeZ": 13,
+      "appearance": "White hair tied with copper wire; blue work apron; one bare arm marked by a flood line.",
+      "schedule": {
+        "dawn": "checking terrace channels",
+        "day": "repairing the public gauge",
+        "dusk": "serving soup at the spillway",
+        "night": "reading old flood ledgers at home"
+      },
+      "dialogue": [
+        {
+          "id": "after-keeper",
+          "lines": [
+            "You gave the river two ways through. I did not think you would remember the second.",
+            "I kept the old maps because I knew you would ask who they were drawn for."
+          ],
+          "when": [
+            "boss:the-dry-keeper"
+          ],
+          "choices": [
+            {
+              "id": "ask-refuge",
+              "text": "Who lived below the chalk?",
+              "reply": "People our council counted as already gone. Take this record and ask them yourself.",
+              "setsFlag": "mara-told-refuge"
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "Nera. The spillway is humming under a dry sky. Take the threadblade and find the old bellpost west of home.",
+            "Stand beside the buried bell and press R to sound your gauntlet with Pulse. Listen to what answers before you take the path to the Sluice."
+          ],
+          "choices": [
+            {
+              "id": "ask-origin",
+              "text": "Why does my gauntlet know the river?",
+              "reply": "Your mother mapped the channels before you could walk. She would have wanted you to choose where the water goes.",
+              "setsFlag": "mara-origin"
+            },
+            {
+              "id": "leave",
+              "text": "I will go.",
+              "reply": "Then come back with your own account of what you found.",
+              "setsFlag": "mara-farewell"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tavi",
+      "name": "Tavi Reed",
+      "occupation": "Courier and Nera’s closest friend",
+      "region": "hearth",
+      "x": -8,
+      "z": 9,
+      "homeX": -13,
+      "homeZ": 15,
+      "appearance": "Short moss coat, asymmetric courier satchel and a kite charm cut from tin.",
+      "schedule": {
+        "dawn": "sorting letters at the Harthwick stair",
+        "day": "running the vale road",
+        "dusk": "waiting at the terrace lookout",
+        "night": "sleeping at the courier loft"
+      },
+      "dialogue": [
+        {
+          "id": "moth-route",
+          "lines": [
+            "You followed the moths? I thought the old tale was only a way to send children off the toll road."
+          ],
+          "when": [
+            "flag:site:copper-moth-den",
+            "not:flag:moth-route-shared"
+          ],
+          "choices": [
+            {
+              "id": "show-route",
+              "text": "Show Tavi the moth road on your map.",
+              "reply": "I will put it in the courier ledger as a shared path. No toll keeper gets to own it.",
+              "setsFlag": "moth-route-shared"
+            }
+          ]
+        },
+        {
+          "id": "at-crown",
+          "lines": [
+            "I can carry a message to every settlement. I cannot decide what it should say for you."
+          ],
+          "when": [
+            "flag:at-crown"
+          ],
+          "choices": [
+            {
+              "id": "send-truth",
+              "text": "Carry the full record.",
+              "reply": "People will argue. They deserve the chance.",
+              "setsFlag": "faction-open-civic-record",
+              "requires": [
+                "not:flag:faction-sealed-record"
+              ]
+            },
+            {
+              "id": "send-safety",
+              "text": "Carry only the evacuation warning.",
+              "reply": "I will do it, but I will come back and ask what you left out.",
+              "setsFlag": "faction-sealed-record",
+              "requires": [
+                "not:flag:faction-open-civic-record"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "after-sluice",
+          "lines": [
+            "You made the old refuge channel run again. Mara cried and pretended it was spray.",
+            "I have roads to run. Send a signal when you find the capital."
+          ],
+          "when": [
+            "boss:the-dry-keeper"
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "At dusk the dry tower rings once. No hand is on the bell.",
+            "If you are going beyond the terraces, look for the copper moths in the vale. They know a path off the toll road."
+          ],
+          "choices": [
+            {
+              "id": "promise",
+              "text": "I will mark it on my map.",
+              "reply": "You always do. Please mark the way home too.",
+              "setsFlag": "tavi-promise"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "imri",
+      "name": "Imri Venn",
+      "occupation": "Disgraced city historian and companion",
+      "region": "vale",
+      "x": -224,
+      "z": 43,
+      "homeX": -233,
+      "homeZ": 49,
+      "appearance": "Navy scarf over a patched archive coat; ink-dark fingers; a folding slate map.",
+      "schedule": {
+        "dawn": "copying road inscriptions",
+        "day": "walking between Rillcross and the aqueduct",
+        "dusk": "debating in the wayhouse",
+        "night": "writing beneath a shielded lamp"
+      },
+      "dialogue": [
+        {
+          "id": "after-archive",
+          "lines": [
+            "I once wrote that the caravan was lost. They erased their names to live.",
+            "My correction will not restore what my first account cost them. I can still carry it."
+          ],
+          "when": [
+            "boss:the-erasure"
+          ],
+          "choices": [
+            {
+              "id": "share-map",
+              "text": "Publish both maps.",
+              "reply": "Every road keeper will argue with them. Good.",
+              "setsFlag": "faction-open-record",
+              "requires": [
+                "not:flag:faction-protect-names"
+              ]
+            },
+            {
+              "id": "guard-map",
+              "text": "Keep the names private.",
+              "reply": "The road may be public while the people remain safe.",
+              "setsFlag": "faction-protect-names",
+              "requires": [
+                "not:flag:faction-open-record"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "after-sluice",
+          "lines": [
+            "The pipe behind your town matches a line under the old capital. If one record was edited, others may be too."
+          ],
+          "when": [
+            "boss:the-dry-keeper"
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "I came looking for a river that runs uphill. People here insist I should look at the rain.",
+            "The city archive called it a mistake. I have learned mistakes can have addresses."
+          ],
+          "choices": [
+            {
+              "id": "join",
+              "text": "Help me trace it.",
+              "reply": "I will keep the ledger. You keep us alive when it bites.",
+              "setsFlag": "imri-joined"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sava",
+      "name": "Sava Quill",
+      "occupation": "Rillcross toll keeper",
+      "region": "vale",
+      "x": -207,
+      "z": 61,
+      "homeX": -218,
+      "homeZ": 64,
+      "appearance": "Copper scale plates and a cord of tiny road tokens.",
+      "schedule": {
+        "dawn": "opening the west toll",
+        "day": "walking the trade road",
+        "dusk": "counting travelers at the wayhouse",
+        "night": "playing cards with ferrymen"
+      },
+      "dialogue": [
+        {
+          "id": "debt-cleared",
+          "lines": [
+            "You did not pay the old toll with coin. You found whose journey the ledger hid. The arch is open."
+          ],
+          "when": [
+            "flag:toll-debt-cleared"
+          ]
+        },
+        {
+          "id": "ledger-read",
+          "lines": [
+            "You found the names under the arch. Now we can decide what to do with the debt."
+          ],
+          "when": [
+            "flag:site:dry-toll-arch"
+          ],
+          "choices": [
+            {
+              "id": "erase",
+              "text": "Strike the old debts.",
+              "reply": "I will witness that choice. Some traders will be furious.",
+              "setsFlag": "faction-road-common",
+              "requires": [
+                "not:flag:faction-road-ledger"
+              ]
+            },
+            {
+              "id": "preserve",
+              "text": "Keep the ledger visible.",
+              "reply": "Then let everyone read who wrote the debt in the first place.",
+              "setsFlag": "faction-road-ledger",
+              "requires": [
+                "not:flag:faction-road-common"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "The toll arch counts names as if they were loads. I never liked that part of the job.",
+            "Read what it hid, then we can decide whether to clear the debt or display it."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oya",
+      "name": "Oya Fen",
+      "occupation": "Speaker for Brackenloft’s returned",
+      "region": "fen",
+      "x": -362,
+      "z": 281,
+      "homeX": -350,
+      "homeZ": 291,
+      "appearance": "Reed-wrapped shoulders, luminous root earrings, water marks that shift with light.",
+      "schedule": {
+        "dawn": "meeting the newly returned by the lower bridge",
+        "day": "tending the root garden",
+        "dusk": "holding open council at the assembly stair",
+        "night": "recording remembered dreams"
+      },
+      "dialogue": [
+        {
+          "id": "after-speaker",
+          "lines": [
+            "The chamber heard us. Now the village must. A seat is a beginning, not an apology."
+          ],
+          "when": [
+            "boss:the-first-speaker"
+          ],
+          "choices": [
+            {
+              "id": "seat",
+              "text": "Give the returned a council seat.",
+              "reply": "We will take it and disagree with you when we must.",
+              "setsFlag": "faction-returned-seat",
+              "requires": [
+                "not:flag:faction-returned-hearing"
+              ]
+            },
+            {
+              "id": "hearing",
+              "text": "Keep a public hearing open.",
+              "reply": "It is less than a seat. We will use it until we can ask for more.",
+              "setsFlag": "faction-returned-hearing",
+              "requires": [
+                "not:flag:faction-returned-seat"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "We are called returned as though the fen borrowed us. I was born here.",
+            "The roots have held every name the census dropped. Hear them before you enter the Parliament."
+          ],
+          "choices": [
+            {
+              "id": "listen",
+              "text": "I will listen first.",
+              "reply": "Then you may find we have a vote, not a curse.",
+              "setsFlag": "oya-trust"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bren",
+      "name": "Bren Hollow",
+      "occupation": "Fen bridge tender",
+      "region": "fen",
+      "x": -377,
+      "z": 265,
+      "homeX": -384,
+      "homeZ": 270,
+      "appearance": "Broad reed hat and a living rope belt threaded through a wooden hook.",
+      "schedule": {
+        "dawn": "testing bridge knots",
+        "day": "mending walkways",
+        "dusk": "teaching children knot signs",
+        "night": "checking the low bridge lamps"
+      },
+      "dialogue": [
+        {
+          "id": "after-graft",
+          "lines": [
+            "The bridge bends under both of us now. I thought one root had to win."
+          ],
+          "when": [
+            "flag:low-bridge-restored"
+          ]
+        },
+        {
+          "id": "graft-ready",
+          "lines": [
+            "That hook can join the two roots without cutting either one. The low walkway still needs a shared span."
+          ],
+          "when": [
+            "item:graft-hook"
+          ],
+          "choices": [
+            {
+              "id": "inspect",
+              "text": "Show me where they meet.",
+              "reply": "Take the eastern walkway and listen for the thinner root.",
+              "setsFlag": "bren-route",
+              "requires": [
+                "not:flag:bren-route"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "Two roots have been fighting over the lower path for years. The people turned it into a story about enemies."
+          ],
+          "choices": [
+            {
+              "id": "inspect",
+              "text": "Show me where they meet.",
+              "reply": "Take the eastern walkway and listen for the thinner root.",
+              "setsFlag": "bren-route"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sel",
+      "name": "Sel Keel",
+      "occupation": "Monastic sky reader",
+      "region": "scar",
+      "x": 96,
+      "z": 324,
+      "homeX": 88,
+      "homeZ": 340,
+      "appearance": "Blue slate mantle, paired lens monocle and an inked horizon across each palm.",
+      "schedule": {
+        "dawn": "measuring the north shadow",
+        "day": "teaching on the monastery steps",
+        "dusk": "watching the second star",
+        "night": "copying sky charts in the upper cell"
+      },
+      "dialogue": [
+        {
+          "id": "mine-proof",
+          "lines": [
+            "The miners heard an echo before the hammer fell? That is the first measurement my charts cannot explain."
+          ],
+          "when": [
+            "flag:site:echo-mine",
+            "not:flag:miners-proof-shared"
+          ],
+          "choices": [
+            {
+              "id": "share-proof",
+              "text": "Show Sel the echo timing.",
+              "reply": "I will add it to the sky record, where anyone can challenge it.",
+              "setsFlag": "miners-proof-shared"
+            }
+          ]
+        },
+        {
+          "id": "after-north",
+          "lines": [
+            "I taught children to trust a star somebody had hung for an emergency. It helped once. It has misled them since."
+          ],
+          "when": [
+            "boss:the-second-north"
+          ],
+          "choices": [
+            {
+              "id": "teach-both",
+              "text": "Teach both histories.",
+              "reply": "Then our charts will have margins for doubt.",
+              "setsFlag": "faction-sky-open",
+              "requires": [
+                "not:flag:faction-sky-beacon"
+              ]
+            },
+            {
+              "id": "keep-guide",
+              "text": "Keep the star as a warning beacon.",
+              "reply": "We will mark it as made by human hands.",
+              "setsFlag": "faction-sky-beacon",
+              "requires": [
+                "not:flag:faction-sky-open"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "The other north star follows the traveler. That should have been my first clue.",
+            "Find the astronomer’s cell before you trust the observatory’s compass."
+          ],
+          "choices": [
+            {
+              "id": "ask",
+              "text": "Who placed it there?",
+              "reply": "The sky did not. We will learn the rest together.",
+              "setsFlag": "sel-trust"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rohn",
+      "name": "Rohn Brack",
+      "occupation": "Missing quarry surveyor",
+      "region": "shelf",
+      "x": 386,
+      "z": 139,
+      "homeX": 401,
+      "homeZ": 134,
+      "appearance": "Dust gray coat with bright orange rescue marks; one boot tied with hoist cord.",
+      "schedule": {
+        "dawn": "surveying the shelf",
+        "day": "checking lift load marks",
+        "dusk": "reporting to the worker canteen",
+        "night": "annotating evacuation plans"
+      },
+      "dialogue": [
+        {
+          "id": "rescued",
+          "lines": [
+            "The lift was built for families. We turned it into a stone conveyor and called that progress."
+          ],
+          "when": [
+            "boss:the-counterking"
+          ],
+          "choices": [
+            {
+              "id": "workers",
+              "text": "Let the workers run the rescue lifts.",
+              "reply": "They will keep the safety tally where everyone can read it.",
+              "setsFlag": "faction-worker-lifts",
+              "requires": [
+                "not:flag:faction-council-lifts"
+              ]
+            },
+            {
+              "id": "council",
+              "text": "Give the lifts to the town council.",
+              "reply": "Then I will put a worker at every inspection.",
+              "setsFlag": "faction-council-lifts",
+              "requires": [
+                "not:flag:faction-worker-lifts"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "missing",
+          "lines": [
+            "If you hear tapping under the shaft, that is me. I can hold out, but the cages cannot."
+          ],
+          "when": [
+            "flag:rohn-found"
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "The first survey line runs toward the capital, not the ore vein. I am going down to see why."
+          ],
+          "choices": [
+            {
+              "id": "warn",
+              "text": "Take a second line.",
+              "reply": "I will tie it to the cage. Thank you.",
+              "setsFlag": "rohn-warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pella",
+      "name": "Pella Spoke",
+      "occupation": "Ferrum Spoke lift mechanic",
+      "region": "shelf",
+      "x": 378,
+      "z": 127,
+      "homeX": 370,
+      "homeZ": 120,
+      "appearance": "Copper braces over a navy mechanic suit; white chalk on every knuckle.",
+      "schedule": {
+        "dawn": "testing brake wheels",
+        "day": "repairing quarry cages",
+        "dusk": "eating with miners",
+        "night": "watching the lift from her window"
+      },
+      "dialogue": [
+        {
+          "id": "after-weight",
+          "lines": [
+            "The rescue cage runs again. Rohn says the old dial weighed passengers before ore. That stays in the manual."
+          ],
+          "when": [
+            "item:mass-dial"
+          ],
+          "choices": [
+            {
+              "id": "help",
+              "text": "Show me the chalk marks for the rescue route.",
+              "reply": "Take the marked route. It should stay safe for whoever comes next.",
+              "setsFlag": "pella-route",
+              "requires": [
+                "not:flag:pella-route"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "A cage rose empty last night. Rohn went down to look. Now every bell rings from below."
+          ],
+          "choices": [
+            {
+              "id": "help",
+              "text": "I will find him.",
+              "reply": "Take my chalk. The safe plates are marked with circles.",
+              "setsFlag": "pella-route"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "isca",
+      "name": "Isca Salt",
+      "occupation": "Silt Quay memory seller",
+      "region": "steppe",
+      "x": 352,
+      "z": -230,
+      "homeX": 360,
+      "homeZ": -221,
+      "appearance": "Layered pale shawls and a belt of carefully sealed salt tablets.",
+      "schedule": {
+        "dawn": "collecting new salt at the flats",
+        "day": "trading at the quay",
+        "dusk": "listening to old caravan songs",
+        "night": "keeping tablets dry beside the well"
+      },
+      "dialogue": [
+        {
+          "id": "after-erasure",
+          "lines": [
+            "A memory is not a title deed. Those names belong to the people who carried them."
+          ],
+          "when": [
+            "boss:the-erasure"
+          ],
+          "choices": [
+            {
+              "id": "return",
+              "text": "Return the caravan names to their families.",
+              "reply": "I know where their grandchildren wait.",
+              "setsFlag": "faction-protect-names",
+              "requires": [
+                "not:flag:faction-open-record"
+              ]
+            },
+            {
+              "id": "display",
+              "text": "Display the full archive with consent.",
+              "reply": "I will ask each family before I show a single tablet.",
+              "setsFlag": "faction-open-record",
+              "requires": [
+                "not:flag:faction-protect-names"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "The archive sells a clean story of a caravan that vanished. A clean story usually means somebody scrubbed it."
+          ],
+          "choices": [
+            {
+              "id": "trail",
+              "text": "Where is its last trace?",
+              "reply": "Find the hollow where footsteps sing.",
+              "setsFlag": "isca-route"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vessa",
+      "name": "Vessa Wren",
+      "occupation": "Kite maker and rescue pilot",
+      "region": "reach",
+      "x": 5,
+      "z": -405,
+      "homeX": -3,
+      "homeZ": -412,
+      "appearance": "Amber flight hood, patched blue sail cloak and fingerless rope gloves.",
+      "schedule": {
+        "dawn": "testing wind ribbons",
+        "day": "teaching kite launches",
+        "dusk": "scanning the cliff for missing pilots",
+        "night": "mending sails by lamplight"
+      },
+      "dialogue": [
+        {
+          "id": "after-loom",
+          "lines": [
+            "The coast can carry people again. I want a station built for whoever comes next, not a monument to those we lost."
+          ],
+          "when": [
+            "boss:the-unmoored"
+          ],
+          "choices": [
+            {
+              "id": "open",
+              "text": "Open the rescue routes to everyone.",
+              "reply": "Then the maps go in every wayhouse.",
+              "setsFlag": "faction-open-routes",
+              "requires": [
+                "not:flag:faction-pilot-routes"
+              ]
+            },
+            {
+              "id": "trained",
+              "text": "Train local pilots to keep the routes safe.",
+              "reply": "I will teach without charging them for the sky.",
+              "setsFlag": "faction-pilot-routes",
+              "requires": [
+                "not:flag:faction-open-routes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "My mentor’s kite is above the Loom, but the wind below it is dead.",
+            "Bring the lower shutters back and you can reach the spindle."
+          ],
+          "choices": [
+            {
+              "id": "go",
+              "text": "I will look for them.",
+              "reply": "Take a line. It is a promise, not a leash.",
+              "setsFlag": "vessa-route"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eiren",
+      "name": "Eiren of the Crown",
+      "occupation": "Last civic lamplighter",
+      "region": "crown",
+      "x": -269,
+      "z": -228,
+      "homeX": -282,
+      "homeZ": -236,
+      "appearance": "A lantern frame worn as a pack; one navy glove bright with copper dust.",
+      "schedule": {
+        "dawn": "lighting the public stair",
+        "day": "walking the silent market",
+        "dusk": "checking all six civic lamps",
+        "night": "guarding the engine entrance"
+      },
+      "dialogue": [
+        {
+          "id": "after-engine",
+          "lines": [
+            "The lamps came on one by one. None were ordered to.",
+            "The Crown has a morning now. It will have disagreements too."
+          ],
+          "when": [
+            "boss:the-hush-regent"
+          ]
+        },
+        {
+          "id": "at-engine",
+          "lines": [
+            "The emergency was real. The centuries of silence were a choice no one asked us to renew.",
+            "If you have the six instruments, the engine will hear more than the Regent."
+          ],
+          "when": [
+            "item:concord-crest"
+          ]
+        },
+        {
+          "id": "first",
+          "lines": [
+            "A city can survive a night. It cannot survive a night that refuses to end."
+          ],
+          "choices": [
+            {
+              "id": "promise",
+              "text": "I will find the engine.",
+              "reply": "Then I will keep one lamp for your return.",
+              "setsFlag": "eiren-trust"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "quests": [
+    {
+      "id": "first-thread",
+      "title": "The River Under Harthwick",
+      "kind": "main",
+      "act": 1,
+      "region": "hearth",
+      "introduction": "Nera’s tuning gauntlet answers a bell beneath her home. Mara sends her to the dry spillway before another terrace fails.",
+      "discovery": "Speak to Mara or follow the bell at dusk.",
+      "stages": [
+        {
+          "id": "leave-hearth",
+          "text": "Sound the buried bell west of Harthwick.",
+          "journal": "Mara says to stand by the bellpost and press R to use Pulse. Listen for the channel beneath it.",
+          "completion": {
+            "type": "set-flag",
+            "target": "tutorial:pulse"
+          }
+        },
+        {
+          "id": "enter-sluice",
+          "text": "Follow the old water line into Tidemark Sluice.",
+          "journal": "The bell’s answer points west beneath the terraces.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "tidemark-sluice"
+          }
+        },
+        {
+          "id": "hear-the-gauges",
+          "text": "Find what the public gauge concealed.",
+          "journal": "The oldest flood mark is lower than the newest; the pipes may explain why.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "sluice-gauges"
+          }
+        },
+        {
+          "id": "restore-water",
+          "text": "Open both paths through the Sluice.",
+          "journal": "The refuge channel should receive water before the council canal.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-dry-keeper"
+          }
+        }
+      ],
+      "reward": {
+        "ability": "flow",
+        "flag": "act-one-complete"
+      }
+    },
+    {
+      "id": "roads-of-air",
+      "title": "A Line for the Lost",
+      "kind": "main",
+      "act": 2,
+      "region": "reach",
+      "introduction": "The dry wind around Wren Station strands a rescue pilot above the cliffs.",
+      "discovery": "Watch the stationary kites at Wren Station or speak with Vessa.",
+      "requires": [
+        "ability:flow"
+      ],
+      "stages": [
+        {
+          "id": "find-wren",
+          "text": "Reach the kite station on the western coast.",
+          "journal": "Vessa’s signal ribbons point toward the Loom.",
+          "completion": {
+            "type": "enter-region",
+            "target": "reach"
+          }
+        },
+        {
+          "id": "enter-loom",
+          "text": "Find the stranded pilot above the windless cliff.",
+          "journal": "The lower shutters can breathe again if the old water feed turns.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "gale-loom"
+          }
+        },
+        {
+          "id": "unmoor",
+          "text": "Release the held storm without losing the rescue route.",
+          "journal": "The central spindle must be made safe for people, not just kites.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-unmoored"
+          }
+        }
+      ],
+      "reward": {
+        "ability": "lift",
+        "flag": "sky-route-open"
+      }
+    },
+    {
+      "id": "names-in-salt",
+      "title": "The Map That Was Erased",
+      "kind": "main",
+      "act": 2,
+      "region": "steppe",
+      "introduction": "Imri follows the uphill river into a salt archive that sells a lie about a missing caravan.",
+      "discovery": "Hear Isca’s caravan song or inspect the singing footprints in Salt Hymn Hollow.",
+      "requires": [
+        "ability:flow"
+      ],
+      "stages": [
+        {
+          "id": "find-footsteps",
+          "text": "Trace the caravan’s route through Sableglass.",
+          "journal": "The salt remembers footsteps that the map omits.",
+          "completion": {
+            "type": "enter-region",
+            "target": "steppe"
+          }
+        },
+        {
+          "id": "enter-archive",
+          "text": "Compare the two archive catalogs.",
+          "journal": "Wake and Hush record different roads, but neither need be false.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "salt-archive"
+          }
+        },
+        {
+          "id": "restore-record",
+          "text": "Defeat the force erasing living names.",
+          "journal": "The record belongs to the people who carried it.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-erasure"
+          }
+        }
+      ],
+      "reward": {
+        "ability": "witness",
+        "flag": "caravan-truth"
+      }
+    },
+    {
+      "id": "sixth-seat",
+      "title": "The Seat Beneath the Roots",
+      "kind": "main",
+      "act": 3,
+      "region": "fen",
+      "introduction": "Oya asks Nera to hear the fen’s returned people before the Root Parliament votes on them.",
+      "discovery": "Listen to Oya at Brackenloft or read names at the drowned census hut.",
+      "requires": [
+        "ability:witness"
+      ],
+      "stages": [
+        {
+          "id": "hear-oya",
+          "text": "Meet the returned in Brackenloft.",
+          "journal": "They remember years the public census cannot account for.",
+          "completion": {
+            "type": "enter-region",
+            "target": "fen"
+          }
+        },
+        {
+          "id": "enter-parliament",
+          "text": "Take their account to the living chamber.",
+          "journal": "The sixth seat is buried below the assembly floor.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "root-parliament"
+          }
+        },
+        {
+          "id": "win-hearing",
+          "text": "Give the buried electorate a hearing.",
+          "journal": "The roots need to join without one voice mastering another.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-first-speaker"
+          }
+        }
+      ],
+      "reward": {
+        "itemId": "graft-hook",
+        "flag": "returned-heard"
+      }
+    },
+    {
+      "id": "weight-of-one",
+      "title": "The Measure of a Life",
+      "kind": "main",
+      "act": 4,
+      "region": "shelf",
+      "introduction": "A rescue cage rises empty from the Weight House. Rohn is still below.",
+      "discovery": "Hear Pella’s night bell in Ferrum Spoke or inspect the unmanned quarry lift.",
+      "requires": [
+        "ability:lift"
+      ],
+      "stages": [
+        {
+          "id": "find-lift",
+          "text": "Reach the Riven Shelf hoists.",
+          "journal": "The old tally weighs people where the new tally counts only ore.",
+          "completion": {
+            "type": "enter-region",
+            "target": "shelf"
+          }
+        },
+        {
+          "id": "enter-weight-house",
+          "text": "Follow Rohn’s safety marks into the shaft.",
+          "journal": "Use the balance of three cages to descend.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "weight-house"
+          }
+        },
+        {
+          "id": "bring-rohn-home",
+          "text": "Restore the original evacuation cage.",
+          "journal": "The Counterking is obeying an order long past its use.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-counterking"
+          }
+        }
+      ],
+      "reward": {
+        "itemId": "mass-dial",
+        "flag": "evacuation-lifts-restored"
+      }
+    },
+    {
+      "id": "two-norths",
+      "title": "The Sky That Followed Us",
+      "kind": "main",
+      "act": 5,
+      "region": "scar",
+      "introduction": "Two north stars now point to two incompatible futures for the old capital.",
+      "discovery": "Compare the monastery compass with the shadow at Glass Storm Cairn.",
+      "requires": [
+        "ability:witness",
+        "item:mass-dial"
+      ],
+      "stages": [
+        {
+          "id": "meet-sel",
+          "text": "Read the sky from Keel Monastery.",
+          "journal": "Sel says one star follows travelers. The other keeps its place.",
+          "completion": {
+            "type": "enter-region",
+            "target": "scar"
+          }
+        },
+        {
+          "id": "enter-meridian",
+          "text": "Find who placed the second star.",
+          "journal": "The observatory’s missing monk kept measurements in a hidden cell.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "meridian-observatory"
+          }
+        },
+        {
+          "id": "restore-bearing",
+          "text": "Turn both bearings toward the Hollow Crown.",
+          "journal": "The emergency guide must be named for what it was.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-second-north"
+          }
+        }
+      ],
+      "reward": {
+        "itemId": "concord-crest",
+        "flag": "true-bearing"
+      }
+    },
+    {
+      "id": "the-unfinished-vote",
+      "title": "The Morning Owed",
+      "kind": "main",
+      "act": 6,
+      "region": "crown",
+      "introduction": "Nera discovers that Vesper Crown was held between two choices so its citizens could survive a past catastrophe. The Regent still enforces that emergency order.",
+      "discovery": "Follow the second north to the capital, then listen to Eiren’s six lamps.",
+      "requires": [
+        "ability:flow",
+        "ability:lift",
+        "ability:witness",
+        "item:graft-hook",
+        "item:mass-dial",
+        "item:concord-crest"
+      ],
+      "stages": [
+        {
+          "id": "reach-crown",
+          "text": "Walk into the city that never completed its morning.",
+          "journal": "The old civic lamps are a route, not a royal procession.",
+          "completion": {
+            "type": "enter-region",
+            "target": "crown"
+          }
+        },
+        {
+          "id": "enter-engine",
+          "text": "Bring the six regional instruments below the city.",
+          "journal": "Each instrument was made to carry a choice, never to make one.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "hush-engine"
+          }
+        },
+        {
+          "id": "release-city",
+          "text": "End the Regent’s held command.",
+          "journal": "The final choice should belong to the people who must live with it.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-hush-regent"
+          }
+        },
+        {
+          "id": "answer-question",
+          "text": "Choose how the city records its future.",
+          "journal": "The Crown owes its citizens the whole question.",
+          "completion": {
+            "type": "set-flag",
+            "target": "ending-decided"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "campaign-complete"
+      }
+    },
+    {
+      "id": "keepers-refuge",
+      "title": "The People Below the Chalk",
+      "kind": "mystery",
+      "region": "hearth",
+      "introduction": "The waterkeeper’s note names a shelter omitted from public maps.",
+      "discovery": "A bell rings below the collapsed post at dusk.",
+      "stages": [
+        {
+          "id": "find-bell",
+          "text": "Open the covered keeper stair.",
+          "journal": "The dry bell answers a second bell below ground.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "collapsed-bellpost"
+          }
+        },
+        {
+          "id": "read-note",
+          "text": "Find the waterkeeper’s account.",
+          "journal": "The refuge was occupied when the council sealed it.",
+          "completion": {
+            "type": "obtain-item",
+            "target": "waterkeeper-note"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "refuge-named"
+      }
+    },
+    {
+      "id": "moth-road",
+      "title": "Against the Wind",
+      "kind": "exploration",
+      "region": "vale",
+      "introduction": "Copper moths fly against a wind strong enough to ground kites.",
+      "discovery": "Watch the moths at dusk west of Rillcross.",
+      "stages": [
+        {
+          "id": "find-den",
+          "text": "Follow the moths rather than the toll road.",
+          "journal": "Their flight points to a hill with a concealed door.",
+          "completion": {
+            "type": "interact",
+            "target": "copper-moth-den"
+          }
+        },
+        {
+          "id": "show-tavi",
+          "text": "Share the route with Tavi.",
+          "journal": "A route is safer when another courier knows it.",
+          "completion": {
+            "type": "set-flag",
+            "target": "moth-route-shared"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "moth-route-known"
+      }
+    },
+    {
+      "id": "toll-accounts",
+      "title": "The Road’s Old Debt",
+      "kind": "regional",
+      "region": "vale",
+      "introduction": "The Dry Toll Arch charged people for a moving road.",
+      "discovery": "Read the tally beneath the arch or speak to Sava.",
+      "requires": [
+        "ability:witness"
+      ],
+      "stages": [
+        {
+          "id": "read-ledger",
+          "text": "Find whose journeys the ledger omitted.",
+          "journal": "The numbers are names recorded as loads.",
+          "completion": {
+            "type": "interact",
+            "target": "dry-toll-arch"
+          }
+        },
+        {
+          "id": "decide-toll",
+          "text": "Tell Sava what the ledger means.",
+          "journal": "The road can be made common or the old debt displayed for all to judge.",
+          "completion": {
+            "type": "set-flag",
+            "target": "toll-debt-cleared"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "toll-debt-cleared"
+      }
+    },
+    {
+      "id": "returned-record",
+      "title": "Names Under Water",
+      "kind": "regional",
+      "region": "fen",
+      "introduction": "Oya asks for a record that the fen cannot wash away.",
+      "discovery": "Read the silt-covered census hut.",
+      "requires": [
+        "ability:witness"
+      ],
+      "stages": [
+        {
+          "id": "read-census",
+          "text": "Rebuild the missing household entry.",
+          "journal": "There were six seats; the public roll names five.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "drowned-census-hut"
+          }
+        },
+        {
+          "id": "take-ballot",
+          "text": "Bring the hidden ballot into daylight.",
+          "journal": "The returned must be allowed to speak for themselves.",
+          "completion": {
+            "type": "obtain-item",
+            "target": "sixth-ballot"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "sixth-vote-found"
+      }
+    },
+    {
+      "id": "root-bridge",
+      "title": "A Bridge for Two",
+      "kind": "character",
+      "region": "fen",
+      "introduction": "Bren’s two roots fight over a bridge the whole village needs.",
+      "discovery": "Find Bren at the lower walkway.",
+      "requires": [
+        "item:graft-hook"
+      ],
+      "stages": [
+        {
+          "id": "meet-bren",
+          "text": "Hear why each root bends away.",
+          "journal": "Bren says one root has always been called the problem.",
+          "completion": {
+            "type": "set-flag",
+            "target": "bren-route"
+          }
+        },
+        {
+          "id": "join-roots",
+          "text": "Restore the low walkway.",
+          "journal": "Graft a shared span that does not sever either root.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "reed-prison"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "low-bridge-restored"
+      }
+    },
+    {
+      "id": "rescue-surveyor",
+      "title": "The Empty Cage",
+      "kind": "character",
+      "region": "shelf",
+      "introduction": "Pella heard Rohn tapping from below the quarry.",
+      "discovery": "Speak to Pella or follow the night bell.",
+      "stages": [
+        {
+          "id": "promise-pella",
+          "text": "Take Pella’s chalk marks.",
+          "journal": "The circle marks indicate plates that can bear a rescue load.",
+          "completion": {
+            "type": "set-flag",
+            "target": "pella-route"
+          }
+        },
+        {
+          "id": "open-house",
+          "text": "Descend past the unbalanced cages.",
+          "journal": "Rohn followed a line drawn toward the capital.",
+          "completion": {
+            "type": "enter-dungeon",
+            "target": "weight-house"
+          }
+        },
+        {
+          "id": "rescue-rohn",
+          "text": "Bring Rohn up the original evacuation lift.",
+          "journal": "The lift was made for people before stone.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-counterking"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "rohn-rescued"
+      }
+    },
+    {
+      "id": "miners-echo",
+      "title": "A Hammer Before the Blow",
+      "kind": "mystery",
+      "region": "scar",
+      "introduction": "The Echo Mine answers a strike before it happens.",
+      "discovery": "Listen at the mine mouth when the wind drops.",
+      "stages": [
+        {
+          "id": "enter-mine",
+          "text": "Find the trapped miners by timing the echo.",
+          "journal": "The answer marks a safe lift shaft.",
+          "completion": {
+            "type": "interact",
+            "target": "echo-mine"
+          }
+        },
+        {
+          "id": "share-proof",
+          "text": "Tell Sel what the timing implies.",
+          "journal": "A sky that remembers tomorrow may have been made for evacuation.",
+          "completion": {
+            "type": "set-flag",
+            "target": "miners-proof-shared"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "miners-home"
+      }
+    },
+    {
+      "id": "caravan-names",
+      "title": "What the Caravan Kept",
+      "kind": "mystery",
+      "region": "steppe",
+      "introduction": "The lost caravan left a rhythm instead of a list of names.",
+      "discovery": "Follow the singing steps at Salt Hymn Hollow.",
+      "stages": [
+        {
+          "id": "follow-steps",
+          "text": "Cross the hollow on the old walking rhythm.",
+          "journal": "A wrong note conceals a safe stone rather than punishing the traveler.",
+          "completion": {
+            "type": "interact",
+            "target": "salt-hymn-hollow"
+          }
+        },
+        {
+          "id": "find-map",
+          "text": "Recover the caravan’s self-drawn road.",
+          "journal": "The map is a route, not a claim on the people who took it.",
+          "completion": {
+            "type": "obtain-item",
+            "target": "caravan-map"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "caravan-route-known"
+      }
+    },
+    {
+      "id": "kite-promise",
+      "title": "A Tether Home",
+      "kind": "character",
+      "region": "reach",
+      "introduction": "Vessa’s mentor vanished after launching a rescue kite.",
+      "discovery": "Find the kite nursery below Wren Station.",
+      "stages": [
+        {
+          "id": "find-thread",
+          "text": "Repair the tether at the nursery.",
+          "journal": "A line holds only if both ends remain anchored.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "kite-nursery"
+          }
+        },
+        {
+          "id": "open-loom",
+          "text": "Restore the rescue current.",
+          "journal": "The Loom’s lower shutters feed the lift.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "loom-shutters"
+          }
+        },
+        {
+          "id": "return-pilot",
+          "text": "Bring the pilot back to Wren Station.",
+          "journal": "The station needs a route for the next person as much as for this one.",
+          "completion": {
+            "type": "defeat-boss",
+            "target": "the-unmoored"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "pilot-returned"
+      }
+    },
+    {
+      "id": "six-lamps",
+      "title": "The Last Lamplighter",
+      "kind": "secret",
+      "region": "crown",
+      "introduction": "One lamp lights itself before each false dawn.",
+      "discovery": "Follow the glowing lamplighter marks without a quest marker.",
+      "stages": [
+        {
+          "id": "find-lamp",
+          "text": "Follow Eiren’s route in Hush.",
+          "journal": "The six civic lamps form a question mark from above.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "last-lamplighter"
+          }
+        },
+        {
+          "id": "light-market",
+          "text": "Return a citizen’s name to the silent market.",
+          "journal": "A public lamp should light a public record.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "silent-market"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "six-lamps-lit"
+      }
+    },
+    {
+      "id": "original-question",
+      "title": "The Question They Buried",
+      "kind": "secret",
+      "region": "crown",
+      "introduction": "A council seal lies under black paving beyond the official route.",
+      "discovery": "A hidden ledger in the Silent Market points toward the Buried Council Vault.",
+      "requires": [
+        "item:graft-hook",
+        "item:mass-dial",
+        "item:concord-crest"
+      ],
+      "stages": [
+        {
+          "id": "open-vault",
+          "text": "Open the council’s alternate record.",
+          "journal": "All six instruments point to the words cut from the public vote.",
+          "completion": {
+            "type": "solve-puzzle",
+            "target": "buried-council-vault"
+          }
+        },
+        {
+          "id": "read-question",
+          "text": "Read the citizen record before facing the Engine.",
+          "journal": "The city was supposed to be asked again.",
+          "completion": {
+            "type": "obtain-item",
+            "target": "citizen-record"
+          }
+        }
+      ],
+      "reward": {
+        "flag": "original-question-known"
+      }
+    }
+  ],
+  "dungeons": [
+    {
+      "id": "tidemark-sluice",
+      "title": "Tidemark Sluice",
+      "region": "hearth",
+      "entrance": {
+        "x": -105,
+        "z": -30
+      },
+      "prerequisite": [],
+      "rewardAbility": "flow",
+      "musicCue": "sluice-copper-choir",
+      "intro": "The terraces drink from a river that no longer reaches them. Nera hears a second current ticking behind the stone.",
+      "architecture": "Copper spillways loop around a central dry well; an older, hand-carved channel runs against the official flow.",
+      "rooms": [
+        {
+          "id": "sluice-mouth",
+          "name": "The Dry Lip",
+          "x": 0,
+          "z": 0,
+          "y": 0,
+          "kind": "hub",
+          "description": "A carved flood gauge marks two incompatible high-water lines."
+        },
+        {
+          "id": "gauge-house",
+          "name": "Gauge House",
+          "x": 12,
+          "z": 0,
+          "y": 2,
+          "kind": "puzzle",
+          "description": "Three copper floats can be heard through the wall; their pipes return to the well.",
+          "puzzleId": "sluice-gauges"
+        },
+        {
+          "id": "silt-gallery",
+          "name": "Silt Gallery",
+          "x": 21,
+          "z": -11,
+          "y": -3,
+          "kind": "combat",
+          "description": "Riverglass grazers pick through debris left by the last managed flood.",
+          "enemyArchetypes": [
+            "thread-rat",
+            "gate-eel"
+          ]
+        },
+        {
+          "id": "well",
+          "name": "The Listening Well",
+          "x": 10,
+          "z": -22,
+          "y": -8,
+          "kind": "hub",
+          "description": "Every channel is visible from this shaft, including one that climbs uphill.",
+          "enemyArchetypes": [
+            "silt-eel"
+          ]
+        },
+        {
+          "id": "underflow",
+          "name": "Underflow",
+          "x": -4,
+          "z": -30,
+          "y": -12,
+          "kind": "puzzle",
+          "description": "A concealed race carries water beneath the dry public canal.",
+          "puzzleId": "sluice-underflow"
+        },
+        {
+          "id": "keeper-cell",
+          "name": "Keeper Cell",
+          "x": -15,
+          "z": -22,
+          "y": -7,
+          "kind": "secret",
+          "description": "A waterkeeper hid her refusal to close the city gate."
+        },
+        {
+          "id": "wheel-loft",
+          "name": "Wheel Loft",
+          "x": -10,
+          "z": -9,
+          "y": 5,
+          "kind": "miniboss",
+          "description": "A rusted wheel circles a platform where the Gate Eel guards its nest."
+        },
+        {
+          "id": "crown-valve",
+          "name": "Crown Valve",
+          "x": -1,
+          "z": 10,
+          "y": 8,
+          "kind": "puzzle",
+          "description": "The valve can feed the terraces or an emergency refuge.",
+          "puzzleId": "sluice-crown"
+        },
+        {
+          "id": "cistern-heart",
+          "name": "Cistern Heart",
+          "x": 0,
+          "z": 23,
+          "y": -3,
+          "kind": "boss",
+          "description": "The enormous brass throat can flood and drain in one breath."
+        },
+        {
+          "id": "return-arch",
+          "name": "Return Arch",
+          "x": -18,
+          "z": 6,
+          "y": 0,
+          "kind": "reward",
+          "description": "Fresh water runs through the old hand-cut channel toward Harthwick."
+        }
+      ],
+      "links": [
+        {
+          "from": "sluice-mouth",
+          "to": "gauge-house"
+        },
+        {
+          "from": "gauge-house",
+          "to": "silt-gallery",
+          "requires": [
+            "puzzle:sluice-gauges"
+          ]
+        },
+        {
+          "from": "silt-gallery",
+          "to": "well"
+        },
+        {
+          "from": "well",
+          "to": "underflow"
+        },
+        {
+          "from": "underflow",
+          "to": "keeper-cell",
+          "requires": [
+            "puzzle:sluice-underflow"
+          ]
+        },
+        {
+          "from": "keeper-cell",
+          "to": "wheel-loft"
+        },
+        {
+          "from": "wheel-loft",
+          "to": "crown-valve"
+        },
+        {
+          "from": "crown-valve",
+          "to": "cistern-heart",
+          "requires": [
+            "puzzle:sluice-crown"
+          ]
+        },
+        {
+          "from": "cistern-heart",
+          "to": "return-arch"
+        },
+        {
+          "from": "wheel-loft",
+          "to": "sluice-mouth",
+          "requires": [
+            "puzzle:sluice-underflow"
+          ],
+          "shortcut": true
+        },
+        {
+          "from": "return-arch",
+          "to": "well",
+          "requires": [],
+          "shortcut": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "sluice-gauges",
+          "roomId": "gauge-house",
+          "title": "The Missing Flood",
+          "mechanic": "sluice",
+          "clue": "The oldest flood mark is below the newest. Follow the pipes, not the painted numbers.",
+          "steps": [
+            {
+              "target": "west-float",
+              "roomId": "sluice-mouth",
+              "verb": "pulse"
+            },
+            {
+              "target": "low-gate",
+              "verb": "interact"
+            },
+            {
+              "target": "east-float",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:sluice-gauges"
+        },
+        {
+          "id": "sluice-underflow",
+          "roomId": "underflow",
+          "title": "Water That Climbs",
+          "mechanic": "sluice",
+          "clue": "The keeper scratched arrows on the underside of the bridge.",
+          "steps": [
+            {
+              "target": "under-race",
+              "verb": "pulse"
+            },
+            {
+              "target": "return-sluice",
+              "verb": "interact"
+            },
+            {
+              "target": "well-wheel",
+              "roomId": "well",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:sluice-underflow"
+        },
+        {
+          "id": "sluice-crown",
+          "roomId": "crown-valve",
+          "title": "A River Has Two Banks",
+          "mechanic": "sluice",
+          "clue": "One path fed a city; the other kept people alive.",
+          "steps": [
+            {
+              "target": "refuge-gate",
+              "roomId": "wheel-loft",
+              "verb": "interact"
+            },
+            {
+              "target": "crown-valve",
+              "verb": "pulse"
+            },
+            {
+              "target": "terrace-gate",
+              "verb": "interact"
+            }
+          ],
+          "completionFlag": "puzzle:sluice-crown"
+        }
+      ],
+      "miniboss": {
+        "id": "gate-eel",
+        "roomId": "wheel-loft",
+        "archetype": "gate-eel",
+        "reveal": "Its spine is threaded with broken measuring wire; it strikes whenever the wheel stops."
+      },
+      "boss": {
+        "id": "the-dry-keeper",
+        "name": "The Dry Keeper",
+        "roomId": "cistern-heart",
+        "silhouette": "An empty diving suit held upright by looping copper pipes.",
+        "phases": [
+          {
+            "threshold": 1,
+            "telegraph": "A pipe coughs before each sweeping jet.",
+            "attacks": [
+              "fan-jet",
+              "hook-drag"
+            ],
+            "vulnerableTo": [
+              "pulse"
+            ]
+          },
+          {
+            "threshold": 0.66,
+            "telegraph": "The gauge glows as the floor begins to fill.",
+            "attacks": [
+              "flood-rise",
+              "current-lunge"
+            ],
+            "vulnerableTo": [
+              "sluice-gates",
+              "ranged"
+            ]
+          },
+          {
+            "threshold": 0.32,
+            "telegraph": "Both valves ring together; one is a false echo.",
+            "attacks": [
+              "double-jet",
+              "drain-vortex"
+            ],
+            "vulnerableTo": [
+              "pulse",
+              "open-refuge-gate"
+            ]
+          }
+        ],
+        "reward": "The Keeper dissolves into clean water. Nera learns Flow by guiding it toward both the town and the forgotten shelter."
+      },
+      "optionalRooms": [
+        "keeper-cell"
+      ]
+    },
+    {
+      "id": "gale-loom",
+      "title": "Gale Loom",
+      "region": "reach",
+      "entrance": {
+        "x": 20,
+        "z": -450
+      },
+      "prerequisite": [
+        "ability:flow"
+      ],
+      "rewardAbility": "lift",
+      "musicCue": "loom-kite-reeds",
+      "intro": "At Wren Station, children launch kites through an impossible lull. Their missing mentor is trapped above the cliffs.",
+      "architecture": "Hanging sail bridges, wind vanes and a central hollow spindle turn a weather station into an aerial instrument.",
+      "rooms": [
+        {
+          "id": "loom-dock",
+          "name": "Lower Anchorage",
+          "x": 0,
+          "z": 0,
+          "y": 0,
+          "kind": "hub",
+          "description": "A row of tethered rescue kites points toward the silent spindle."
+        },
+        {
+          "id": "windmouth",
+          "name": "Windmouth",
+          "x": 12,
+          "z": -5,
+          "y": 5,
+          "kind": "puzzle",
+          "description": "Shutters can route the sea gust into three different vertical wells.",
+          "puzzleId": "loom-shutters"
+        },
+        {
+          "id": "sailwalk",
+          "name": "Sailwalk",
+          "x": 24,
+          "z": -8,
+          "y": 13,
+          "kind": "combat",
+          "description": "Kite-cutters circle a narrow span that sways with the wind.",
+          "enemyArchetypes": [
+            "hookwing",
+            "reach-bowman"
+          ]
+        },
+        {
+          "id": "spindle",
+          "name": "Spindle Hollow",
+          "x": 20,
+          "z": 8,
+          "y": 20,
+          "kind": "hub",
+          "description": "The central drum shows every bridge above and below it.",
+          "enemyArchetypes": [
+            "static-wisp"
+          ]
+        },
+        {
+          "id": "weaver-nook",
+          "name": "Weaver Nook",
+          "x": 5,
+          "z": 13,
+          "y": 15,
+          "kind": "secret",
+          "description": "A rescued kite maker left a pattern for turning one dangerous gust into a lift."
+        },
+        {
+          "id": "crossdraft",
+          "name": "Crossdraft Balcony",
+          "x": 31,
+          "z": 17,
+          "y": 27,
+          "kind": "puzzle",
+          "description": "Two currents collide; the safe route is felt before it is seen.",
+          "puzzleId": "loom-crossdraft"
+        },
+        {
+          "id": "cutter-perch",
+          "name": "Cutter Perch",
+          "x": 42,
+          "z": 5,
+          "y": 31,
+          "kind": "miniboss",
+          "description": "The Hookwing Matriarch nests among torn signal flags."
+        },
+        {
+          "id": "upper-harness",
+          "name": "Upper Harness",
+          "x": 27,
+          "z": -5,
+          "y": 38,
+          "kind": "puzzle",
+          "description": "The loom can pull a rescue platform into the eye of the storm.",
+          "puzzleId": "loom-harness"
+        },
+        {
+          "id": "storm-eye",
+          "name": "Storm Eye",
+          "x": 14,
+          "z": -17,
+          "y": 47,
+          "kind": "boss",
+          "description": "An open arena circles the still center of a violent wind."
+        },
+        {
+          "id": "landing-net",
+          "name": "Landing Net",
+          "x": -2,
+          "z": -6,
+          "y": 20,
+          "kind": "reward",
+          "description": "The restored station can launch people safely across the reach."
+        }
+      ],
+      "links": [
+        {
+          "from": "loom-dock",
+          "to": "windmouth"
+        },
+        {
+          "from": "windmouth",
+          "to": "sailwalk",
+          "requires": [
+            "puzzle:loom-shutters"
+          ]
+        },
+        {
+          "from": "sailwalk",
+          "to": "spindle"
+        },
+        {
+          "from": "spindle",
+          "to": "weaver-nook"
+        },
+        {
+          "from": "spindle",
+          "to": "crossdraft"
+        },
+        {
+          "from": "crossdraft",
+          "to": "cutter-perch",
+          "requires": [
+            "puzzle:loom-crossdraft"
+          ]
+        },
+        {
+          "from": "cutter-perch",
+          "to": "upper-harness"
+        },
+        {
+          "from": "upper-harness",
+          "to": "storm-eye",
+          "requires": [
+            "puzzle:loom-harness"
+          ]
+        },
+        {
+          "from": "storm-eye",
+          "to": "landing-net"
+        },
+        {
+          "from": "landing-net",
+          "to": "loom-dock",
+          "requires": [],
+          "shortcut": true
+        },
+        {
+          "from": "weaver-nook",
+          "to": "crossdraft",
+          "requires": [
+            "puzzle:loom-shutters"
+          ],
+          "shortcut": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "loom-shutters",
+          "roomId": "windmouth",
+          "title": "Borrowed Wind",
+          "mechanic": "wind",
+          "clue": "The torn orange sail marks the current that lifts rather than cuts.",
+          "steps": [
+            {
+              "target": "sea-shutter",
+              "roomId": "loom-dock",
+              "verb": "flow"
+            },
+            {
+              "target": "orange-vane",
+              "verb": "pulse"
+            },
+            {
+              "target": "lift-shutter",
+              "verb": "interact"
+            }
+          ],
+          "completionFlag": "puzzle:loom-shutters"
+        },
+        {
+          "id": "loom-crossdraft",
+          "roomId": "crossdraft",
+          "title": "The Quiet Seam",
+          "mechanic": "wind",
+          "clue": "The two flags fall still for a heartbeat where the currents meet.",
+          "steps": [
+            {
+              "target": "north-vane",
+              "roomId": "spindle",
+              "verb": "pulse"
+            },
+            {
+              "target": "south-vane",
+              "verb": "pulse"
+            },
+            {
+              "target": "seam-tether",
+              "verb": "interact"
+            }
+          ],
+          "completionFlag": "puzzle:loom-crossdraft"
+        },
+        {
+          "id": "loom-harness",
+          "roomId": "upper-harness",
+          "title": "Rescue Pattern",
+          "mechanic": "wind",
+          "clue": "The weaver set three knots in a descending line.",
+          "steps": [
+            {
+              "target": "first-knot",
+              "roomId": "cutter-perch",
+              "verb": "interact"
+            },
+            {
+              "target": "third-knot",
+              "verb": "interact"
+            },
+            {
+              "target": "spindle-drum",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:loom-harness"
+        }
+      ],
+      "miniboss": {
+        "id": "hookwing-matriarch",
+        "roomId": "cutter-perch",
+        "archetype": "hookwing",
+        "reveal": "She protects a nest of human signal ribbons, not stolen treasure."
+      },
+      "boss": {
+        "id": "the-unmoored",
+        "name": "The Unmoored",
+        "roomId": "storm-eye",
+        "silhouette": "A giant hollow sail body with one stone anchor for a heart.",
+        "phases": [
+          {
+            "threshold": 1,
+            "telegraph": "Its sail gathers from the left before a slicing gust.",
+            "attacks": [
+              "sail-shear",
+              "anchor-drop"
+            ],
+            "vulnerableTo": [
+              "pulse",
+              "ranged"
+            ]
+          },
+          {
+            "threshold": 0.67,
+            "telegraph": "The eye briefly stops, then all loose objects rise.",
+            "attacks": [
+              "debris-lift",
+              "crosswind"
+            ],
+            "vulnerableTo": [
+              "shutters",
+              "flow"
+            ]
+          },
+          {
+            "threshold": 0.33,
+            "telegraph": "Its anchor drags sparks across the circular rail.",
+            "attacks": [
+              "anchor-orbit",
+              "storm-collapse"
+            ],
+            "vulnerableTo": [
+              "seam-tether",
+              "pulse"
+            ]
+          }
+        ],
+        "reward": "A gust lifts Nera without a rope. Lift turns the wind into a route home."
+      },
+      "optionalRooms": [
+        "weaver-nook"
+      ]
+    },
+    {
+      "id": "salt-archive",
+      "title": "Salt Archive",
+      "region": "steppe",
+      "entrance": {
+        "x": 400,
+        "z": -250
+      },
+      "prerequisite": [
+        "ability:flow"
+      ],
+      "rewardAbility": "witness",
+      "musicCue": "archive-glass-whisper",
+      "intro": "Silt Quay is selling memories as salt tablets. The record of a vanished caravan contradicts every official map.",
+      "architecture": "Layered salt galleries preserve sound in translucent walls; the central catalog belongs to two incompatible histories.",
+      "rooms": [
+        {
+          "id": "archive-stairs",
+          "name": "Sunken Steps",
+          "x": 0,
+          "z": 0,
+          "y": 0,
+          "kind": "hub",
+          "description": "Footprints under the salt run toward the entrance, then begin again."
+        },
+        {
+          "id": "reading-shelf",
+          "name": "Reading Shelf",
+          "x": 13,
+          "z": 0,
+          "y": -4,
+          "kind": "puzzle",
+          "description": "Three tablets disagree on the date of the same storm.",
+          "puzzleId": "archive-dates"
+        },
+        {
+          "id": "crystal-stacks",
+          "name": "Crystal Stacks",
+          "x": 22,
+          "z": 12,
+          "y": -6,
+          "kind": "combat",
+          "description": "Glass-backed archivists rise when a shelf is disturbed.",
+          "enemyArchetypes": [
+            "salt-darter",
+            "glass-singer",
+            "salt-guard"
+          ]
+        },
+        {
+          "id": "catalog",
+          "name": "Double Catalog",
+          "x": 12,
+          "z": 21,
+          "y": -10,
+          "kind": "hub",
+          "description": "Wake and Hush catalogs occupy the same room at different angles.",
+          "enemyArchetypes": [
+            "hush-wisp"
+          ]
+        },
+        {
+          "id": "caravan-cell",
+          "name": "Caravan Cell",
+          "x": -3,
+          "z": 18,
+          "y": -15,
+          "kind": "secret",
+          "description": "The missing caravan hid its own names to avoid conscription."
+        },
+        {
+          "id": "echo-bridge",
+          "name": "Echo Bridge",
+          "x": 28,
+          "z": 26,
+          "y": -16,
+          "kind": "puzzle",
+          "description": "A bridge exists only while an old footfall is being replayed.",
+          "puzzleId": "archive-footfall"
+        },
+        {
+          "id": "curator-den",
+          "name": "Curator Den",
+          "x": 36,
+          "z": 10,
+          "y": -20,
+          "kind": "miniboss",
+          "description": "The Brine Curator files living people by the names they once used."
+        },
+        {
+          "id": "sealed-index",
+          "name": "Sealed Index",
+          "x": 22,
+          "z": -2,
+          "y": -26,
+          "kind": "puzzle",
+          "description": "The true map was cut into two eras and filed as an error.",
+          "puzzleId": "archive-index"
+        },
+        {
+          "id": "memory-vault",
+          "name": "Memory Vault",
+          "x": 8,
+          "z": -13,
+          "y": -31,
+          "kind": "boss",
+          "description": "A ring of translucent records turns around a black, unwritten center."
+        },
+        {
+          "id": "west-exit",
+          "name": "West Exit",
+          "x": -8,
+          "z": -8,
+          "y": -10,
+          "kind": "reward",
+          "description": "A new road can be traced across the steppe using the unedited map."
+        }
+      ],
+      "links": [
+        {
+          "from": "archive-stairs",
+          "to": "reading-shelf"
+        },
+        {
+          "from": "reading-shelf",
+          "to": "crystal-stacks",
+          "requires": [
+            "puzzle:archive-dates"
+          ]
+        },
+        {
+          "from": "crystal-stacks",
+          "to": "catalog"
+        },
+        {
+          "from": "catalog",
+          "to": "caravan-cell"
+        },
+        {
+          "from": "catalog",
+          "to": "echo-bridge"
+        },
+        {
+          "from": "echo-bridge",
+          "to": "curator-den",
+          "requires": [
+            "puzzle:archive-footfall"
+          ]
+        },
+        {
+          "from": "curator-den",
+          "to": "sealed-index"
+        },
+        {
+          "from": "sealed-index",
+          "to": "memory-vault",
+          "requires": [
+            "puzzle:archive-index"
+          ]
+        },
+        {
+          "from": "memory-vault",
+          "to": "west-exit"
+        },
+        {
+          "from": "west-exit",
+          "to": "archive-stairs",
+          "requires": [],
+          "shortcut": true
+        },
+        {
+          "from": "caravan-cell",
+          "to": "sealed-index",
+          "requires": [
+            "puzzle:archive-footfall"
+          ],
+          "shortcut": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "archive-dates",
+          "roomId": "reading-shelf",
+          "title": "The Date That Was Removed",
+          "mechanic": "temporal",
+          "clue": "A scorch line crosses all three tablets; one was carved after the fire.",
+          "steps": [
+            {
+              "target": "burned-tablet",
+              "roomId": "archive-stairs",
+              "verb": "pulse"
+            },
+            {
+              "target": "new-tablet",
+              "verb": "interact"
+            },
+            {
+              "target": "date-wheel",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:archive-dates"
+        },
+        {
+          "id": "archive-footfall",
+          "roomId": "echo-bridge",
+          "title": "Borrowed Footsteps",
+          "mechanic": "temporal",
+          "clue": "The bridge remembers a caravan moving against the wind. Touch the recalled plate to hold that footfall in place.",
+          "steps": [
+            {
+              "target": "caravan-print",
+              "roomId": "catalog",
+              "verb": "pulse"
+            },
+            {
+              "target": "echo-plate",
+              "verb": "interact"
+            },
+            {
+              "target": "bridge-memory",
+              "verb": "interact"
+            }
+          ],
+          "completionFlag": "puzzle:archive-footfall"
+        },
+        {
+          "id": "archive-index",
+          "roomId": "sealed-index",
+          "title": "Two Truths",
+          "mechanic": "temporal",
+          "clue": "Neither half is a forgery; the road moved when the world was hushed. The index holds a fixed impression of each state.",
+          "steps": [
+            {
+              "target": "wake-map",
+              "roomId": "curator-den",
+              "verb": "interact"
+            },
+            {
+              "target": "hush-map",
+              "verb": "interact"
+            },
+            {
+              "target": "index-lens",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:archive-index"
+        }
+      ],
+      "miniboss": {
+        "id": "brine-curator",
+        "roomId": "curator-den",
+        "archetype": "brine-curator",
+        "reveal": "The Curator wears the names of those who survived by becoming anonymous."
+      },
+      "boss": {
+        "id": "the-erasure",
+        "name": "The Erasure",
+        "roomId": "memory-vault",
+        "silhouette": "A person-shaped absence with salt pages orbiting an empty head.",
+        "phases": [
+          {
+            "threshold": 1,
+            "telegraph": "A page turns toward the true position before an echo attacks.",
+            "attacks": [
+              "page-slice",
+              "false-double"
+            ],
+            "vulnerableTo": [
+              "pulse"
+            ]
+          },
+          {
+            "threshold": 0.67,
+            "telegraph": "Two floor maps separate and a bridge flickers between them.",
+            "attacks": [
+              "missing-floor",
+              "echo-rush"
+            ],
+            "vulnerableTo": [
+              "wake",
+              "hush"
+            ]
+          },
+          {
+            "threshold": 0.33,
+            "telegraph": "The names on the walls brighten in the order they were hidden.",
+            "attacks": [
+              "name-storm",
+              "salt-collapse"
+            ],
+            "vulnerableTo": [
+              "index-lens",
+              "pulse"
+            ]
+          }
+        ],
+        "reward": "Nera can Witness the last imprint held in stone, water, and living wood."
+      },
+      "optionalRooms": [
+        "caravan-cell"
+      ]
+    },
+    {
+      "id": "root-parliament",
+      "title": "Root Parliament",
+      "region": "fen",
+      "entrance": {
+        "x": -370,
+        "z": 290
+      },
+      "prerequisite": [
+        "ability:witness"
+      ],
+      "rewardItem": "graft-hook",
+      "musicCue": "root-low-council",
+      "intro": "The fen has begun returning people it once swallowed. Their new voices demand a hearing, not a cure.",
+      "architecture": "Living roots weave around an ancient voting chamber; graft points reroute bridges and open witness alcoves.",
+      "rooms": [
+        {
+          "id": "root-threshold",
+          "name": "Threshold of Knots",
+          "x": 0,
+          "z": 0,
+          "y": 0,
+          "kind": "hub",
+          "description": "Petitions are tied to roots instead of posted on a door."
+        },
+        {
+          "id": "first-vote",
+          "name": "First Vote",
+          "x": -12,
+          "z": 8,
+          "y": -3,
+          "kind": "puzzle",
+          "description": "A root bridge bends toward whichever voice is loudest.",
+          "puzzleId": "root-quorum"
+        },
+        {
+          "id": "seed-vault",
+          "name": "Seed Vault",
+          "x": -25,
+          "z": 12,
+          "y": -7,
+          "kind": "combat",
+          "description": "Briar jurors guard seeds labeled with human names.",
+          "enemyArchetypes": [
+            "root-borer",
+            "briar-guard",
+            "moss-ambusher"
+          ]
+        },
+        {
+          "id": "assembly",
+          "name": "Assembly Trunk",
+          "x": -12,
+          "z": 25,
+          "y": -12,
+          "kind": "hub",
+          "description": "Five galleries encircle a hollow tree where no chair faces outward.",
+          "enemyArchetypes": [
+            "hush-wisp"
+          ]
+        },
+        {
+          "id": "lost-seat",
+          "name": "The Empty Seat",
+          "x": 2,
+          "z": 28,
+          "y": -16,
+          "kind": "secret",
+          "description": "A sixth vote was cut out of the living floor."
+        },
+        {
+          "id": "graft-ways",
+          "name": "Graft Ways",
+          "x": -30,
+          "z": 33,
+          "y": -15,
+          "kind": "puzzle",
+          "description": "A bridge can join two roots without making either obey.",
+          "puzzleId": "root-graft"
+        },
+        {
+          "id": "briar-bench",
+          "name": "Briar Bench",
+          "x": -40,
+          "z": 20,
+          "y": -21,
+          "kind": "miniboss",
+          "description": "The Crowned Stag carries old voting bells in its antlers."
+        },
+        {
+          "id": "second-vote",
+          "name": "Second Vote",
+          "x": -28,
+          "z": 5,
+          "y": -27,
+          "kind": "puzzle",
+          "description": "The chamber hears those buried beneath it when Witness is used.",
+          "puzzleId": "root-hearing"
+        },
+        {
+          "id": "heartwood",
+          "name": "Heartwood",
+          "x": -11,
+          "z": -6,
+          "y": -31,
+          "kind": "boss",
+          "description": "The floor opens like a flower around a root-lined pit."
+        },
+        {
+          "id": "surface-path",
+          "name": "Surface Path",
+          "x": 5,
+          "z": -12,
+          "y": -5,
+          "kind": "reward",
+          "description": "A living bridge grows toward Brackenloft, wide enough for the returned."
+        }
+      ],
+      "links": [
+        {
+          "from": "root-threshold",
+          "to": "first-vote"
+        },
+        {
+          "from": "first-vote",
+          "to": "seed-vault",
+          "requires": [
+            "puzzle:root-quorum"
+          ]
+        },
+        {
+          "from": "seed-vault",
+          "to": "assembly"
+        },
+        {
+          "from": "assembly",
+          "to": "lost-seat"
+        },
+        {
+          "from": "assembly",
+          "to": "graft-ways"
+        },
+        {
+          "from": "graft-ways",
+          "to": "briar-bench",
+          "requires": [
+            "puzzle:root-graft"
+          ]
+        },
+        {
+          "from": "briar-bench",
+          "to": "second-vote"
+        },
+        {
+          "from": "second-vote",
+          "to": "heartwood",
+          "requires": [
+            "puzzle:root-hearing"
+          ]
+        },
+        {
+          "from": "heartwood",
+          "to": "surface-path"
+        },
+        {
+          "from": "surface-path",
+          "to": "root-threshold",
+          "requires": [],
+          "shortcut": true
+        },
+        {
+          "from": "lost-seat",
+          "to": "second-vote",
+          "requires": [
+            "puzzle:root-graft"
+          ],
+          "shortcut": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "root-quorum",
+          "roomId": "first-vote",
+          "title": "A Quorum of Two",
+          "mechanic": "root",
+          "clue": "A single shout bends the bridge away. Let the unheard root speak with it.",
+          "steps": [
+            {
+              "target": "old-petition",
+              "roomId": "root-threshold",
+              "verb": "witness"
+            },
+            {
+              "target": "north-root",
+              "verb": "pulse"
+            },
+            {
+              "target": "south-root",
+              "verb": "interact"
+            }
+          ],
+          "completionFlag": "puzzle:root-quorum"
+        },
+        {
+          "id": "root-graft",
+          "roomId": "graft-ways",
+          "title": "Neither Must Break",
+          "mechanic": "root",
+          "clue": "The bridge needs a join, not a new master.",
+          "steps": [
+            {
+              "target": "broken-graft",
+              "roomId": "assembly",
+              "verb": "witness"
+            },
+            {
+              "target": "living-root",
+              "verb": "interact"
+            },
+            {
+              "target": "bridge-root",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:root-graft"
+        },
+        {
+          "id": "root-hearing",
+          "roomId": "second-vote",
+          "title": "The Buried Ballot",
+          "mechanic": "root",
+          "clue": "Each bell answers a name carved beneath the floor.",
+          "steps": [
+            {
+              "target": "buried-seat",
+              "roomId": "briar-bench",
+              "verb": "witness"
+            },
+            {
+              "target": "third-bell",
+              "verb": "pulse"
+            },
+            {
+              "target": "fifth-bell",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:root-hearing"
+        }
+      ],
+      "miniboss": {
+        "id": "crowned-stag",
+        "roomId": "briar-bench",
+        "archetype": "crowned-stag",
+        "reveal": "Its antlers bear the bells of an electorate erased from the public ledger."
+      },
+      "boss": {
+        "id": "the-first-speaker",
+        "name": "The First Speaker",
+        "roomId": "heartwood",
+        "silhouette": "A towering woven figure whose many mouths open along one arm.",
+        "phases": [
+          {
+            "threshold": 1,
+            "telegraph": "Roots tighten beneath the next striking hand.",
+            "attacks": [
+              "root-sweep",
+              "seed-burst"
+            ],
+            "vulnerableTo": [
+              "witness",
+              "pulse"
+            ]
+          },
+          {
+            "threshold": 0.67,
+            "telegraph": "One gallery goes dark as the floor reweaves.",
+            "attacks": [
+              "bridge-break",
+              "briar-ring"
+            ],
+            "vulnerableTo": [
+              "living-root",
+              "pulse"
+            ]
+          },
+          {
+            "threshold": 0.33,
+            "telegraph": "Several voices disagree before the Speaker lunges.",
+            "attacks": [
+              "discord-lunge",
+              "root-storm"
+            ],
+            "vulnerableTo": [
+              "buried-seat",
+              "witness"
+            ]
+          }
+        ],
+        "reward": "The Speaker yields a Graft Hook, a living tool that joins severed pathways without silencing their roots."
+      },
+      "optionalRooms": [
+        "lost-seat"
+      ]
+    },
+    {
+      "id": "weight-house",
+      "title": "Weight House",
+      "region": "shelf",
+      "entrance": {
+        "x": 430,
+        "z": 160
+      },
+      "prerequisite": [
+        "ability:lift"
+      ],
+      "rewardItem": "mass-dial",
+      "musicCue": "weight-iron-breath",
+      "intro": "Quarry lifts move at night while the workers sleep. Ferrum Spoke wants its missing surveyor found before another platform falls.",
+      "architecture": "A vertical network of counterweighted rooms rotates around an open quarry shaft; mass and route are inseparable.",
+      "rooms": [
+        {
+          "id": "weight-yard",
+          "name": "Weight Yard",
+          "x": 0,
+          "z": 0,
+          "y": 0,
+          "kind": "hub",
+          "description": "An empty passenger cage rises when a stone is removed."
+        },
+        {
+          "id": "balance-room",
+          "name": "Balance Room",
+          "x": 14,
+          "z": 4,
+          "y": 8,
+          "kind": "puzzle",
+          "description": "Three platforms share one chain, and the marked weight is a lie.",
+          "puzzleId": "weight-scale"
+        },
+        {
+          "id": "ore-chute",
+          "name": "Ore Chute",
+          "x": 23,
+          "z": 14,
+          "y": -4,
+          "kind": "combat",
+          "description": "Iron mites ride falling ore across the route.",
+          "enemyArchetypes": [
+            "iron-mule",
+            "thread-rat"
+          ]
+        },
+        {
+          "id": "main-shaft",
+          "name": "Main Shaft",
+          "x": 8,
+          "z": 24,
+          "y": -16,
+          "kind": "hub",
+          "description": "Every lift is visible around a deep shaft that has no bottom from here.",
+          "enemyArchetypes": [
+            "brass-warden"
+          ]
+        },
+        {
+          "id": "surveyor-niche",
+          "name": "Surveyor Niche",
+          "x": -8,
+          "z": 26,
+          "y": -20,
+          "kind": "secret",
+          "description": "A hidden log proves the quarry was an evacuation machine."
+        },
+        {
+          "id": "pendulum-hall",
+          "name": "Pendulum Hall",
+          "x": 20,
+          "z": 34,
+          "y": -24,
+          "kind": "puzzle",
+          "description": "The moving weights form a passage only when their swings oppose.",
+          "puzzleId": "weight-pendulum"
+        },
+        {
+          "id": "crusher-landing",
+          "name": "Crusher Landing",
+          "x": 37,
+          "z": 25,
+          "y": -34,
+          "kind": "miniboss",
+          "description": "The Iron Mule uses the chain as a weapon and refuses to leave the lift."
+        },
+        {
+          "id": "dial-foundry",
+          "name": "Dial Foundry",
+          "x": 24,
+          "z": 8,
+          "y": -40,
+          "kind": "puzzle",
+          "description": "A portable mass dial waits beneath a false stone mould.",
+          "puzzleId": "weight-dial"
+        },
+        {
+          "id": "deep-platform",
+          "name": "Deep Platform",
+          "x": 5,
+          "z": -5,
+          "y": -48,
+          "kind": "boss",
+          "description": "The arena drops in steps as the old hoist unwinds."
+        },
+        {
+          "id": "rescue-cage",
+          "name": "Rescue Cage",
+          "x": -10,
+          "z": -7,
+          "y": -20,
+          "kind": "reward",
+          "description": "The missing surveyor rides up with the restored evacuation cage."
+        }
+      ],
+      "links": [
+        {
+          "from": "weight-yard",
+          "to": "balance-room"
+        },
+        {
+          "from": "balance-room",
+          "to": "ore-chute",
+          "requires": [
+            "puzzle:weight-scale"
+          ]
+        },
+        {
+          "from": "ore-chute",
+          "to": "main-shaft"
+        },
+        {
+          "from": "main-shaft",
+          "to": "surveyor-niche"
+        },
+        {
+          "from": "main-shaft",
+          "to": "pendulum-hall"
+        },
+        {
+          "from": "pendulum-hall",
+          "to": "crusher-landing",
+          "requires": [
+            "puzzle:weight-pendulum"
+          ]
+        },
+        {
+          "from": "crusher-landing",
+          "to": "dial-foundry"
+        },
+        {
+          "from": "dial-foundry",
+          "to": "deep-platform",
+          "requires": [
+            "puzzle:weight-dial"
+          ]
+        },
+        {
+          "from": "deep-platform",
+          "to": "rescue-cage"
+        },
+        {
+          "from": "rescue-cage",
+          "to": "weight-yard",
+          "requires": [],
+          "shortcut": true
+        },
+        {
+          "from": "surveyor-niche",
+          "to": "dial-foundry",
+          "requires": [
+            "puzzle:weight-pendulum"
+          ],
+          "shortcut": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "weight-scale",
+          "roomId": "balance-room",
+          "title": "A Missing Passenger",
+          "mechanic": "gravity",
+          "clue": "The worker tally counts four bodies. The official scale counts only three.",
+          "steps": [
+            {
+              "target": "worker-tally",
+              "roomId": "weight-yard",
+              "verb": "pulse"
+            },
+            {
+              "target": "unmarked-weight",
+              "verb": "interact"
+            },
+            {
+              "target": "cage-brake",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:weight-scale"
+        },
+        {
+          "id": "weight-pendulum",
+          "roomId": "pendulum-hall",
+          "title": "Against the Swing",
+          "mechanic": "gravity",
+          "clue": "The scratched rail shows where the two shadows meet.",
+          "steps": [
+            {
+              "target": "left-weight",
+              "roomId": "main-shaft",
+              "verb": "lift"
+            },
+            {
+              "target": "right-brake",
+              "verb": "interact"
+            },
+            {
+              "target": "swing-latch",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:weight-pendulum"
+        },
+        {
+          "id": "weight-dial",
+          "roomId": "dial-foundry",
+          "title": "An Honest Measure",
+          "mechanic": "gravity",
+          "clue": "A dial calibrated to people must never be set by ore alone.",
+          "steps": [
+            {
+              "target": "rescue-record",
+              "roomId": "crusher-landing",
+              "verb": "pulse"
+            },
+            {
+              "target": "mass-dial",
+              "verb": "interact"
+            },
+            {
+              "target": "lift-platform",
+              "verb": "lift"
+            }
+          ],
+          "completionFlag": "puzzle:weight-dial"
+        }
+      ],
+      "miniboss": {
+        "id": "iron-mule",
+        "roomId": "crusher-landing",
+        "archetype": "iron-mule",
+        "reveal": "The machine follows an evacuation order centuries after the people left."
+      },
+      "boss": {
+        "id": "the-counterking",
+        "name": "The Counterking",
+        "roomId": "deep-platform",
+        "silhouette": "A crown of swinging stone blocks above a narrow armored body.",
+        "phases": [
+          {
+            "threshold": 1,
+            "telegraph": "Its largest block rises before the platform drops.",
+            "attacks": [
+              "block-drop",
+              "chain-swipe"
+            ],
+            "vulnerableTo": [
+              "lift",
+              "pulse"
+            ]
+          },
+          {
+            "threshold": 0.66,
+            "telegraph": "Two cages trade height around the shaft.",
+            "attacks": [
+              "cage-crush",
+              "gravity-tilt"
+            ],
+            "vulnerableTo": [
+              "brake",
+              "lift"
+            ]
+          },
+          {
+            "threshold": 0.33,
+            "telegraph": "The crown splits into three separately balanced weights.",
+            "attacks": [
+              "triple-fall",
+              "shaft-draw"
+            ],
+            "vulnerableTo": [
+              "counterweight",
+              "lift"
+            ]
+          }
+        ],
+        "reward": "The Mass Dial survives the collapse; Nera can change the burden borne by old machinery."
+      },
+      "optionalRooms": [
+        "surveyor-niche"
+      ]
+    },
+    {
+      "id": "meridian-observatory",
+      "title": "Meridian Observatory",
+      "region": "scar",
+      "entrance": {
+        "x": 110,
+        "z": 370
+      },
+      "prerequisite": [
+        "ability:witness",
+        "item:mass-dial"
+      ],
+      "rewardItem": "concord-crest",
+      "musicCue": "meridian-blue-lens",
+      "intro": "Keel Monastery teaches that the sky has one fixed north. Its star maps now turn toward the old capital.",
+      "architecture": "Blue slate galleries rotate around a lens tower. Light can cross the same room in Wake and Hush at different angles.",
+      "rooms": [
+        {
+          "id": "meridian-gate",
+          "name": "North Gate",
+          "x": 0,
+          "z": 0,
+          "y": 0,
+          "kind": "hub",
+          "description": "A compass carved into the floor has two north marks."
+        },
+        {
+          "id": "low-lens",
+          "name": "Low Lens",
+          "x": 12,
+          "z": 10,
+          "y": 6,
+          "kind": "puzzle",
+          "description": "A movable reflector points at a shuttered ceiling.",
+          "puzzleId": "meridian-first-light"
+        },
+        {
+          "id": "night-gallery",
+          "name": "Night Gallery",
+          "x": 24,
+          "z": 18,
+          "y": 12,
+          "kind": "combat",
+          "description": "Slate sentinels step only where a shadow passes.",
+          "enemyArchetypes": [
+            "scar-bowman",
+            "glass-singer",
+            "lens-warden"
+          ]
+        },
+        {
+          "id": "axis",
+          "name": "The Axis",
+          "x": 10,
+          "z": 29,
+          "y": 20,
+          "kind": "hub",
+          "description": "Six rings can be seen turning around a suspended model of the kingdom.",
+          "enemyArchetypes": [
+            "static-wisp"
+          ]
+        },
+        {
+          "id": "astronomer-cell",
+          "name": "Astronomer Cell",
+          "x": -5,
+          "z": 24,
+          "y": 25,
+          "kind": "secret",
+          "description": "A monk recorded that a past sky was manufactured, then refused to erase the page."
+        },
+        {
+          "id": "false-north",
+          "name": "False North",
+          "x": 25,
+          "z": 38,
+          "y": 32,
+          "kind": "puzzle",
+          "description": "Two north stars appear at once; only one casts a shadow.",
+          "puzzleId": "meridian-parallax"
+        },
+        {
+          "id": "glass-stair",
+          "name": "Glass Stair",
+          "x": 39,
+          "z": 23,
+          "y": 41,
+          "kind": "miniboss",
+          "description": "The Lens Warden crosses between reflected positions."
+        },
+        {
+          "id": "crown-ring",
+          "name": "Crown Ring",
+          "x": 22,
+          "z": 7,
+          "y": 48,
+          "kind": "puzzle",
+          "description": "The model must face the capital and the coast at the same time.",
+          "puzzleId": "meridian-concord"
+        },
+        {
+          "id": "upper-dome",
+          "name": "Upper Dome",
+          "x": 4,
+          "z": -5,
+          "y": 56,
+          "kind": "boss",
+          "description": "The open dome mirrors the horizon into a ring around the player."
+        },
+        {
+          "id": "south-descent",
+          "name": "South Descent",
+          "x": -12,
+          "z": -7,
+          "y": 21,
+          "kind": "reward",
+          "description": "The real sky returns to the compass, exposing a route through the Hollow Crown."
+        }
+      ],
+      "links": [
+        {
+          "from": "meridian-gate",
+          "to": "low-lens"
+        },
+        {
+          "from": "low-lens",
+          "to": "night-gallery",
+          "requires": [
+            "puzzle:meridian-first-light"
+          ]
+        },
+        {
+          "from": "night-gallery",
+          "to": "axis"
+        },
+        {
+          "from": "axis",
+          "to": "astronomer-cell"
+        },
+        {
+          "from": "axis",
+          "to": "false-north"
+        },
+        {
+          "from": "false-north",
+          "to": "glass-stair",
+          "requires": [
+            "puzzle:meridian-parallax"
+          ]
+        },
+        {
+          "from": "glass-stair",
+          "to": "crown-ring"
+        },
+        {
+          "from": "crown-ring",
+          "to": "upper-dome",
+          "requires": [
+            "puzzle:meridian-concord"
+          ]
+        },
+        {
+          "from": "upper-dome",
+          "to": "south-descent"
+        },
+        {
+          "from": "south-descent",
+          "to": "meridian-gate",
+          "requires": [],
+          "shortcut": true
+        },
+        {
+          "from": "astronomer-cell",
+          "to": "crown-ring",
+          "requires": [
+            "puzzle:meridian-parallax"
+          ],
+          "shortcut": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "meridian-first-light",
+          "roomId": "low-lens",
+          "title": "The Ceiling Is a Map",
+          "mechanic": "mirror",
+          "clue": "The missing star was painted on the underside of the shutter.",
+          "steps": [
+            {
+              "target": "low-reflector",
+              "roomId": "meridian-gate",
+              "verb": "interact"
+            },
+            {
+              "target": "shutter-memory",
+              "verb": "witness"
+            },
+            {
+              "target": "blue-lens",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:meridian-first-light"
+        },
+        {
+          "id": "meridian-parallax",
+          "roomId": "false-north",
+          "title": "Two Norths",
+          "mechanic": "mirror",
+          "clue": "One star moves with you. The other moves with the room.",
+          "steps": [
+            {
+              "target": "near-star",
+              "roomId": "axis",
+              "verb": "hush"
+            },
+            {
+              "target": "far-star",
+              "verb": "wake"
+            },
+            {
+              "target": "parallax-wheel",
+              "verb": "interact"
+            }
+          ],
+          "completionFlag": "puzzle:meridian-parallax"
+        },
+        {
+          "id": "meridian-concord",
+          "roomId": "crown-ring",
+          "title": "A Shared Horizon",
+          "mechanic": "mirror",
+          "clue": "The coast and the capital are two bearings of one choice.",
+          "steps": [
+            {
+              "target": "coast-ring",
+              "roomId": "glass-stair",
+              "verb": "lift"
+            },
+            {
+              "target": "capital-ring",
+              "verb": "interact"
+            },
+            {
+              "target": "concord-lens",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:meridian-concord"
+        }
+      ],
+      "miniboss": {
+        "id": "lens-warden",
+        "roomId": "glass-stair",
+        "archetype": "lens-warden",
+        "reveal": "Its reflection moves a beat before the body, giving every attack away."
+      },
+      "boss": {
+        "id": "the-second-north",
+        "name": "The Second North",
+        "roomId": "upper-dome",
+        "silhouette": "A tall cloaked astronomer with a rotating mirror halo and no visible face.",
+        "phases": [
+          {
+            "threshold": 1,
+            "telegraph": "The halo aligns with a floor seam before a beam fires.",
+            "attacks": [
+              "north-beam",
+              "mirror-step"
+            ],
+            "vulnerableTo": [
+              "pulse",
+              "reflector"
+            ]
+          },
+          {
+            "threshold": 0.67,
+            "telegraph": "The dome displays two skies, then darkens one.",
+            "attacks": [
+              "false-horizon",
+              "glass-rain"
+            ],
+            "vulnerableTo": [
+              "wake",
+              "hush"
+            ]
+          },
+          {
+            "threshold": 0.33,
+            "telegraph": "Every mirror faces inward before the final sweep.",
+            "attacks": [
+              "convergent-beam",
+              "halo-dive"
+            ],
+            "vulnerableTo": [
+              "concord-lens",
+              "mass-dial"
+            ]
+          }
+        ],
+        "reward": "The Concord Crest records two true bearings in one instrument, opening the capital without deciding its future."
+      },
+      "optionalRooms": [
+        "astronomer-cell"
+      ]
+    },
+    {
+      "id": "hush-engine",
+      "title": "Hush Engine",
+      "region": "crown",
+      "entrance": {
+        "x": -270,
+        "z": -280
+      },
+      "prerequisite": [
+        "ability:flow",
+        "ability:lift",
+        "ability:witness",
+        "item:graft-hook",
+        "item:mass-dial",
+        "item:concord-crest"
+      ],
+      "musicCue": "engine-held-breath",
+      "intro": "Vesper Crown did not fall. The city was held between two decisions so its people could survive a catastrophe outside the walls.",
+      "architecture": "A civic machine under the capital joins all six regional technologies around a central chamber containing the original vote.",
+      "rooms": [
+        {
+          "id": "engine-foyer",
+          "name": "Civic Foyer",
+          "x": 0,
+          "z": 0,
+          "y": 0,
+          "kind": "hub",
+          "description": "Names of vanished citizens glow in Wake and their present homes appear in Hush."
+        },
+        {
+          "id": "flow-ring",
+          "name": "Flow Ring",
+          "x": 14,
+          "z": -8,
+          "y": -7,
+          "kind": "puzzle",
+          "description": "A borrowed river feeds a city that has forgotten thirst.",
+          "puzzleId": "engine-flow"
+        },
+        {
+          "id": "wind-ring",
+          "name": "Wind Ring",
+          "x": 26,
+          "z": -3,
+          "y": -13,
+          "kind": "combat",
+          "description": "The Unmoored fragments ride the ventilation shaft.",
+          "enemyArchetypes": [
+            "hush-wisp",
+            "brass-warden",
+            "briar-guard"
+          ]
+        },
+        {
+          "id": "central-dais",
+          "name": "Central Dais",
+          "x": 14,
+          "z": 12,
+          "y": -19,
+          "kind": "hub",
+          "description": "Six empty seats face a seventh chair turned toward the exit.",
+          "enemyArchetypes": [
+            "twin-wardens"
+          ]
+        },
+        {
+          "id": "citizen-record",
+          "name": "Citizen Record",
+          "x": -1,
+          "z": 18,
+          "y": -22,
+          "kind": "secret",
+          "description": "The original vote asked whether the city could choose again, not whether it should live."
+        },
+        {
+          "id": "memory-ring",
+          "name": "Memory Ring",
+          "x": 31,
+          "z": 22,
+          "y": -28,
+          "kind": "puzzle",
+          "description": "Salt voices and living roots speak different versions of the same warning.",
+          "puzzleId": "engine-witness"
+        },
+        {
+          "id": "wardens-cross",
+          "name": "Wardens Cross",
+          "x": 42,
+          "z": 8,
+          "y": -34,
+          "kind": "miniboss",
+          "description": "The Twin Wardens protect opposing doors but share one damaged heart."
+        },
+        {
+          "id": "concord-bridge",
+          "name": "Concord Bridge",
+          "x": 28,
+          "z": -8,
+          "y": -41,
+          "kind": "puzzle",
+          "description": "Weight and light must hold the bridge while both world states are heard.",
+          "puzzleId": "engine-concord"
+        },
+        {
+          "id": "engine-heart",
+          "name": "Engine Heart",
+          "x": 9,
+          "z": -18,
+          "y": -50,
+          "kind": "boss",
+          "description": "The city rotates far overhead as the last held breath escapes."
+        },
+        {
+          "id": "dawn-stair",
+          "name": "Dawn Stair",
+          "x": -9,
+          "z": -8,
+          "y": -18,
+          "kind": "reward",
+          "description": "People emerge into a world that will answer their choices, including the player’s."
+        }
+      ],
+      "links": [
+        {
+          "from": "engine-foyer",
+          "to": "flow-ring"
+        },
+        {
+          "from": "flow-ring",
+          "to": "wind-ring",
+          "requires": [
+            "puzzle:engine-flow"
+          ]
+        },
+        {
+          "from": "wind-ring",
+          "to": "central-dais"
+        },
+        {
+          "from": "central-dais",
+          "to": "citizen-record"
+        },
+        {
+          "from": "central-dais",
+          "to": "memory-ring"
+        },
+        {
+          "from": "memory-ring",
+          "to": "wardens-cross",
+          "requires": [
+            "puzzle:engine-witness"
+          ]
+        },
+        {
+          "from": "wardens-cross",
+          "to": "concord-bridge"
+        },
+        {
+          "from": "concord-bridge",
+          "to": "engine-heart",
+          "requires": [
+            "puzzle:engine-concord"
+          ]
+        },
+        {
+          "from": "engine-heart",
+          "to": "dawn-stair"
+        },
+        {
+          "from": "dawn-stair",
+          "to": "engine-foyer",
+          "requires": [],
+          "shortcut": true
+        },
+        {
+          "from": "citizen-record",
+          "to": "concord-bridge",
+          "requires": [
+            "puzzle:engine-witness"
+          ],
+          "shortcut": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "engine-flow",
+          "roomId": "flow-ring",
+          "title": "A River Owed",
+          "mechanic": "conductor",
+          "clue": "The first flood debt was never paid. Restore the refuge path before feeding the palace.",
+          "steps": [
+            {
+              "target": "refuge-conduit",
+              "roomId": "engine-foyer",
+              "verb": "flow"
+            },
+            {
+              "target": "wind-fan",
+              "verb": "lift"
+            },
+            {
+              "target": "civic-valve",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:engine-flow"
+        },
+        {
+          "id": "engine-witness",
+          "roomId": "memory-ring",
+          "title": "The Names Between",
+          "mechanic": "conductor",
+          "clue": "The record leaves space between two accounts for the people who lived both.",
+          "steps": [
+            {
+              "target": "salt-record",
+              "roomId": "central-dais",
+              "verb": "witness"
+            },
+            {
+              "target": "root-memory",
+              "verb": "graft"
+            },
+            {
+              "target": "empty-seat",
+              "verb": "interact"
+            }
+          ],
+          "completionFlag": "puzzle:engine-witness"
+        },
+        {
+          "id": "engine-concord",
+          "roomId": "concord-bridge",
+          "title": "Neither Silence Nor Command",
+          "mechanic": "conductor",
+          "clue": "Every mechanism was designed to carry a choice, not make one.",
+          "steps": [
+            {
+              "target": "mass-dial",
+              "roomId": "wardens-cross",
+              "verb": "counter"
+            },
+            {
+              "target": "concord-crest",
+              "verb": "concord"
+            },
+            {
+              "target": "bridge-conductor",
+              "verb": "pulse"
+            }
+          ],
+          "completionFlag": "puzzle:engine-concord"
+        }
+      ],
+      "miniboss": {
+        "id": "twin-wardens",
+        "roomId": "wardens-cross",
+        "archetype": "twin-wardens",
+        "reveal": "Each warden can be spared by allowing the other to hear the shared heartbeat."
+      },
+      "boss": {
+        "id": "the-hush-regent",
+        "name": "The Hush Regent",
+        "roomId": "engine-heart",
+        "silhouette": "A human figure suspended within six rotating civic machines, one hand open and one clenched.",
+        "phases": [
+          {
+            "threshold": 1,
+            "telegraph": "The Regent points to a ring before its mechanism fires.",
+            "attacks": [
+              "flood-debt",
+              "wind-shear",
+              "root-snare"
+            ],
+            "vulnerableTo": [
+              "flow",
+              "lift",
+              "graft-hook"
+            ]
+          },
+          {
+            "threshold": 0.67,
+            "telegraph": "The arena alternates Wake and Hush as a recorded voice counts.",
+            "attacks": [
+              "memory-erasure",
+              "false-floor",
+              "mirror-beam"
+            ],
+            "vulnerableTo": [
+              "witness",
+              "realm-shift",
+              "concord-crest"
+            ]
+          },
+          {
+            "threshold": 0.33,
+            "telegraph": "The clenched hand opens, then the six rings converge.",
+            "attacks": [
+              "sixfold-convergence",
+              "held-breath"
+            ],
+            "vulnerableTo": [
+              "mass-dial",
+              "concord-crest",
+              "pulse"
+            ]
+          }
+        ],
+        "reward": "The Engine stops enforcing a centuries-old emergency order. The final civic choice determines which institutions survive; the world remains explorable afterward."
+      },
+      "optionalRooms": [
+        "citizen-record"
+      ]
+    }
+  ]
+}
