@@ -1,5 +1,7 @@
 # Hushwake
 
+**[Play Hushwake in your browser](https://hushwake-unity.vercel.app/)** — keyboard and mouse recommended.
+
 Follow Nera Vale through a world caught between Wake and Hush. Beneath its settlements, old civic machines still enforce decisions their people never finished making. Trace the missing records, restore the regional instruments, and return the final choice to the city.
 
 ## Explore, listen, and change the world
@@ -14,7 +16,7 @@ Follow Nera Vale through a world caught between Wake and Hush. Beneath its settl
 
 ## Development status
 
-The source compiles, and the first progression audit and Web export passed. Browser verification and a fresh export of the outdoor progression improvements are pending. A playable link will be added after those checks. The original detailed physical machinery, score, and systemic simulation are not reproduced in this edition.
+The first playable edition is public. Compilation, 543 progression/placement assertions, and an ordinary-input browser replay of the opening route passed, including the bell, first dungeon puzzle, combat controls, menus and save/reload. The full seven-dungeon campaign, every boss phase, optional branch and ending still need browser playthroughs. The original detailed physical machinery, score, and systemic simulation are not reproduced in this edition.
 
 ## Toolchain
 
@@ -29,7 +31,7 @@ The source compiles, and the first progression audit and Web export passed. Brow
 
 ## Release requirement
 
-Publish only after Unity compilation and a browser pass verifies starting a journey, movement and camera control, combat, dungeon progression, pause, and save/reload. The public playable link will be added here after deployment is confirmed.
+Future releases require Unity compilation and a browser pass verifying starting a journey, movement and camera control, combat, dungeon progression, pause, and save/reload. The current public player was built from source commit `17f0848cd1a1c7d4607863dde01c21dc91d553ef`; subsequent documentation and serialized build-settings updates are recorded separately in Git.
 
 Credentials, local Unity license files, and browser profiles must stay outside this public repository.
 
