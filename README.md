@@ -8,12 +8,13 @@ Follow Nera Vale through a world caught between Wake and Hush. Beneath its settl
 - Turn between Wake and Hush to uncover another side of the world and operate machinery that remembers both.
 - Fight with the threadblade, dodge telegraphed attacks, and use Pulse, Flow, Lift, Witness, Graft, Counter, and Concord to solve instrument puzzles.
 - Follow seven dungeon routes through guarded passages, ordered puzzle stations, and bosses with changing attack phases.
+- Explore 24 outdoor mechanisms with ordered actions, realm changes, and one-time rewards.
 - Keep a journal of quests and recovered lore, collect regional tools, and return to visited settlements through the map.
 - Choose how the city records its future, then continue exploring. Your journey saves locally in your browser.
 
 ## Development status
 
-The game implementation is awaiting its first compile and browser verification. A playable link will be added after the release passes those checks. The original detailed physical machinery, score, and systemic simulation are not reproduced in this edition.
+The source compiles, and the first progression audit and Web export passed. Browser verification and a fresh export of the outdoor progression improvements are pending. A playable link will be added after those checks. The original detailed physical machinery, score, and systemic simulation are not reproduced in this edition.
 
 ## Toolchain
 

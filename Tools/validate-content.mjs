@@ -12,6 +12,10 @@ for (const collection of ['regions', 'items', 'lore', 'npcs', 'quests', 'dungeon
 }
 assert.equal(catalog.regions.length, 8);
 assert.equal(catalog.dungeons.length, 7);
+assert.equal(catalog.siteMechanisms.length, 24);
+const sites = catalog.regions.flatMap(region => region.sites);
+assert.equal(sites.length, 24);
+assert.deepEqual(new Set(catalog.siteMechanisms.map(site => site.id)), new Set(sites.map(site => site.id)), 'every outdoor site has its authored mechanism');
 for (const collection of ['npcs', 'lore', 'dungeons']) {
   for (const item of catalog[collection]) assert.ok(identifiers.regions.has(item.region), `${item.id}: valid region`);
 }

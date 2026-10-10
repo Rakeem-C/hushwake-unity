@@ -6,6 +6,7 @@ const original = process.argv[2];
 const destination = process.argv[3];
 if (!original || !destination) throw new Error('Pass original checkout and output JSON paths.');
 const content = await import(pathToFileURL(resolve(original, 'src/content/index.ts')).href);
+const adventures = await import(pathToFileURL(resolve(original, 'src/world/site-adventures.ts')).href);
 const catalog = {
   schema: 1,
   sourceCommit: 'ac071c727210da99b34d654be92b38311698c58d',
@@ -15,6 +16,7 @@ const catalog = {
   npcs: content.NPCS,
   quests: content.QUESTS,
   dungeons: content.DUNGEONS,
+  siteMechanisms: Object.entries(adventures.SITE_STEPS).map(([id, steps]) => ({ id, steps })),
 };
 writeFileSync(destination, JSON.stringify(catalog, null, 2) + '\n');
 console.log(JSON.stringify(Object.fromEntries(Object.entries(catalog).filter(([, value]) => Array.isArray(value)).map(([key, value]) => [key, (value as unknown[]).length]))));

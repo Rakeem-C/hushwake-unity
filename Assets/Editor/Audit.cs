@@ -58,6 +58,23 @@ namespace Hushwake.Editor
             Check(p.State.flags.Contains("campaign-complete"), "final campaign choice completes story");
             var restored = new Progress(JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(p.State)));
             Check(restored.State.bosses.Count == 7 && restored.State.puzzles.Count == 21 && restored.State.flags.Contains("campaign-complete"), "save round trip preserves progression");
+            foreach (var site in catalog.regions.SelectMany(r => r.sites))
+            {
+                var mechanism = catalog.siteMechanisms.Single(m => m.id == site.id);
+                Check(mechanism.steps.Length >= 2, "outdoor site uses authored ordered steps: " + site.id);
+                for (var i = 0; i < mechanism.steps.Length; i++)
+                {
+                    var step = mechanism.steps[i];
+                    Check(!p.SolveSite(site, mechanism, i + 1, step.verb), "outdoor out-of-order action rejected");
+                    Check(!p.SolveSite(site, mechanism, i, "invalid"), "outdoor wrong instrument rejected");
+                    if (step.verb == "wake" || step.verb == "hush") p.State.realm = step.verb;
+                    Check(p.SolveSite(site, mechanism, i, step.verb), "legal outdoor mechanism completes: " + site.id);
+                }
+                Check(p.State.events.Contains("solve-puzzle:" + site.id), "outdoor puzzle emits quest completion");
+                Check(p.State.flags.Contains("site:" + site.id), "outdoor explored flag saved");
+                var count = p.State.items.Count;
+                Check(!p.SolveSite(site, mechanism, mechanism.steps.Length - 1, mechanism.steps.Last().verb) && p.State.items.Count == count, "outdoor reward remains one-time");
+            }
             var rejected = false;
             try { new Progress(new SaveData { version = 99 }); } catch (InvalidOperationException) { rejected = true; }
             Check(rejected, "unsupported save version rejected");

@@ -24,6 +24,7 @@ namespace Hushwake
         Target nearest;
         string notice = "", panel = "", selected = "pulse", dialogueTitle = "", dialogueText = "", saveError = "";
         Choice[] dialogueChoices;
+        string dialogueNpc = "";
         bool started, dead;
         float noticeUntil, nextAttack, nextPulse, invulnerable, saveAt, cameraDistance = 19;
         Vector2 journalScroll;
@@ -36,6 +37,7 @@ namespace Hushwake
             public string id, name, kind, destination;
             public Npc npc;
             public Site site;
+            public SiteMechanism mechanism;
             public Dungeon entry;
             public Puzzle puzzle;
             public int step;
@@ -117,7 +119,15 @@ namespace Hushwake
                 }
                 var townLabel = WorldArt.Label(environment, town + Vector3.up * 6, region.settlement.name.ToUpperInvariant(), new Color(.96f, .76f, .38f)); labels.Add(townLabel);
                 Marker("camp:" + region.id, "Rest • " + region.settlement.name, "camp", town + Vector3.right * 5, new Color(1, .63f, .24f));
-                foreach (var site in region.sites) Marker(site.id, site.name, "site", Atlas(site.x, site.z), new Color(.62f, .83f, .81f)).site = site;
+                foreach (var site in region.sites)
+                {
+                    var mechanism = catalog.siteMechanisms.First(s => s.id == site.id);
+                    for (var i = 0; i < mechanism.steps.Length; i++)
+                    {
+                        var point = Atlas(site.x, site.z) + new Vector3((i - 1) * 3.2f, 0, i % 2 * 3.2f); point.y = WorldArt.Height(point.x, point.z);
+                        var station = Marker(site.id, site.name + " · " + (i + 1), "site", point, new Color(.62f, .83f, .81f)); station.site = site; station.mechanism = mechanism; station.step = i;
+                    }
+                }
             }
             foreach (var npc in catalog.npcs)
             {
@@ -216,6 +226,7 @@ namespace Hushwake
 
         void Update()
         {
+            Time.timeScale = started && !dead && string.IsNullOrEmpty(panel) ? 1 : 0;
             frameCount++; frameTime += Time.unscaledDeltaTime; if (frameTime >= 1) { fps = frameCount / frameTime; frameCount = 0; frameTime = 0; }
             foreach (var label in labels) if (label != null) { label.rotation = view.transform.rotation; label.gameObject.SetActive(Vector3.Distance(player.position, label.position) < 26); }
             if (!started || dead || !string.IsNullOrEmpty(panel)) { if (started && Input.GetKeyDown(KeyCode.Escape)) panel = ""; FollowCamera(); return; }
@@ -280,15 +291,19 @@ namespace Hushwake
                 case "npc":
                     var beat = target.npc.dialogue.FirstOrDefault(b => progress.MeetsAll(b.when));
                     if (beat == null) return;
-                    progress.Event("interact", target.id); dialogueTitle = target.name; dialogueText = string.Join("\n\n", beat.lines); dialogueChoices = beat.choices; panel = "dialogue"; break;
+                    progress.Event("interact", target.id); progress.Flag("met-" + target.id); dialogueNpc = target.id; dialogueTitle = target.name; dialogueText = string.Join("\n\n", beat.lines); dialogueChoices = beat.choices; panel = "dialogue"; break;
                 case "camp": progress.State.health = 100; Tell("Rested. Your journey is saved."); Save(); break;
                 case "site":
                     if (!progress.MeetsAll(target.site.requires)) { Tell("You need: " + string.Join(", ", target.site.requires.Select(Friendly))); break; }
                     if (!string.IsNullOrEmpty(target.site.realm) && target.site.realm != "both" && target.site.realm != progress.State.realm) { Tell("This place is visible in " + Pretty(target.site.realm) + ". Press Q to turn the world."); break; }
-                    if (target.id == "collapsed-bellpost" && verb != "pulse") { Tell("The buried bell waits for Pulse. Select 1, then press R."); break; }
-                    if (target.id == "collapsed-bellpost") progress.Flag("tutorial:pulse");
-                    progress.Event("interact", target.id); progress.Flag("site:" + target.id); progress.Item(target.site.rewardItem); ReadLore(target.site.loreId);
-                    dialogueTitle = target.name; dialogueText = target.site.clue + "\n\n" + target.site.challenge + "\n\n" + LoreText(target.site.loreId); dialogueChoices = null; panel = "dialogue"; Save(); break;
+                    var expectedIndex = progress.SiteStep(target.mechanism);
+                    if (expectedIndex >= target.mechanism.steps.Length) { Tell(target.site.name + ": already explored."); break; }
+                    var expected = target.mechanism.steps[expectedIndex];
+                    var siteVerb = verb == "interact" && (expected.verb == "wake" || expected.verb == "hush") ? progress.State.realm : verb;
+                    if (!progress.SolveSite(target.site, target.mechanism, target.step, siteVerb)) { Tell(target.site.name + " • Station " + (expectedIndex + 1) + ": " + expected.hint + "  Use " + Pretty(expected.verb) + ".", 10); break; }
+                    Burst(target.body.position, new Color(.4f, .86f, .78f), 2); Save();
+                    if (progress.SiteStep(target.mechanism) < target.mechanism.steps.Length) { Tell(target.mechanism.steps[expectedIndex + 1].hint + " • Next marked station.", 8); break; }
+                    dialogueNpc = ""; dialogueTitle = target.site.name; dialogueText = target.site.clue + "\n\n" + LoreText(target.site.loreId); dialogueChoices = null; panel = "dialogue"; break;
                 case "dungeon": EnterDungeon(target.entry); break;
                 case "door":
                     if (target.link.shortcut && (target.link.requires == null || target.link.requires.Length == 0) && (room.id == target.link.from || progress.State.bosses.Contains(dungeon.boss.id))) progress.Flag("shortcut:" + dungeon.id + ":" + target.link.from + ":" + target.link.to);

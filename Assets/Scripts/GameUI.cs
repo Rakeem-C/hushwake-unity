@@ -71,6 +71,12 @@ namespace Hushwake
                     prompt = Pretty(step.target) + " · " + ((step.verb == "interact" || step.verb == "wake" || step.verb == "hush") ? "[E] " : "[R] ") + Pretty(step.verb);
                     if (progress.PuzzleStep(nearest.puzzle) > nearest.step) prompt += " · Complete";
                 }
+                if (nearest.kind == "site")
+                {
+                    var step = nearest.mechanism.steps[nearest.step];
+                    prompt = nearest.name + " · " + ((step.verb == "interact" || step.verb == "wake" || step.verb == "hush") ? "[E] " : "[R] ") + Pretty(step.verb);
+                    if (progress.SiteStep(nearest.mechanism) > nearest.step) prompt += " · Complete";
+                }
                 Backdrop(new Rect(width / 2 - 285, height - 133, 570, 46), .84f); GUI.Label(new Rect(width / 2 - 270, height - 125, 540, 35), prompt, new GUIStyle(body) { alignment = TextAnchor.MiddleCenter });
             }
             if (Time.unscaledTime < noticeUntil && !string.IsNullOrEmpty(notice))
@@ -116,7 +122,7 @@ namespace Hushwake
                 case "dialogue":
                     GUILayout.Label(dialogueText, body); GUILayout.Space(22);
                     if (dialogueChoices != null) foreach (var choice in dialogueChoices)
-                        if (progress.MeetsAll(choice.requires) && GUILayout.Button(choice.text, button)) { progress.Flag(choice.setsFlag); dialogueText = choice.reply; dialogueChoices = null; progress.UpdateQuests(catalog); Save(); break; }
+                        if (progress.MeetsAll(choice.requires) && GUILayout.Button(choice.text, button)) { progress.Flag(choice.setsFlag); if (dialogueNpc == "sava" && (choice.id == "erase" || choice.id == "preserve")) progress.Flag("toll-debt-cleared"); dialogueText = choice.reply; dialogueChoices = null; progress.UpdateQuests(catalog); Save(); break; }
                     break;
                 case "inventory":
                     GUILayout.Label("Instruments", heading);

@@ -45,9 +45,9 @@ namespace Hushwake
             }
         }
         public bool MeetsAll(string[] requirements) => requirements == null || requirements.All(Meets);
-        public void Flag(string flag) { if (!string.IsNullOrEmpty(flag) && !State.flags.Contains(flag)) State.flags.Add(flag); Event("set-flag", flag); }
-        public void Item(string item) { if (!string.IsNullOrEmpty(item) && !State.items.Contains(item)) State.items.Add(item); Event("obtain-item", item); }
-        public void Ability(string ability) { if (!string.IsNullOrEmpty(ability) && !State.abilities.Contains(ability)) State.abilities.Add(ability); Event("gain-ability", ability); }
+        public void Flag(string flag) { if (string.IsNullOrEmpty(flag)) return; if (!State.flags.Contains(flag)) State.flags.Add(flag); Event("set-flag", flag); }
+        public void Item(string item) { if (string.IsNullOrEmpty(item)) return; if (!State.items.Contains(item)) State.items.Add(item); Event("obtain-item", item); }
+        public void Ability(string ability) { if (string.IsNullOrEmpty(ability)) return; if (!State.abilities.Contains(ability)) State.abilities.Add(ability); Event("gain-ability", ability); }
         public void Event(string type, string target) { var key = type + ":" + target; if (!State.events.Contains(key)) State.events.Add(key); }
         public int PuzzleStep(Puzzle puzzle)
         {
@@ -82,10 +82,31 @@ namespace Hushwake
             if (link.from == dungeon.boss.roomId && link.to != mini?.roomId && !State.bosses.Contains(dungeon.boss.id)) return false;
             return true;
         }
+        public int SiteStep(SiteMechanism mechanism)
+        {
+            for (var i = 0; i < mechanism.steps.Length; i++) if (!State.flags.Contains("site-step:" + mechanism.id + ":" + i)) return i;
+            return mechanism.steps.Length;
+        }
+        public bool SolveSite(Site site, SiteMechanism mechanism, int index, string verb)
+        {
+            if (index != SiteStep(mechanism) || index >= mechanism.steps.Length || !MeetsAll(site.requires)) return false;
+            var step = mechanism.steps[index]; if (step.verb != verb) return false;
+            if ((verb == "wake" || verb == "hush") && State.realm != verb) return false;
+            if (new[] { "pulse", "flow", "lift", "witness" }.Contains(verb) && !State.abilities.Contains(verb)) return false;
+            Flag("site-step:" + site.id + ":" + index);
+            if (site.id == "collapsed-bellpost" && index == 0) Flag("tutorial:pulse");
+            if (index + 1 == mechanism.steps.Length)
+            {
+                Flag("site:" + site.id); Item(site.rewardItem); Event("interact", site.id); Event("solve-puzzle", site.id);
+                if (!string.IsNullOrEmpty(site.loreId) && !State.lore.Contains(site.loreId)) State.lore.Add(site.loreId);
+            }
+            return true;
+        }
         public void Defeat(Dungeon dungeon)
         {
             if (State.bosses.Contains(dungeon.boss.id)) return;
             State.bosses.Add(dungeon.boss.id); Event("defeat-boss", dungeon.boss.id);
+            if (dungeon.boss.id == "the-counterking") Flag("rohn-found");
             if (!string.IsNullOrEmpty(dungeon.rewardAbility)) Ability(dungeon.rewardAbility);
             if (!string.IsNullOrEmpty(dungeon.rewardItem)) Item(dungeon.rewardItem);
         }

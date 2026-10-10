@@ -39,7 +39,10 @@ namespace Hushwake.Editor
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions { scenes = new[] { "Assets/Scenes/Hushwake.unity" }, locationPathName = "Build/Web", target = BuildTarget.WebGL, options = BuildOptions.None });
             if (report.summary.result != BuildResult.Succeeded) throw new InvalidOperationException("Unity Web build failed: " + report.summary.result);
             File.Copy("vercel.json", "Build/Web/vercel.json", true);
-            File.WriteAllText("Build/Web/build-info.json", "{\"engine\":\"Unity\",\"editor\":\"" + Application.unityVersion + "\",\"version\":\"0.1.0\",\"builtUtc\":\"" + DateTime.UtcNow.ToString("O") + "\"}");
+            var git = new System.Diagnostics.Process { StartInfo = new System.Diagnostics.ProcessStartInfo("git", "rev-parse HEAD") { UseShellExecute = false, RedirectStandardOutput = true, CreateNoWindow = true } };
+            git.Start(); var commit = git.StandardOutput.ReadToEnd().Trim(); git.WaitForExit();
+            if (git.ExitCode != 0 || !System.Text.RegularExpressions.Regex.IsMatch(commit, "^[a-f0-9]{40}$")) throw new InvalidOperationException("Cannot identify the build source commit.");
+            File.WriteAllText("Build/Web/build-info.json", "{\"engine\":\"Unity\",\"editor\":\"" + Application.unityVersion + "\",\"version\":\"0.1.0\",\"sourceCommit\":\"" + commit + "\",\"builtUtc\":\"" + DateTime.UtcNow.ToString("O") + "\"}");
             Debug.Log("HUSHWAKE_WEB_BUILD_SUCCEEDED bytes=" + report.summary.totalSize);
         }
     }

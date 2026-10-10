@@ -4,7 +4,9 @@ using UnityEngine;
 namespace Hushwake
 {
     [Serializable] public class Point { public float x, z; }
-    [Serializable] public class Catalog { public int schema; public string sourceCommit; public Region[] regions; public Item[] items; public Lore[] lore; public Npc[] npcs; public Quest[] quests; public Dungeon[] dungeons; }
+    [Serializable] public class Catalog { public int schema; public string sourceCommit; public Region[] regions; public Item[] items; public Lore[] lore; public Npc[] npcs; public Quest[] quests; public Dungeon[] dungeons; public SiteMechanism[] siteMechanisms; }
+    [Serializable] public class SiteMechanism { public string id; public SiteStep[] steps; }
+    [Serializable] public class SiteStep { public string verb, hint; }
     [Serializable] public class Region { public string id, name, visual, musicCue, rumor; public Point center; public Settlement settlement; public Site[] sites; }
     [Serializable] public class Settlement { public string name; public float x, z; }
     [Serializable] public class Item { public string id, name, description, type; }
