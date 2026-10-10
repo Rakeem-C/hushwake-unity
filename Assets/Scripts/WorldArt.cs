@@ -70,11 +70,11 @@ namespace Hushwake
         {
             var model=Original(string.IsNullOrEmpty(artKey)?"nera":artKey,parent,position);model.name=name;model.localScale=Vector3.one*.82f;model.gameObject.AddComponent<ArtMotion>();return model;
         }
-        public static Transform Original(string key,Transform parent,Vector3 position){var prefab=Resources.Load<GameObject>("OriginalArt/"+key);if(prefab==null)throw new System.InvalidOperationException("Missing original art: "+key);var result=Object.Instantiate(prefab,parent).transform;result.localPosition=position;return result;}
+        public static Transform Original(string key,Transform parent,Vector3 position){var prefab=Resources.Load<GameObject>("OriginalArt/"+key);if(prefab==null)throw new System.InvalidOperationException("Missing original art: "+key);var result=Object.Instantiate(prefab,parent).transform;result.localPosition=position;ModelBatching.Optimize(key,result);return result;}
         public static Transform Label(Transform parent, Vector3 position, string text, Color color)
         {
             var obj = new GameObject("label", typeof(TextMesh)); obj.transform.SetParent(parent, false); obj.transform.localPosition = position;
-            var label = obj.GetComponent<TextMesh>(); label.text = text; label.fontSize = 36; label.characterSize = .085f; label.anchor = TextAnchor.MiddleCenter; label.alignment = TextAlignment.Center; label.color = color;
+            var label = obj.GetComponent<TextMesh>(); label.text = text; label.fontSize = 36; label.characterSize = .055f; label.anchor = TextAnchor.MiddleCenter; label.alignment = TextAlignment.Center; label.color = color;
             return obj.transform;
         }
         public static void Ring(Transform parent, Vector3 position, float radius, Color color)

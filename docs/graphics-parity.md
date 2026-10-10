@@ -16,4 +16,6 @@ The target is the original game's detailed stylized presentation, rather than th
 
 Art conversion preserves mesh positions, normals, UVs, vertex colors, shared PBR textures, hierarchy and handedness. Source assets stay separate from the original checkout. Google Fonts Cormorant Garamond is distributed under the bundled OFL license.
 
-Current status: first browser candidate building; visual parity is pending comparison and further iteration. Full campaign gameplay verification remains a separate requirement.
+Pass 1 restored the original characters, houses and trees, but its light terrain, small trees and incomplete dungeon art did not meet the target. Pass 2 (`9d244b73f92935335f8d077e72972e5b20800cf8`) restored 240 original models, water, larger canopies and regional dungeon art. A fresh browser replay confirmed the opening bell sequence, realm change and dungeon entry, but found 7–10 fps and foreground occlusion. That candidate is withheld from publication.
+
+The next candidate adds rigid material batching, static world batching, camera cutaway, greener meadow detail and finer shorelines. Its art regression audit passed 300 checks; a new Web build and replay are required before parity can be claimed. Full campaign gameplay verification remains a separate requirement.

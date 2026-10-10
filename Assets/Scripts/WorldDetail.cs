@@ -16,7 +16,7 @@ namespace Hushwake {
     if(reserved.Any(q=>WorldLayout.Distance(q,point)<2)||houses.Any(q=>WorldLayout.Distance(q,point)<3.6f)||WorldLayout.Distance(point,center)<4)continue;
     float density=Mathf.PerlinNoise(x*.24f+10,z*.24f+10);if(density<.36f)continue;
     for(int blade=0;blade<7;blade++){float a=(float)random.NextDouble()*Mathf.PI*2,h=.16f+(float)random.NextDouble()*.35f;var offset=new Vector3(((float)random.NextDouble()-.5f)*.55f,0,((float)random.NextDouble()-.5f)*.55f);var root=point+offset;root.y=WorldArt.Height(root.x,root.z);var side=new Vector3(Mathf.Cos(a),0,Mathf.Sin(a))*.045f;var lean=new Vector3(Mathf.Sin(a),0,Mathf.Cos(a))*.13f;int n=p.Count;
-     p.AddRange(new[]{root-side,root+side,root+side*.5f+Vector3.up*h+lean,root-side*.5f+Vector3.up*h+lean});uv.AddRange(new[]{new Vector2(0,0),new Vector2(1,0),new Vector2(1,1),new Vector2(0,1)});var tint=Color.Lerp(new Color(.35f,.43f,.23f),new Color(.65f,.63f,.37f),(float)random.NextDouble());for(int k=0;k<4;k++)c.Add(tint);t.AddRange(new[]{n,n+2,n+1,n,n+3,n+2});
+     p.AddRange(new[]{root-side,root+side,root+side*.5f+Vector3.up*h+lean,root-side*.5f+Vector3.up*h+lean});uv.AddRange(new[]{new Vector2(0,0),new Vector2(1,0),new Vector2(1,1),new Vector2(0,1)});var tint=Color.Lerp(new Color(.09f,.18f,.055f),new Color(.24f,.32f,.10f),(float)random.NextDouble());for(int k=0;k<4;k++)c.Add(tint);t.AddRange(new[]{n,n+2,n+1,n,n+3,n+2});
     }
    }var meadow=Create(p,t,uv,c);var normals=new Vector3[p.Count];for(int i=0;i<normals.Length;i++)normals[i]=Vector3.up;meadow.normals=normals;Render(parent,"Meadow tufts and wind",meadow,grass,false);
   }
@@ -25,7 +25,14 @@ namespace Hushwake {
    foreach(var home in houses){Paving(parent,town,home+Vector3.back*2,1.8f);var pot=WorldArt.Original("prop-keg",parent,home+new Vector3(2.2f,0,-1));pot.localScale=Vector3.one*.4f;var crate=WorldArt.Original("prop-crate",parent,home+new Vector3(-2.15f,0,-1.1f));crate.localScale=Vector3.one*.5f;}
    for(int i=0;i<4;i++){var pos=town+new Vector3(i%2==0?-3:3,0,4+i*3);pos.y=WorldArt.Height(pos.x,pos.z);var lamp=WorldArt.Original("lantern",parent,pos);lamp.localScale=Vector3.one*.45f;}
   }
-  public static void Water(Transform parent){var bytes=Resources.Load<TextAsset>("OriginalWater").bytes;var h=new float[257*257];System.Buffer.BlockCopy(bytes,0,h,0,bytes.Length);var p=new List<Vector3>();var tris=new List<int>();var uv=new List<Vector2>();var c=new List<Color>();for(int z=0;z<256;z++)for(int x=0;x<256;x++){float y=h[z*257+x];if(y<-100)continue;int n=p.Count;float px=x/256f*250-125,pz=z/256f*250-125,cell=250f/256;p.AddRange(new[]{new Vector3(px,y,pz),new Vector3(px+cell,y,pz),new Vector3(px,y,pz+cell),new Vector3(px+cell,y,pz+cell)});for(int i=0;i<4;i++){uv.Add(new Vector2(p[n+i].x,p[n+i].z));c.Add(Color.white);}tris.AddRange(new[]{n,n+2,n+1,n+1,n+2,n+3});}Render(parent,"Original river lakes and coast",Create(p,tris,uv,c),new Material(Shader.Find("Hushwake/Water")),false);}
+  public static void Water(Transform parent){
+   var bytes=Resources.Load<TextAsset>("OriginalWater").bytes;int size=Mathf.RoundToInt(Mathf.Sqrt(bytes.Length/4));var h=new float[size*size];System.Buffer.BlockCopy(bytes,0,h,0,bytes.Length);
+   var p=new List<Vector3>();var tris=new List<int>();var uv=new List<Vector2>();var c=new List<Color>();float cell=250f/(size-1);
+   System.Action<int,int,int> quad=(x,z,span)=>{float y=h[z*size+x];if(y<-100)return;int n=p.Count;float px=x*cell-125,pz=z*cell-125,w=cell*span;p.AddRange(new[]{new Vector3(px,y,pz),new Vector3(px+w,y,pz),new Vector3(px,y,pz+w),new Vector3(px+w,y,pz+w)});for(int i=0;i<4;i++){uv.Add(new Vector2(p[n+i].x,p[n+i].z));c.Add(Color.white);}tris.AddRange(new[]{n,n+2,n+1,n+1,n+2,n+3});};
+   // Fine shoreline samples, coarse coplanar interiors: smoother banks without a million water quads.
+   for(int z=0;z<size-1;z+=4)for(int x=0;x<size-1;x+=4){float a=h[z*size+x],b=h[z*size+x+4],d=h[(z+4)*size+x],e=h[(z+4)*size+x+4],mid=h[(z+2)*size+x+2];if(a>-100&&Mathf.Abs(a-b)<.01f&&Mathf.Abs(a-d)<.01f&&Mathf.Abs(a-e)<.01f&&Mathf.Abs(a-mid)<.01f)quad(x,z,4);else for(int dz=0;dz<4;dz++)for(int dx=0;dx<4;dx++)quad(x+dx,z+dz,1);}
+   Render(parent,"Original river lakes and coast",Create(p,tris,uv,c),new Material(Shader.Find("Hushwake/Water")),false);
+  }
   public static void Chamber(Transform parent,Color hue,string dungeon,string room){
    var floor=WorldArt.Shape(parent,PrimitiveType.Cube,new Vector3(0,-.31f,0),new Vector3(26,.6f,26),hue,"Original masonry chamber floor");floor.GetComponent<Renderer>().sharedMaterial=Resources.Load<Material>("OriginalArt/courtstone");
    var mat=new Material(floor.GetComponent<Renderer>().sharedMaterial);mat.mainTextureScale=Vector2.one*10;floor.GetComponent<Renderer>().sharedMaterial=mat;

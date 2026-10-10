@@ -18,6 +18,8 @@ const bossArt=await load('src/assets/boss-art.ts');
 const {DUNGEONS}=await load('src/content/dungeons.ts');
 const {ENEMY_PROFILES}=await load('src/gameplay/enemies.ts');
 fs.mkdirSync(output,{recursive:true});
+function writeWater(){const size=1025,water=Buffer.alloc(size*size*4);for(let z=0;z<size;z++)for(let x=0;x<size;x++){const value=terrain.waterAt((x/(size-1)*250-125)/.17,(z/(size-1)*250-125)/.17);water.writeFloatLE(value==null?-999:value*.17,(z*size+x)*4);}fs.writeFileSync(path.join(output,'OriginalWater.bytes'),water);}
+if(process.argv.includes('--water-only')){writeWater();console.log('Original water sampled at 1025 x 1025');process.exit(0);}
 const meshes:any[]=[], materials:any[]=[], textures:any[]=[], models:any[]=[];
 const meshIds=new Map(),matIds=new Map(),texIds=new Map();
 function texture(t:any){
@@ -77,8 +79,7 @@ for(const type of ['cobble','limestone','courtstone','fieldstone']){
 }
 for(const [name,build] of [['substrate',detail.createGroundSubstrateTexture],['macro',detail.createGroundMacroTexture],['meadow',detail.createMeadowLeafTexture]]){const t=build();const id=texture(t);textures[id].file=name+'.rgba';fs.writeFileSync(path.join(output,name+'.rgba'),Buffer.from(t.image.data));}
 const heights=Buffer.alloc(257*257*4);for(let z=0;z<257;z++)for(let x=0;x<257;x++)heights.writeFloatLE(terrain.heightAt((x/256*250-125)/.17,(z/256*250-125)/.17)*.17,(z*257+x)*4);
-const water=Buffer.alloc(257*257*4);for(let z=0;z<257;z++)for(let x=0;x<257;x++){const value=terrain.waterAt((x/256*250-125)/.17,(z/256*250-125)/.17);water.writeFloatLE(value==null?-999:value*.17,(z*257+x)*4);}
 fs.writeFileSync(path.join(output,'OriginalHeight.bytes'),heights);
-fs.writeFileSync(path.join(output,'OriginalWater.bytes'),water);
+writeWater();
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify({version:1,sourceCommit:'ac071c727210da99b34d654be92b38311698c58d',meshes,materials,textures,models}));
 console.log(JSON.stringify({models:models.length,meshes:meshes.length,materials:materials.length,textures:textures.length,vertices:meshes.reduce((sum,m)=>sum+m.vertices,0)}));

@@ -15,6 +15,7 @@ namespace Hushwake
         Camera view;
         Light sun;
         RainAtmosphere rain;
+        CameraVisibility visibility;
         Dungeon dungeon;
         Room room;
         readonly List<Target> targets = new List<Target>();
@@ -68,9 +69,10 @@ namespace Hushwake
             Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 0;
             QualitySettings.shadows = ShadowQuality.All;
-            QualitySettings.shadowDistance = 70;QualitySettings.shadowResolution=ShadowResolution.High;QualitySettings.shadowCascades=4;QualitySettings.antiAliasing=4;QualitySettings.pixelLightCount=2;
+            QualitySettings.shadowDistance = 45;QualitySettings.shadowResolution=ShadowResolution.High;QualitySettings.shadowCascades=2;QualitySettings.antiAliasing=4;QualitySettings.pixelLightCount=2;
             view = new GameObject("Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>();
             view.tag = "MainCamera"; view.fieldOfView = 52; view.nearClipPlane = .1f; view.farClipPlane = 200;view.gameObject.AddComponent<VisualFinish>();
+            visibility=view.gameObject.AddComponent<CameraVisibility>();
             sun = new GameObject("Evening sun", typeof(Light)).GetComponent<Light>(); sun.type = LightType.Directional; sun.intensity = 1.15f; sun.shadows = LightShadows.Soft;
             sun.transform.rotation = Quaternion.Euler(48, -30, 0);
             RenderSettings.fog = true; RenderSettings.fogMode = FogMode.ExponentialSquared; RenderSettings.fogDensity = .008f;RenderSettings.skybox=new Material(Shader.Find("Hushwake/Sky"));RenderSettings.ambientMode=UnityEngine.Rendering.AmbientMode.Trilight;
@@ -93,7 +95,7 @@ namespace Hushwake
         Target Marker(string id, string title, string kind, Vector3 position, Color color)
         {
             var body = new GameObject(title).transform; body.SetParent(environment, false); body.localPosition = position;
-            var instrument=WorldArt.Original(kind=="camp"?"lantern":"prop-copper",body,Vector3.zero);instrument.localScale=Vector3.one*.4f;
+            if(kind!="station"){var instrument=WorldArt.Original(kind=="camp"?"lantern":"prop-copper",body,Vector3.zero);instrument.localScale=Vector3.one*.4f;}
             WorldArt.Shape(body, PrimitiveType.Sphere, Vector3.up * 1.1f, Vector3.one * .22f, color, "signal");
             WorldArt.Ring(body, Vector3.up * .03f, .85f, color);
             var label = WorldArt.Label(body, Vector3.up * 2.4f, title, new Color(.88f, .92f, .8f)); labels.Add(label);
@@ -153,6 +155,7 @@ namespace Hushwake
                 SpawnFoe("wild:" + region.id, "Hush scavenger", pos, false, false, 45);
             }
             player.position = WorldArt.Ground(position.x, position.z); cameraDistance = 10;
+            ModelBatching.StaticWorld(environment);visibility.Track(environment,player);
             DetectRegion(); CameraSnap(); RealmVisuals();
         }
         static Color RegionColor(string id)
@@ -212,6 +215,7 @@ namespace Hushwake
             if (dungeon.boss.roomId == id && !progress.State.bosses.Contains(dungeon.boss.id)) SpawnFoe(dungeon.boss.id, dungeon.boss.name, new Vector3(0, 0, 5), true, false, 220);
             if (dungeon.id == "hush-engine" && progress.State.bosses.Contains(dungeon.boss.id) && !progress.State.flags.Contains("ending-decided")) Marker("ending", "The unfinished vote", "ending", new Vector3(0, 0, 5), new Color(.97f, .8f, .49f));
             player.position = new Vector3(0, 0, -6); cameraDistance = 14; CameraSnap(); RealmVisuals();
+            ModelBatching.StaticWorld(environment);visibility.Track(environment,player);
             RefreshDoors();
             Tell(room.description, 7); progress.UpdateQuests(catalog);
         }
