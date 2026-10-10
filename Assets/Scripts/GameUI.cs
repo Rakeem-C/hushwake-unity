@@ -32,7 +32,7 @@ namespace Hushwake
             {
                 Backdrop(new Rect(0, 0, width, height), .7f);
                 GUI.Label(new Rect(width / 2 - 420, height * .14f, 840, 100), "HUSHWAKE", title);
-                GUI.Label(new Rect(width / 2 - 260, height * .31f, 520, 70), "A thread between two worlds\nUnity edition · rebuilt from the original Hushwake story", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter });
+                GUI.Label(new Rect(width / 2 - 260, height * .31f, 520, 70), "A thread between two worlds\nExplore lost records. Restore the instruments. Return the choice.", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter });
                 var x = width / 2 - 145; var y = height * .48f;
                 if (GUI.Button(new Rect(x, y, 290, 50), "Begin a new journey", button)) { if (PlayerPrefs.HasKey(SaveKey)) panel = "replace"; else StartJourney(false); }
                 GUI.enabled = PlayerPrefs.HasKey(SaveKey);

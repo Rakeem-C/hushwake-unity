@@ -1,10 +1,19 @@
-# Hushwake — Unity Edition
+# Hushwake
 
-A separate Unity rebuild of Hushwake, the fantasy adventure following Nera Vale through the Wake and Hush realms.
+Follow Nera Vale through a world caught between Wake and Hush. Beneath its settlements, old civic machines still enforce decisions their people never finished making. Trace the missing records, restore the regional instruments, and return the final choice to the city.
 
-**Status: gameplay implementation is awaiting its first Unity compile and browser verification. No playable Unity deployment has been published yet.**
+## Explore, listen, and change the world
 
-The C# implementation includes a procedural world, movement, combat, instrument puzzles, dialogue, journal, map, inventory, seven dungeon graphs, and versioned browser saves. These systems still require Unity compilation and browser verification. The original Three.js visuals, score, detailed physical machinery, and systemic simulation are not reproduced by this first Unity edition.
+- Explore eight regions, from the Chalkmere Terraces to the Hollow Crown, with settlements, hidden records, and people whose accounts change as your journey unfolds.
+- Turn between Wake and Hush to uncover another side of the world and operate machinery that remembers both.
+- Fight with the threadblade, dodge telegraphed attacks, and use Pulse, Flow, Lift, Witness, Graft, Counter, and Concord to solve instrument puzzles.
+- Follow seven dungeon routes through guarded passages, ordered puzzle stations, and bosses with changing attack phases.
+- Keep a journal of quests and recovered lore, collect regional tools, and return to visited settlements through the map.
+- Choose how the city records its future, then continue exploring. Your journey saves locally in your browser.
+
+## Development status
+
+The game implementation is awaiting its first compile and browser verification. A playable link will be added after the release passes those checks. The original detailed physical machinery, score, and systemic simulation are not reproduced in this edition.
 
 ## Toolchain
 

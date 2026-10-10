@@ -9,7 +9,8 @@ namespace Hushwake
         public static Material Material(Color color)
         {
             if (Materials.TryGetValue(color, out var found)) return found;
-            var material = new Material(Shader.Find("Standard"));
+            var template = Resources.Load<Material>("HushwakeStandard");
+            var material = template != null ? new Material(template) : new Material(Shader.Find("Standard"));
             material.color = color;
             material.SetFloat("_Glossiness", .08f);
             Materials[color] = material;

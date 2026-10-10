@@ -14,6 +14,8 @@ namespace Hushwake.Editor
         public static void Run()
         {
             Audit.Run();
+            if (AssetDatabase.LoadAssetAtPath<Material>("Assets/Resources/HushwakeStandard.mat") == null)
+                AssetDatabase.CreateAsset(new Material(Shader.Find("Standard")), "Assets/Resources/HushwakeStandard.mat");
             Directory.CreateDirectory("Assets/Scenes");
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             // Runtime bootstrap creates the world after scene load, in both Editor and Web players.
