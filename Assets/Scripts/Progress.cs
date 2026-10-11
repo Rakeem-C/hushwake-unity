@@ -45,6 +45,7 @@ namespace Hushwake
             }
         }
         public bool MeetsAll(string[] requirements) => requirements == null || requirements.All(Meets);
+        public void TakeDamage(float amount) { State.health = Mathf.Clamp(State.health - Mathf.Max(0, amount), 0, 100); }
         public void Flag(string flag) { if (string.IsNullOrEmpty(flag)) return; if (!State.flags.Contains(flag)) State.flags.Add(flag); Event("set-flag", flag); }
         public void Item(string item) { if (string.IsNullOrEmpty(item)) return; if (!State.items.Contains(item)) State.items.Add(item); Event("obtain-item", item); }
         public void Ability(string ability) { if (string.IsNullOrEmpty(ability)) return; if (!State.abilities.Contains(ability)) State.abilities.Add(ability); Event("gain-ability", ability); }

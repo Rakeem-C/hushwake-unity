@@ -14,3 +14,6 @@ Do not ship raw multi-million-triangle source models. Import complete leaf compo
 Proof: ArtAudit bounds both LOD budgets and contact shading; fresh normal-input outdoor/indoor camera replay and measured frame-rate samples are required before release. CC0/MIT provenance remains tracked; raw import files remain editor-only and ignored.
 
 A foreground crown can contain the camera, making the generic slab entry distance zero. Forest cutaway must treat camera containment as blocking and share a single full-tree bound across every LOD renderer; otherwise leaves hide the avatar or individual tree parts flicker. ArtAudit covers camera-inside-crown and distant-tree cases. Replay the normal Tidemark approach and zoom after every cutaway change.
+
+## Health at defeat
+Browser combat exposed health below zero after a finishing hit. Damage must use the bounded Progress.TakeDamage transition; the HUD and death condition must share the same state. Audit covers ordinary damage, an overshooting finishing hit, additional damage at zero, and negative damage. Replay a defeat in the fresh browser player, confirm 0 health, then use Rest and try again and confirm 100 health.

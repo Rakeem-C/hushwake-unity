@@ -436,7 +436,7 @@ namespace Hushwake
         void Hurt(float damage)
         {
             if (Time.time < invulnerable) return;
-            invulnerable = Time.time + .75f; progress.State.health -= damage; Tell("Nera takes " + damage + " damage.", 2);
+            invulnerable = Time.time + .75f; progress.TakeDamage(damage); Tell("Nera takes " + damage + " damage.", 2);
             if (progress.State.health <= 0) { dead = true; Tell("The thread holds. Rest, then try again.", 30); }
         }
         void Burst(Vector3 position, Color color, float radius)

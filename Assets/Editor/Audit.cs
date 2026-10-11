@@ -17,6 +17,7 @@ namespace Hushwake.Editor
             var reserved = WorldLayout.InteractionPoints(catalog, .17f);
             foreach (var house in WorldLayout.Houses(catalog, .17f).Values.SelectMany(h => h)) Check(reserved.All(point => WorldLayout.Distance(point, house) >= 5), "settlement geometry leaves all authored interaction points clear");
             var p = new Progress();
+            var injured=new Progress();injured.TakeDamage(18);Check(injured.State.health==82,"ordinary damage remains unchanged");injured.State.health=10;injured.TakeDamage(18);Check(injured.State.health==0,"finishing hit stops at zero health");injured.TakeDamage(18);Check(injured.State.health==0,"additional damage cannot create negative health");injured.State.health=42;injured.TakeDamage(-18);Check(injured.State.health==42,"negative damage cannot heal");
             Check(p.Meets("ability:pulse") && !p.Meets("ability:flow"), "initial abilities");
             Check(p.Meets("not:ability:flow"), "negative requirement");
             p.Flag("tutorial:pulse");
