@@ -1,5 +1,7 @@
 # Graphics parity target
 
+This is the historical original-art restoration record. The user's newer target is Nintendo's official 2026 remake; see `fidelity-2026.md` for that comparison and the remaining gap.
+
 Reference: original Hushwake Sites v8, source `ac071c727210da99b34d654be92b38311698c58d`, inspected through normal browser input on October 10, 2026. Local benchmark screenshot: `.qa/original-benchmark.png`.
 
 The target is the original game's detailed stylized presentation, rather than the initial Unity primitive prototype. Compare at 1280×720 using ordinary controls. Asset import alone is not proof of final rendering.
