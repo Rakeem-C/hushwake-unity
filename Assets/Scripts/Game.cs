@@ -223,6 +223,8 @@ namespace Hushwake
         }
 
         void Update()
+        {if(Input.GetKeyDown(KeyCode.F3))FrameDiagnostics.visible=!FrameDiagnostics.visible;FrameDiagnostics.ui=FrameDiagnostics.actors=0;long stamp=FrameDiagnostics.visible?FrameDiagnostics.Stamp():0;try{UpdateGame();}finally{if(FrameDiagnostics.visible)FrameDiagnostics.script=FrameDiagnostics.Milliseconds(stamp);FrameDiagnostics.fps=fps;}}
+        void UpdateGame()
         {
             Time.timeScale = started && !dead && string.IsNullOrEmpty(panel) ? 1 : 0;
             frameCount++; frameTime += Time.unscaledDeltaTime; if (frameTime >= 1) { fps = frameCount / frameTime; frameCount = 0; frameTime = 0;

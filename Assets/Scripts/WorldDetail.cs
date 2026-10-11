@@ -6,6 +6,7 @@ namespace Hushwake {
  public static class WorldDetail {
   static Material grass;
   static Material paving;
+  static Texture2D waterCoverage;static Material waterMaterial;
   static Mesh Create(List<Vector3> p,List<int> t,List<Vector2> uv,List<Color> c){var m=new Mesh{indexFormat=IndexFormat.UInt32};m.SetVertices(p);m.SetTriangles(t,0);m.SetUVs(0,uv);m.SetColors(c);m.RecalculateNormals();m.RecalculateBounds();m.RecalculateTangents();return m;}
   static void Render(Transform parent,string name,Mesh mesh,Material mat,bool shadows=true){var obj=new GameObject(name,typeof(MeshFilter),typeof(MeshRenderer));obj.transform.SetParent(parent,false);obj.GetComponent<MeshFilter>().sharedMesh=mesh;var r=obj.GetComponent<MeshRenderer>();r.sharedMaterial=mat;r.shadowCastingMode=shadows?ShadowCastingMode.On:ShadowCastingMode.Off;obj.AddComponent<GeneratedMeshLifetime>();}
   public static void Paving(Transform parent,Vector3 a,Vector3 b,float width){if(paving==null){paving=new Material(Resources.Load<Material>("OriginalArt/cobble"));paving.color=new Color(.58f,.62f,.53f);}var p=new List<Vector3>();var t=new List<int>();var uv=new List<Vector2>();var c=new List<Color>();var side=Vector3.Cross(Vector3.up,(b-a).normalized)*width*.5f;int sections=Mathf.Max(1,Mathf.CeilToInt(Vector3.Distance(a,b)/.6f));for(int i=0;i<=sections;i++){var center=Vector3.Lerp(a,b,i/(float)sections);foreach(var sign in new[]{-1,1}){var v=center+side*sign;v.y=WorldArt.Height(v.x,v.z)+.025f;p.Add(v);uv.Add(new Vector2(sign<0?0:width,i*.6f));c.Add(Color.white);}if(i>0){int n=i*2;t.AddRange(new[]{n-2,n,n-1,n-1,n,n+1});}}Render(parent,"Weathered cobble road",Create(p,t,uv,c),paving,false);}
@@ -27,11 +28,12 @@ namespace Hushwake {
   }
   public static void Water(Transform parent){
    var bytes=Resources.Load<TextAsset>("OriginalWater").bytes;int size=Mathf.RoundToInt(Mathf.Sqrt(bytes.Length/4));var h=new float[size*size];System.Buffer.BlockCopy(bytes,0,h,0,bytes.Length);
+   if(waterCoverage==null){var pixels=new byte[size*size*4];for(int i=0;i<h.Length;i++)for(int channel=0;channel<4;channel++)pixels[i*4+channel]=h[i]<-100?(byte)0:(byte)255;waterCoverage=new Texture2D(size,size,TextureFormat.RGBA32,false,true){name="Original smooth shoreline coverage",filterMode=FilterMode.Bilinear,wrapMode=TextureWrapMode.Clamp};waterCoverage.SetPixelData(pixels,0);waterCoverage.Apply(false,true);waterMaterial=new Material(Shader.Find("Hushwake/Water"));waterMaterial.SetTexture("_Coverage",waterCoverage);}
    var p=new List<Vector3>();var tris=new List<int>();var uv=new List<Vector2>();var c=new List<Color>();float cell=250f/(size-1);
    System.Action<int,int,int> quad=(x,z,span)=>{float y=h[z*size+x];if(y<-100)return;int n=p.Count;float px=x*cell-125,pz=z*cell-125,w=cell*span;p.AddRange(new[]{new Vector3(px,y,pz),new Vector3(px+w,y,pz),new Vector3(px,y,pz+w),new Vector3(px+w,y,pz+w)});for(int i=0;i<4;i++){uv.Add(new Vector2(p[n+i].x,p[n+i].z));c.Add(Color.white);}tris.AddRange(new[]{n,n+2,n+1,n+1,n+2,n+3});};
    // Fine shoreline samples, coarse coplanar interiors: smoother banks without a million water quads.
    for(int z=0;z<size-1;z+=4)for(int x=0;x<size-1;x+=4){float a=h[z*size+x],b=h[z*size+x+4],d=h[(z+4)*size+x],e=h[(z+4)*size+x+4],mid=h[(z+2)*size+x+2];if(a>-100&&Mathf.Abs(a-b)<.01f&&Mathf.Abs(a-d)<.01f&&Mathf.Abs(a-e)<.01f&&Mathf.Abs(a-mid)<.01f)quad(x,z,4);else for(int dz=0;dz<4;dz++)for(int dx=0;dx<4;dx++)quad(x+dx,z+dz,1);}
-   Render(parent,"Original river lakes and coast",Create(p,tris,uv,c),new Material(Shader.Find("Hushwake/Water")),false);
+   Render(parent,"Original river lakes and coast",Create(p,tris,uv,c),waterMaterial,false);
   }
   public static void Chamber(Transform parent,Color hue,string dungeon,string room){
    var floor=WorldArt.Shape(parent,PrimitiveType.Cube,new Vector3(0,-.31f,0),new Vector3(26,.6f,26),hue,"Original masonry chamber floor");floor.GetComponent<Renderer>().sharedMaterial=Resources.Load<Material>("OriginalArt/courtstone");

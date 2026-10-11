@@ -5,16 +5,18 @@ namespace Hushwake
 {
     public sealed class CameraVisibility : MonoBehaviour
     {
-        sealed class Piece {public MeshRenderer renderer;public Bounds bounds;public bool visible,cutaway;public float rangeSquared;}
+        sealed class Piece {public MeshRenderer renderer;public Bounds bounds;public bool visible,cutaway;public float rangeSquared;public Transform actor;}
+        readonly System.Collections.Generic.Dictionary<Transform,Vector3> actorPositions=new System.Collections.Generic.Dictionary<Transform,Vector3>();
         Piece[] pieces = new Piece[0]; Transform subject; float next;
         public void Track(Transform world, Transform player)
         {
             pieces = world.GetComponentsInChildren<MeshRenderer>().Where(r => r.enabled && r.GetComponent<MeshFilter>() != null).Select(r=>{
-                var bounds=r.bounds;bool animated=r.GetComponentInParent<ArtMotion>()!=null,generated=r.GetComponent<GeneratedMeshLifetime>()!=null;
+                var bounds=r.bounds;var motion=r.GetComponentInParent<ArtMotion>();bool animated=motion!=null,generated=r.GetComponent<GeneratedMeshLifetime>()!=null;
                 bool atlas=r.name=="Landscape"||r.name=="Original river lakes and coast";bool meadow=r.name=="Meadow tufts and wind";
                 float range=animated?35:meadow?70:bounds.size.sqrMagnitude<25?38:80+bounds.extents.magnitude;
-                return new Piece{renderer=r,bounds=bounds,visible=true,cutaway=!animated&&!atlas&&(!generated||bounds.size.sqrMagnitude<25),rangeSquared=atlas?float.MaxValue:range*range};
+                return new Piece{renderer=r,bounds=bounds,visible=true,actor=animated?motion.transform:null,cutaway=!animated&&!atlas&&(!generated||bounds.size.sqrMagnitude<25),rangeSquared=atlas?float.MaxValue:range*range};
             }).ToArray();
+            FrameDiagnostics.pieces=pieces.Length;
             subject = player; next = 0;
         }
         public static bool Blocks(Bounds bounds, Vector3 camera, Vector3 focus)
@@ -27,17 +29,23 @@ namespace Hushwake
             float distance=delta.magnitude;return near*distance>.15f&&near*distance<distance-.35f;
         }
         void LateUpdate()
+        {long stamp=FrameDiagnostics.visible?FrameDiagnostics.Stamp():0;try{UpdateVisibility();}finally{if(FrameDiagnostics.visible)FrameDiagnostics.visibility=FrameDiagnostics.Milliseconds(stamp);}}
+        void UpdateVisibility()
         {
             if (subject == null || Time.unscaledTime < next) return; next = Time.unscaledTime + .12f;
             var origin = transform.position;
             var focus=subject.position;var feet=focus+Vector3.up*.4f;var chest=focus+Vector3.up*1.1f;var head=focus+Vector3.up*1.8f;
+            actorPositions.Clear();int active=0;
             foreach (var piece in pieces)
             {
                 if (piece.renderer == null) continue;
-                bool visible=(piece.bounds.center-focus).sqrMagnitude<piece.rangeSquared;
+                var center=piece.bounds.center;if(piece.actor!=null){if(!actorPositions.TryGetValue(piece.actor,out center)){center=piece.actor.position;actorPositions[piece.actor]=center;}}
+                bool visible=(center-focus).sqrMagnitude<piece.rangeSquared;
                 if(visible&&piece.cutaway)visible=!(Blocks(piece.bounds,origin,feet)||Blocks(piece.bounds,origin,chest)||Blocks(piece.bounds,origin,head));
                 if(piece.visible!=visible){piece.renderer.enabled=visible;piece.visible=visible;}
+                if(visible)active++;
             }
+            FrameDiagnostics.active=active;
         }
     }
 }

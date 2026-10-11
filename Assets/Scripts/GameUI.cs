@@ -26,6 +26,8 @@ namespace Hushwake
             var previous = GUI.color; GUI.color = new Color(.018f, .040f, .045f, alpha); GUI.DrawTexture(rect, Texture2D.whiteTexture); GUI.color = previous;
         }
         void OnGUI()
+        {long stamp=FrameDiagnostics.visible?FrameDiagnostics.Stamp():0;try{DrawUI();}finally{if(FrameDiagnostics.visible){FrameDiagnostics.ui+=FrameDiagnostics.Milliseconds(stamp);FrameDiagnostics.Draw();}}}
+        void DrawUI()
         {
             InitUI(); var scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f); if (scale <= 0) return;
             GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(scale, scale, 1));
