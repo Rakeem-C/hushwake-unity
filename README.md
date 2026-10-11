@@ -16,7 +16,7 @@ Follow Nera Vale through a world caught between Wake and Hush. Beneath its settl
 
 ## Development status
 
-The first playable edition is public. Compilation, 543 progression/placement assertions, and an ordinary-input browser replay of the opening route passed, including the bell, first dungeon puzzle, combat controls, menus and save/reload. The full seven-dungeon campaign, every boss phase, optional branch and ending still need browser playthroughs. The original detailed physical machinery, score, and systemic simulation are not reproduced in this edition.
+The playable edition includes the original detailed characters, regional buildings, tree canopies, dungeon architecture, equipment and enemy models, with textured ground, river surfaces, rain and distinct Wake/Hush lighting. Compilation, 543 progression/placement assertions, 372 art checks, and an ordinary-input browser replay passed, including the bell, first dungeon puzzle, combat controls, menus, camera zoom and save/reload. The full seven-dungeon campaign, every boss phase, optional branch and ending still need browser playthroughs. The original score and complete physical machinery/systemic simulation are not reproduced in this edition. Frame rate depends on hardware; the detailed art is substantially heavier than the initial primitive prototype.
 
 ## Toolchain
 
@@ -27,11 +27,11 @@ The first playable edition is public. Compilation, 543 progression/placement ass
 
 ## Content provenance
 
-`Assets/Resources/game-content.json` imports the original regions, NPCs, quests, items, lore, and dungeon blueprints from Hushwake's ChatGPT Sites version 8, source commit `ac071c727210da99b34d654be92b38311698c58d`. The import script reads the original project without changing it. Engine-specific TypeScript and Three.js code are not represented as Unity gameplay.
+`Assets/Resources/game-content.json` imports the original regions, NPCs, quests, items, lore, and dungeon blueprints from Hushwake's ChatGPT Sites version 8, source commit `ac071c727210da99b34d654be92b38311698c58d`. `Tools/ExportArt.ts` and the Unity importer preserve 240 original models, 2,360 meshes, 385 materials and 59 textures, including normals, UVs, vertex colors and animated limb hierarchy. The import scripts read the original project without changing it. Engine-specific TypeScript and Three.js code are not represented as Unity gameplay. Cormorant Garamond's bundled OFL license covers the menu font.
 
 ## Release requirement
 
-Future releases require Unity compilation and a browser pass verifying starting a journey, movement and camera control, combat, dungeon progression, pause, and save/reload. The current public player was built from source commit `17f0848cd1a1c7d4607863dde01c21dc91d553ef`; subsequent documentation and serialized build-settings updates are recorded separately in Git.
+Future releases require Unity compilation and a browser pass verifying starting a journey, movement and camera control, combat, dungeon progression, pause, and save/reload. The graphics player was built from source commit `6f606e860833720962883c2fc4f2c6c960d1422b`; subsequent documentation updates are recorded separately in Git. Its public `build-info.json` identifies the compiled source. See `docs/graphics-parity.md` and `docs/rendering-guardrails.md` for the comparison and retained failure cases.
 
 Credentials, local Unity license files, and browser profiles must stay outside this public repository.
 

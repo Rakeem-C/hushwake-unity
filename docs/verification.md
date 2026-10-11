@@ -40,3 +40,7 @@ Full seven-dungeon browser playthrough, each boss phase, every optional quest/di
 - Public browser opened without sign-in; title, new journey, Mara dialogue/response, normal movement and bell Pulse quest progression passed at approximately 59 fps. Browser console error scan was empty.
 - Local evidence: `.qa/public-hushwake.png` and `.qa/save-reload.png` (excluded from source control).
 - Public save/reload/Continue also passed: the bell Pulse quest stage and 100 health remained after a full page reload.
+
+## Detailed graphics release candidate
+
+Source `6f606e860833720962883c2fc4f2c6c960d1422b`, built 2026-10-11 00:45 UTC: successful Web export, 43,817,265 bytes, 543 progression assertions and 372 art assertions. Fresh browser replay passed the bell reward, Wake/Hush landscape lighting, entrance/room cutaway, gauge sequence and rejected out-of-order action, gallery combat effects/telegraphs/dodge, moving enemy visibility, map/journal/inventory, pause, wheel zoom, and save/full reload/Continue restoring Silt Gallery, Hush, quest stage and 91 health. Browser console errors: none. See `graphics-parity.md` for device-specific frame-rate measurements and visual scope.
