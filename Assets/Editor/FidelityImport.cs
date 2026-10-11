@@ -7,15 +7,18 @@ namespace Hushwake.Editor {
   [System.Serializable]public class Names{public string[] names;}
   static string[] names;
   static string AuthoredName(Material material){if(material.name.StartsWith("material-")&&int.TryParse(material.name.Substring(9),out int id)&&id>=0&&id<names.Length)return names[id];return material.name;}
-  public static void Run(){
+  public static void ConfigureTextures(){
    AssetDatabase.Refresh();
-   names=JsonUtility.FromJson<Names>(Resources.Load<TextAsset>("Fidelity/material-names").text).names;
-   int enhanced=0;
    foreach(var path in Directory.GetFiles("Assets/Resources/Fidelity").Where(p=>p.EndsWith(".jpg")||p.EndsWith(".png"))){
     var importer=(TextureImporter)AssetImporter.GetAtPath(path);importer.sRGBTexture=path.Contains("Diffuse")||path.Contains("_diff.");
     // Preserve RGB OpenGL normal encoding for the custom surface shaders.
     importer.textureType=TextureImporterType.Default;importer.mipmapEnabled=true;importer.wrapMode=TextureWrapMode.Repeat;importer.filterMode=FilterMode.Trilinear;importer.anisoLevel=8;importer.maxTextureSize=importer.sRGBTexture?2048:1024;importer.textureCompression=TextureImporterCompression.CompressedHQ;importer.SaveAndReimport();
    }
+  }
+  public static void Run(){
+   ConfigureTextures();
+   names=JsonUtility.FromJson<Names>(Resources.Load<TextAsset>("Fidelity/material-names").text).names;
+   int enhanced=0;
    foreach(var guid in AssetDatabase.FindAssets("t:Material",new[]{"Assets/Resources/OriginalArt"})){
     var material=AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));if(material.shader.name!="Hushwake/OriginalArt")continue;
     var name=AuthoredName(material);

@@ -59,17 +59,22 @@ namespace Hushwake
         public static GameObject Landscape(Transform parent)
         {
             var root=new GameObject("Smooth landscape atlas");root.transform.SetParent(parent,false);var mat=new Material(Shader.Find("Hushwake/Landscape"));
-            foreach(var pair in new[]{("_Grass","grass_ground_Diffuse"),("_Rock","rock_ground_02_Diffuse"),("_GrassNormal","grass_ground_nor_gl"),("_RockNormal","rock_ground_02_nor_gl"),("_GrassRough","grass_ground_Rough"),("_RockRough","rock_ground_02_Rough")})mat.SetTexture(pair.Item1,Resources.Load<Texture2D>("Fidelity/"+pair.Item2));
+            foreach(var pair in new[]{("_Grass","leafy_grass_Diffuse"),("_Rock","rock_ground_02_Diffuse"),("_GrassNormal","leafy_grass_nor_gl"),("_RockNormal","rock_ground_02_nor_gl"),("_GrassRough","leafy_grass_Rough"),("_RockRough","rock_ground_02_Rough")})mat.SetTexture(pair.Item1,Resources.Load<Texture2D>("Fidelity/"+pair.Item2));
             for(int z=0;z<256;z+=32)for(int x=0;x<256;x+=32){var obj=new GameObject("Landscape",typeof(MeshFilter),typeof(MeshRenderer));obj.transform.SetParent(root.transform,false);obj.GetComponent<MeshFilter>().sharedMesh=TerrainPatch(x,z,32);var renderer=obj.GetComponent<MeshRenderer>();renderer.sharedMaterial=mat;renderer.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;obj.AddComponent<GeneratedMeshLifetime>();}
             return root;
         }
         public static void Tree(Transform parent, Vector3 position, float height, Color leaves)
         {
-            var art=Original("tree-"+Mathf.Abs(Mathf.RoundToInt(position.x*3+position.z))%6,parent,position);art.localScale=Vector3.one*(height/11f);art.localRotation=Quaternion.Euler(0,position.x*23,0);return;
+            var prefab=Resources.Load<GameObject>("Fidelity/Forest/mature-tree");
+            if(prefab==null)throw new System.InvalidOperationException("Missing bounded forest model");
+            var art=Object.Instantiate(prefab,parent).transform;art.localPosition=position;
+            float width=.9f+Mathf.PerlinNoise(position.x+100,position.z+100)*.25f;
+            art.localScale=new Vector3(width,1,width)*(height/10f);art.localRotation=Quaternion.Euler(0,position.x*23,0);
+            WorldShade.Tree(position,height);
         }
         public static void House(Transform parent, Vector3 position, Color roof,string region="hearth",int variant=0)
         {
-            var art=Original("house-"+region+"-"+variant%3,parent,position);art.localScale=Vector3.one*.66f;return;
+            var art=Original("house-"+region+"-"+variant%3,parent,position);art.localScale=Vector3.one*.66f;WorldShade.House(position);return;
         }
         public static Transform Character(Transform parent, Vector3 position, Color coat, string name,string artKey="")
         {

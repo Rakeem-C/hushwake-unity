@@ -1,9 +1,23 @@
 using UnityEngine;
+using System.Collections.Generic;
 namespace Hushwake {
  public sealed class ArtMotion:MonoBehaviour {
-  Transform[] hips,arms;Quaternion[] hipBase,armBase;Vector3 last;float blend,phase;
-  void Start(){var all=GetComponentsInChildren<Transform>();var legs=new System.Collections.Generic.List<Transform>();var upper=new System.Collections.Generic.List<Transform>();foreach(var t in all){if(t.name.Contains(":hip:")||t.name=="leftLeg"||t.name=="rightLeg")legs.Add(t);if(t.name.Contains("upper-arm")||t.name.Contains(":arm:"))upper.Add(t);}hips=legs.ToArray();arms=upper.ToArray();hipBase=new Quaternion[hips.Length];armBase=new Quaternion[arms.Length];for(int i=0;i<hips.Length;i++)hipBase[i]=hips[i].localRotation;for(int i=0;i<arms.Length;i++)armBase[i]=arms[i].localRotation;last=transform.position;}
+  sealed class Joint {public Transform pivot;public Quaternion rest;public string kind;public float side;}
+  readonly List<Joint> joints=new List<Joint>();Vector3 last;float blend,phase;
+  void Start(){foreach(var t in GetComponentsInChildren<Transform>()){
+   string kind=t.name.StartsWith("rig:")?t.name.Split(':')[1]:t.name.Contains(":hip:")||t.name=="leftLeg"||t.name=="rightLeg"?"hip":t.name.Contains(":sole:")?"ankle":t.name.Contains(":arm:")?"shoulder":null;
+   if(kind==null)continue;
+   float side=t.name.Contains("left")||t.name.Contains(":-1")?-1:1;
+   joints.Add(new Joint{pivot=t,rest=t.localRotation,kind=kind,side=side});
+  }last=transform.position;}
   void LateUpdate(){long stamp=FrameDiagnostics.visible?FrameDiagnostics.Stamp():0;try{Animate();}finally{if(FrameDiagnostics.visible)FrameDiagnostics.actors+=FrameDiagnostics.Milliseconds(stamp);}}
-  void Animate(){var position=transform.position;var speed=(position-last).magnitude/Mathf.Max(Time.deltaTime,.001f);last=position;if(speed<.001f&&blend<.001f)return;blend=Mathf.Lerp(blend,Mathf.Clamp01(speed/3),Time.deltaTime*9);phase+=Time.deltaTime*(5+speed);for(int i=0;i<hips.Length;i++)hips[i].localRotation=hipBase[i]*Quaternion.Euler(Mathf.Sin(phase+(i%2)*Mathf.PI)*24*blend,0,0);for(int i=0;i<arms.Length;i++)arms[i].localRotation=armBase[i]*Quaternion.Euler(Mathf.Sin(phase+(i%2)*Mathf.PI)*15*blend,0,0);}
+  void Animate(){float dt=Mathf.Max(Time.deltaTime,.001f);float distance=(transform.position-last).magnitude;last=transform.position;
+   float speed=distance<10?distance/dt:0;blend=Mathf.Lerp(blend,Mathf.Clamp01(speed/3),1-Mathf.Exp(-dt*9));phase+=dt*(5+Mathf.Min(speed,8));
+   if(Camera.main!=null&&(Camera.main.transform.position-transform.position).sqrMagnitude>40*40)return;
+   foreach(var j in joints){float wave=Mathf.Sin(phase+(j.side<0?Mathf.PI:0));float hip=wave*25*blend,knee=Mathf.Max(0,-wave)*38*blend,angle=0;
+    switch(j.kind){case "hip":angle=hip;break;case "knee":angle=knee;break;case "ankle":angle=-hip-knee*.65f;break;case "shoulder":angle=-wave*18*blend;break;case "elbow":angle=-8-Mathf.Max(0,wave)*19*blend;break;}
+    j.pivot.localRotation=j.rest*Quaternion.Euler(angle,0,0);
+   }
+  }
  }
 }

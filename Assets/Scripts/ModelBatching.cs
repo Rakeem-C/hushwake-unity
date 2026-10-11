@@ -10,13 +10,23 @@ namespace Hushwake
     {
         sealed class Piece { public Mesh mesh; public Material material; public int[] pivot; }
         static readonly Dictionary<string, Piece[]> cache = new Dictionary<string, Piece[]>();
-        public static bool AnimatedPivot(Transform t) => t.name.Contains(":hip:") || t.name == "leftLeg" || t.name == "rightLeg" || t.name.Contains("upper-arm") || t.name.Contains(":arm:");
+        public static bool AnimatedPivot(Transform t) => t.name.Contains(":hip:") || t.name == "leftLeg" || t.name == "rightLeg" || t.name.StartsWith("rig:") || t.name.Contains(":arm:") || t.name.Contains(":sole:");
+        static void PrepareRig(Transform root){
+            foreach(var f in root.GetComponentsInChildren<MeshFilter>()){
+                string n=f.name;string joint=null;
+                if(n.Contains(":shin:v3:")||n.Contains(":shin-v3:"))joint="knee";
+                else if(n.Contains(":forearm:v3:")||n.Contains(":lower-arm-v3:")||n.Contains(":hand-v3:"))joint="elbow";
+                else if(n.Contains(":sleeve:v3:")||n.Contains(":upper-arm-v3:"))joint="shoulder";
+                if(joint!=null&&f.transform.parent!=root&&!f.transform.parent.name.StartsWith("rig:"))f.transform.parent.name="rig:"+joint+":"+(n.Contains(":-1:")?"left":"right");
+            }
+        }
         static int[] Path(Transform t, Transform root) { var path = new List<int>(); while (t != root) { path.Add(t.GetSiblingIndex()); t = t.parent; } path.Reverse(); return path.ToArray(); }
         static Transform Resolve(Transform root, int[] path) { foreach (int i in path) root = root.GetChild(i); return root; }
         public static void Optimize(string key, Transform root)
         {
             // Room walls stay individually cullable for the camera cutaway.
             if (key.StartsWith("room-")) return;
+            PrepareRig(root);
             var filters = root.GetComponentsInChildren<MeshFilter>();
             if (!cache.TryGetValue(key, out var pieces))
             {
@@ -47,7 +57,7 @@ namespace Hushwake
         }
         public static void StaticWorld(Transform world)
         {
-            var objects = world.GetComponentsInChildren<MeshRenderer>().Where(r => r.enabled && r.GetComponent<MeshFilter>() != null && r.GetComponentInParent<ArtMotion>() == null && r.GetComponent<GeneratedMeshLifetime>() == null).Select(r => r.gameObject).ToArray();
+            var objects = world.GetComponentsInChildren<MeshRenderer>().Where(r => r.enabled && r.GetComponent<MeshFilter>() != null && r.GetComponentInParent<ArtMotion>() == null && r.GetComponentInParent<LODGroup>() == null && r.GetComponent<GeneratedMeshLifetime>() == null).Select(r => r.gameObject).ToArray();
             if (objects.Length > 0) StaticBatchingUtility.Combine(objects, world.gameObject);
         }
     }

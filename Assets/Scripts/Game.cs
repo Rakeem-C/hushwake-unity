@@ -91,6 +91,7 @@ namespace Hushwake
         Vector3 Atlas(float x, float z) => WorldArt.Ground(x * AtlasScale, z * AtlasScale);
         void ClearEnvironment()
         {
+            WorldShade.Clear();
             if (environment != null) Destroy(environment.gameObject);
             environment = new GameObject("World").transform; environment.SetParent(transform, false);
             targets.Clear(); labels.Clear(); foes.Clear(); shots.Clear(); effects.Clear(); nearest = null;
@@ -107,7 +108,7 @@ namespace Hushwake
         void BuildWorld(Vector3 position)
         {
             dungeon = null; room = null; progress.State.dungeon = ""; progress.State.room = "";
-            ClearEnvironment(); WorldArt.Landscape(environment);WorldDetail.Water(environment);
+            ClearEnvironment(); WorldShade.Begin();WorldArt.Landscape(environment);WorldDetail.Water(environment);
             var random = new System.Random(42109);
             var reserved = WorldLayout.InteractionPoints(catalog, AtlasScale);
             var houses = WorldLayout.Houses(catalog, AtlasScale);
@@ -158,7 +159,7 @@ namespace Hushwake
                 SpawnFoe("wild:" + region.id, "Hush scavenger", pos, false, false, 45);
             }
             player.position = WorldArt.Ground(position.x, position.z); cameraDistance = 10;
-            ModelBatching.StaticWorld(environment);visibility.Track(environment,player);
+            WorldShade.Finish();ModelBatching.StaticWorld(environment);visibility.Track(environment,player);
             DetectRegion(); CameraSnap(); RealmVisuals();
         }
         static Color RegionColor(string id)

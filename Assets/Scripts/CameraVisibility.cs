@@ -13,7 +13,7 @@ namespace Hushwake
             pieces = world.GetComponentsInChildren<MeshRenderer>().Where(r => r.enabled && r.GetComponent<MeshFilter>() != null).Select(r=>{
                 var bounds=r.bounds;var motion=r.GetComponentInParent<ArtMotion>();bool animated=motion!=null,generated=r.GetComponent<GeneratedMeshLifetime>()!=null;
                 bool atlas=r.name=="Landscape"||r.name=="Original river lakes and coast";bool meadow=r.name=="Meadow tufts and wind";
-                float range=animated?35:meadow?70:bounds.size.sqrMagnitude<25?38:80+bounds.extents.magnitude;
+                float range=animated?35:meadow?30:bounds.size.sqrMagnitude<25?38:80+bounds.extents.magnitude;
                 return new Piece{renderer=r,bounds=bounds,visible=true,actor=animated?motion.transform:null,cutaway=!animated&&!atlas&&(!generated||bounds.size.sqrMagnitude<25),rangeSquared=atlas?float.MaxValue:range*range};
             }).ToArray();
             FrameDiagnostics.pieces=pieces.Length;
