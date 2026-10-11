@@ -30,11 +30,12 @@ namespace Hushwake
         {
             if (subject == null || Time.unscaledTime < next) return; next = Time.unscaledTime + .12f;
             var origin = transform.position;
+            var focus=subject.position;var feet=focus+Vector3.up*.4f;var chest=focus+Vector3.up*1.1f;var head=focus+Vector3.up*1.8f;
             foreach (var piece in pieces)
             {
                 if (piece.renderer == null) continue;
-                bool visible=(piece.bounds.center-subject.position).sqrMagnitude<piece.rangeSquared;
-                if(visible&&piece.cutaway)visible=!(Blocks(piece.bounds, origin, subject.position + Vector3.up * .4f) || Blocks(piece.bounds, origin, subject.position + Vector3.up * 1.1f) || Blocks(piece.bounds, origin, subject.position + Vector3.up * 1.8f));
+                bool visible=(piece.bounds.center-focus).sqrMagnitude<piece.rangeSquared;
+                if(visible&&piece.cutaway)visible=!(Blocks(piece.bounds,origin,feet)||Blocks(piece.bounds,origin,chest)||Blocks(piece.bounds,origin,head));
                 if(piece.visible!=visible){piece.renderer.enabled=visible;piece.visible=visible;}
             }
         }
