@@ -12,7 +12,8 @@ Shader "Hushwake/OriginalArt" {
  fixed4 tex=tex2D(_MainTex,IN.uv_MainTex);clip(tex.a-_Cutoff);
  o.Albedo=tex.rgb*_Color.rgb*IN.color.rgb; o.Alpha=1;
  o.Metallic=_Metallic; o.Smoothness=lerp(_Glossiness,1-tex2D(_RoughnessMap,IN.uv_MainTex).g,_HasRoughness);
- o.Normal=lerp(float3(0,0,1),normalize(tex2D(_NormalMap,IN.uv_MainTex).xyz*2-1),_HasNormal);
+ // Avoid excessive normal relief on small characters and curved surfaces.
+ o.Normal=normalize(lerp(float3(0,0,1),tex2D(_NormalMap,IN.uv_MainTex).xyz*2-1,_HasNormal*.65));
  o.Emission=_EmissionColor.rgb;
  }
  ENDCG

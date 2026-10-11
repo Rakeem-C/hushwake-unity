@@ -6,7 +6,8 @@ namespace Hushwake {
  public static class WorldDetail {
   static Material grass;
   static Material paving;
-  static Texture2D waterCoverage;static Material waterMaterial;
+  static Texture2D waterCoverage;static Material waterMaterial;static float[] waterField;static int waterSize;
+  public static bool Submerged(Vector3 point){if(waterField==null)return false;int x=Mathf.Clamp(Mathf.RoundToInt((point.x+125)/250*(waterSize-1)),0,waterSize-1),z=Mathf.Clamp(Mathf.RoundToInt((point.z+125)/250*(waterSize-1)),0,waterSize-1);return waterField[z*waterSize+x]>point.y-.04f;}
   static Mesh Create(List<Vector3> p,List<int> t,List<Vector2> uv,List<Color> c){var m=new Mesh{indexFormat=IndexFormat.UInt32};m.SetVertices(p);m.SetTriangles(t,0);m.SetUVs(0,uv);m.SetColors(c);m.RecalculateNormals();m.RecalculateBounds();m.RecalculateTangents();return m;}
   static void Render(Transform parent,string name,Mesh mesh,Material mat,bool shadows=true){var obj=new GameObject(name,typeof(MeshFilter),typeof(MeshRenderer));obj.transform.SetParent(parent,false);obj.GetComponent<MeshFilter>().sharedMesh=mesh;var r=obj.GetComponent<MeshRenderer>();r.sharedMaterial=mat;r.shadowCastingMode=shadows?ShadowCastingMode.On:ShadowCastingMode.Off;obj.AddComponent<GeneratedMeshLifetime>();}
   public static void Paving(Transform parent,Vector3 a,Vector3 b,float width){if(paving==null){paving=new Material(Resources.Load<Material>("OriginalArt/cobble"));paving.color=new Color(.58f,.62f,.53f);}var p=new List<Vector3>();var t=new List<int>();var uv=new List<Vector2>();var c=new List<Color>();var side=Vector3.Cross(Vector3.up,(b-a).normalized)*width*.5f;int sections=Mathf.Max(1,Mathf.CeilToInt(Vector3.Distance(a,b)/.6f));for(int i=0;i<=sections;i++){var center=Vector3.Lerp(a,b,i/(float)sections);foreach(var sign in new[]{-1,1}){var v=center+side*sign;v.y=WorldArt.Height(v.x,v.z)+.025f;p.Add(v);uv.Add(new Vector2(sign<0?0:width,i*.6f));c.Add(Color.white);}if(i>0){int n=i*2;t.AddRange(new[]{n-2,n,n-1,n-1,n,n+1});}}Render(parent,"Weathered cobble road",Create(p,t,uv,c),paving,false);}
@@ -14,10 +15,10 @@ namespace Hushwake {
    if(grass==null){grass=new Material(Shader.Find("Hushwake/Meadow"));grass.SetTexture("_MainTex",Resources.Load<Texture2D>("OriginalArt/meadow"));}
    var random=new System.Random(seed);var p=new List<Vector3>();var t=new List<int>();var uv=new List<Vector2>();var c=new List<Color>();
    for(int i=0;i<1800;i++){float x=center.x+((float)random.NextDouble()-.5f)*62,z=center.z+((float)random.NextDouble()-.5f)*62;var point=WorldArt.Ground(x,z);
-    if(reserved.Any(q=>WorldLayout.Distance(q,point)<2)||houses.Any(q=>WorldLayout.Distance(q,point)<3.6f)||WorldLayout.Distance(point,center)<4)continue;
+    if(reserved.Any(q=>WorldLayout.Distance(q,point)<2)||houses.Any(q=>WorldLayout.Distance(q,point)<3.6f)||WorldLayout.Distance(point,center)<4||Submerged(point))continue;
     float density=Mathf.PerlinNoise(x*.24f+10,z*.24f+10);if(density<.36f)continue;
-    for(int blade=0;blade<7;blade++){float a=(float)random.NextDouble()*Mathf.PI*2,h=.16f+(float)random.NextDouble()*.35f;var offset=new Vector3(((float)random.NextDouble()-.5f)*.55f,0,((float)random.NextDouble()-.5f)*.55f);var root=point+offset;root.y=WorldArt.Height(root.x,root.z);var side=new Vector3(Mathf.Cos(a),0,Mathf.Sin(a))*.045f;var lean=new Vector3(Mathf.Sin(a),0,Mathf.Cos(a))*.13f;int n=p.Count;
-     p.AddRange(new[]{root-side,root+side,root+side*.5f+Vector3.up*h+lean,root-side*.5f+Vector3.up*h+lean});uv.AddRange(new[]{new Vector2(0,0),new Vector2(1,0),new Vector2(1,1),new Vector2(0,1)});var tint=Color.Lerp(new Color(.09f,.18f,.055f),new Color(.24f,.32f,.10f),(float)random.NextDouble());for(int k=0;k<4;k++)c.Add(tint);t.AddRange(new[]{n,n+2,n+1,n,n+3,n+2});
+    for(int blade=0;blade<7;blade++){float a=(float)random.NextDouble()*Mathf.PI*2,h=.20f+(float)random.NextDouble()*.4f;var offset=new Vector3(((float)random.NextDouble()-.5f)*.55f,0,((float)random.NextDouble()-.5f)*.55f);var root=point+offset;root.y=WorldArt.Height(root.x,root.z);var side=new Vector3(Mathf.Cos(a),0,Mathf.Sin(a))*.035f;var lean=new Vector3(Mathf.Sin(a),0,Mathf.Cos(a))*.19f;int n=p.Count;var tint=Color.Lerp(new Color(.075f,.14f,.045f),new Color(.16f,.24f,.08f),(float)random.NextDouble());
+     for(int segment=0;segment<=3;segment++){float f=segment/3f;var middle=root+Vector3.up*h*f+lean*f*f;var width=side*(1-f*.9f);p.AddRange(new[]{middle-width,middle+width});uv.AddRange(new[]{new Vector2(0,f),new Vector2(1,f)});c.AddRange(new[]{tint,tint});if(segment>0){int k=n+segment*2;t.AddRange(new[]{k-2,k+1,k-1,k-2,k,k+1});}}
     }
    }var meadow=Create(p,t,uv,c);var normals=new Vector3[p.Count];for(int i=0;i<normals.Length;i++)normals[i]=Vector3.up;meadow.normals=normals;Render(parent,"Meadow tufts and wind",meadow,grass,false);
   }
@@ -27,7 +28,7 @@ namespace Hushwake {
    for(int i=0;i<4;i++){var pos=town+new Vector3(i%2==0?-3:3,0,4+i*3);pos.y=WorldArt.Height(pos.x,pos.z);var lamp=WorldArt.Original("lantern",parent,pos);lamp.localScale=Vector3.one*.45f;}
   }
   public static void Water(Transform parent){
-   var bytes=Resources.Load<TextAsset>("OriginalWater").bytes;int size=Mathf.RoundToInt(Mathf.Sqrt(bytes.Length/4));var h=new float[size*size];System.Buffer.BlockCopy(bytes,0,h,0,bytes.Length);
+   var bytes=Resources.Load<TextAsset>("OriginalWater").bytes;int size=Mathf.RoundToInt(Mathf.Sqrt(bytes.Length/4));var h=new float[size*size];System.Buffer.BlockCopy(bytes,0,h,0,bytes.Length);waterField=h;waterSize=size;
    if(waterCoverage==null){var pixels=new byte[size*size*4];for(int i=0;i<h.Length;i++)for(int channel=0;channel<4;channel++)pixels[i*4+channel]=h[i]<-100?(byte)0:(byte)255;waterCoverage=new Texture2D(size,size,TextureFormat.RGBA32,false,true){name="Original smooth shoreline coverage",filterMode=FilterMode.Bilinear,wrapMode=TextureWrapMode.Clamp};waterCoverage.SetPixelData(pixels,0);waterCoverage.Apply(false,true);waterMaterial=new Material(Shader.Find("Hushwake/Water"));waterMaterial.SetTexture("_Coverage",waterCoverage);}
    var p=new List<Vector3>();var tris=new List<int>();var uv=new List<Vector2>();var c=new List<Color>();float cell=250f/(size-1);
    System.Action<int,int,int> quad=(x,z,span)=>{float y=h[z*size+x];if(y<-100)return;int n=p.Count;float px=x*cell-125,pz=z*cell-125,w=cell*span;p.AddRange(new[]{new Vector3(px,y,pz),new Vector3(px+w,y,pz),new Vector3(px,y,pz+w),new Vector3(px+w,y,pz+w)});for(int i=0;i<4;i++){uv.Add(new Vector2(p[n+i].x,p[n+i].z));c.Add(Color.white);}tris.AddRange(new[]{n,n+2,n+1,n+1,n+2,n+3});};

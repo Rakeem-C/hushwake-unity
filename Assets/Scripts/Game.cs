@@ -76,6 +76,7 @@ namespace Hushwake
             visibility=view.gameObject.AddComponent<CameraVisibility>();
             sun = new GameObject("Evening sun", typeof(Light)).GetComponent<Light>(); sun.type = LightType.Directional; sun.intensity = 1.15f; sun.shadows = LightShadows.Soft;
             sun.transform.rotation = Quaternion.Euler(48, -30, 0);
+            sun.shadowStrength=.68f;sun.shadowBias=.035f;sun.shadowNormalBias=.2f;
             RenderSettings.fog = true; RenderSettings.fogMode = FogMode.ExponentialSquared; RenderSettings.fogDensity = .008f;RenderSettings.skybox=new Material(Shader.Find("Hushwake/Sky"));RenderSettings.ambientMode=UnityEngine.Rendering.AmbientMode.Trilight;
             RenderSettings.ambientLight = new Color(.42f, .52f, .53f);
             RenderSettings.defaultReflectionMode=UnityEngine.Rendering.DefaultReflectionMode.Custom;RenderSettings.customReflectionTexture=Resources.Load<Cubemap>("OriginalArt/SkyReflection");
@@ -124,7 +125,7 @@ namespace Hushwake
                 }
                 var town = Atlas(region.settlement.x, region.settlement.z);
                 for(int i=0;i<houses[region.id].Count;i++) WorldArt.House(environment, houses[region.id][i], color,region.id,i);
-                WorldDetail.Settlement(environment,town,houses[region.id]);WorldDetail.Meadow(environment,town,reserved,houses[region.id],region.id.Sum(c=>(int)c)*31);
+                WorldDetail.Settlement(environment,town,houses[region.id]);WorldDetail.Meadow(environment,town,reserved,houses[region.id],region.id.Sum(c=>(int)c)*31);WorldFlora.Add(environment,town,reserved,houses[region.id],region.id.Sum(c=>(int)c)*31);
                 var townLabel = WorldArt.Label(environment, town + Vector3.up * 6, region.settlement.name.ToUpperInvariant(), new Color(.96f, .76f, .38f)); labels.Add(townLabel);
                 Marker("camp:" + region.id, "Rest • " + region.settlement.name, "camp", town + Vector3.right * 5, new Color(1, .63f, .24f));
                 foreach (var site in region.sites)

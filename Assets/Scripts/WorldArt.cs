@@ -21,6 +21,12 @@ namespace Hushwake
             var obj = GameObject.CreatePrimitive(type); obj.name = name;
             obj.transform.SetParent(parent, false); obj.transform.localPosition = position; obj.transform.localScale = scale;
             obj.GetComponent<Renderer>().sharedMaterial = Material(color);
+            if(name=="weathered rock"){
+                obj.GetComponent<Renderer>().sharedMaterial=Resources.Load<Material>("Fidelity/boulder");
+                var filter=obj.GetComponent<MeshFilter>();var mesh=Object.Instantiate(filter.sharedMesh);var points=mesh.vertices;
+                for(int i=0;i<points.Length;i++){float irregularity=.88f+Mathf.PerlinNoise(points[i].x*6+position.x,points[i].z*6+position.z)*.24f;points[i]*=irregularity;}
+                mesh.vertices=points;mesh.RecalculateNormals();mesh.RecalculateTangents();mesh.RecalculateBounds();filter.sharedMesh=mesh;obj.AddComponent<GeneratedMeshLifetime>();
+            }
             var collider = obj.GetComponent<Collider>(); if (collider != null) Object.Destroy(collider);
             return obj;
         }
@@ -33,31 +39,29 @@ namespace Hushwake
         }
         public static Vector3 Ground(float x, float z) => new Vector3(x, Height(x, z), z);
         public static Mesh TerrainMesh()
+        { return TerrainPatch(0,0,256); }
+        public static Mesh TerrainPatch(int startX,int startZ,int size)
         {
-            const int size = 128; const float cell = 250f/size;
+            const float cell = 250f/256;
             var vertices = new List<Vector3>(); var colors = new List<Color>(); var triangles = new List<int>();
-            for (var z = 0; z < size; z++) for (var x = 0; x < size; x++)
+            var normals=new List<Vector3>();var uv=new List<Vector2>();
+            for (var z = 0; z <= size; z++) for (var x = 0; x <= size; x++)
             {
-                var p = new Vector3((x - size / 2) * cell, 0, (z - size / 2) * cell);
-                var corners = new[] { p, p + new Vector3(cell, 0, 0), p + new Vector3(0, 0, cell), p + new Vector3(cell, 0, cell) };
-                foreach (var i in new[] { 0, 2, 1, 1, 2, 3 })
-                {
-                    var v = corners[i]; v.y = Height(v.x, v.z); vertices.Add(v);
-                    var hue = Mathf.PerlinNoise(v.x * .035f + 100, v.z * .035f + 100);
-                    colors.Add(Color.Lerp(new Color(.19f, .29f, .15f), new Color(.35f, .43f, .23f), hue));
-                    triangles.Add(triangles.Count);
-                }
+                var v=Ground((startX+x)*cell-125,(startZ+z)*cell-125);vertices.Add(v);
+                // Global derivatives keep normals continuous at every chunk boundary.
+                normals.Add(new Vector3(Height(v.x-.25f,v.z)-Height(v.x+.25f,v.z),.5f,Height(v.x,v.z-.25f)-Height(v.x,v.z+.25f)).normalized);uv.Add(new Vector2(v.x,v.z));
+                colors.Add(Color.Lerp(new Color(.19f,.29f,.15f),new Color(.35f,.43f,.23f),Mathf.PerlinNoise(v.x*.035f+100,v.z*.035f+100)));
+                if(x<size&&z<size){int n=z*(size+1)+x;triangles.AddRange(new[]{n,n+size+1,n+1,n+1,n+size+1,n+size+2});}
             }
-            var mesh = new Mesh { name = "Hushwake low-poly landscape", indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
-            mesh.SetVertices(vertices); mesh.SetColors(colors); mesh.SetTriangles(triangles, 0); mesh.RecalculateNormals(); return mesh;
+            var mesh = new Mesh { name = "Smooth authored landscape", indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
+            mesh.SetVertices(vertices);mesh.SetColors(colors);mesh.SetUVs(0,uv);mesh.SetTriangles(triangles,0);mesh.SetNormals(normals);mesh.RecalculateTangents();mesh.RecalculateBounds();return mesh;
         }
         public static GameObject Landscape(Transform parent)
         {
-            var obj = new GameObject("Landscape", typeof(MeshFilter), typeof(MeshRenderer)); obj.transform.SetParent(parent, false);
-            obj.GetComponent<MeshFilter>().sharedMesh = TerrainMesh();
-            obj.GetComponent<MeshRenderer>().shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;
-            var mat=new Material(Shader.Find("Hushwake/Landscape"));mat.SetTexture("_Substrate",Resources.Load<Texture2D>("OriginalArt/substrate"));obj.GetComponent<MeshRenderer>().sharedMaterial=mat;
-            return obj;
+            var root=new GameObject("Smooth landscape atlas");root.transform.SetParent(parent,false);var mat=new Material(Shader.Find("Hushwake/Landscape"));
+            foreach(var pair in new[]{("_Grass","grass_ground_Diffuse"),("_Rock","rock_ground_02_Diffuse"),("_GrassNormal","grass_ground_nor_gl"),("_RockNormal","rock_ground_02_nor_gl"),("_GrassRough","grass_ground_Rough"),("_RockRough","rock_ground_02_Rough")})mat.SetTexture(pair.Item1,Resources.Load<Texture2D>("Fidelity/"+pair.Item2));
+            for(int z=0;z<256;z+=32)for(int x=0;x<256;x+=32){var obj=new GameObject("Landscape",typeof(MeshFilter),typeof(MeshRenderer));obj.transform.SetParent(root.transform,false);obj.GetComponent<MeshFilter>().sharedMesh=TerrainPatch(x,z,32);var renderer=obj.GetComponent<MeshRenderer>();renderer.sharedMaterial=mat;renderer.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;obj.AddComponent<GeneratedMeshLifetime>();}
+            return root;
         }
         public static void Tree(Transform parent, Vector3 position, float height, Color leaves)
         {
