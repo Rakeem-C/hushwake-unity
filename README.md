@@ -16,7 +16,7 @@ Follow Nera Vale through a world caught between Wake and Hush. Beneath its settl
 
 ## Development status
 
-The playable edition includes detailed characters, regional buildings, tree canopies, dungeon architecture, equipment and enemy models. The latest visual pass adds smooth terrain, 2K ground/bark/stone/plaster surfaces, photographed leaf silhouettes, fabric relief, curved grass, ferns and flowers, restrained water ripples and edge smoothing. Compilation, 543 progression/placement assertions and 453 art checks passed. Ordinary-input browser checks cover the opening bell, first dungeon puzzle, combat controls, menus, camera zoom and save/reload. The full seven-dungeon campaign, every boss phase, optional branch and ending still need browser playthroughs. The original score and complete physical machinery/systemic simulation are not reproduced in this edition. Frame rate depends on hardware. The visuals have improved, but parity with Nintendo's 2026 Ocarina of Time remake has not been achieved.
+The playable edition includes detailed characters, regional buildings, tree canopies, dungeon architecture, equipment and enemy models. The latest visual pass adds smooth terrain, 2K ground/bark/stone/plaster surfaces, photographed leaf silhouettes, fabric relief, photographic woodland trees, dense curved grass, folded ferns and flowers, soft ground contact, articulated walking, restrained water ripples and edge smoothing. Compilation, 547 progression/placement assertions and 477 art checks passed. Ordinary-input browser checks cover the opening bell, first dungeon puzzle, combat controls, menus, camera zoom and save/reload. The full seven-dungeon campaign, every boss phase, optional branch and ending still need browser playthroughs. The original score and complete physical machinery/systemic simulation are not reproduced in this edition. Frame rate depends on hardware. The visuals have improved, but parity with Nintendo's 2026 Ocarina of Time remake has not been achieved.
 
 ## Toolchain
 
@@ -31,7 +31,7 @@ The playable edition includes detailed characters, regional buildings, tree cano
 
 ## Release requirement
 
-Future releases require Unity compilation and a browser pass verifying starting a journey, movement and camera control, combat, dungeon progression, pause, and save/reload. The fidelity player was built from source commit `0554bf5f7db66624e661c163d90c56e03312661e`; subsequent documentation updates are recorded separately in Git. Its public `build-info.json` identifies the compiled source. See `docs/fidelity-2026.md`, `docs/graphics-parity.md` and `docs/rendering-guardrails.md` for the comparison and retained failure cases.
+Future releases require Unity compilation and a browser pass verifying starting a journey, movement and camera control, combat, dungeon progression, pause, and save/reload. The latest player was built from source commit `67766cae10808a2cb3c6bef5881ff72fc2828bfb`; subsequent documentation updates are recorded separately in Git. Its public `build-info.json` identifies the compiled source. See `docs/forest-2026.md`, `docs/fidelity-2026.md`, `docs/graphics-parity.md` and `docs/rendering-guardrails.md` for the comparison and retained failure cases.
 
 Credentials, local Unity license files, and browser profiles must stay outside this public repository.
 
