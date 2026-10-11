@@ -27,26 +27,26 @@ namespace Hushwake.Editor {
    var result=new Mesh{indexFormat=IndexFormat.UInt32};result.SetVertices(positions);result.SetNormals(normals);result.SetUVs(0,uv);result.SetTriangles(chosen,0);result.RecalculateTangents();result.RecalculateBounds();return result;
   }
   static void Save(UnityEngine.Object asset,string path){var existing=AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);if(existing==null)AssetDatabase.CreateAsset(asset,path);else{EditorUtility.CopySerialized(asset,existing);UnityEngine.Object.DestroyImmediate(asset);} }
-  static Material Surface(string name,string diffuse,string normal,string rough){var m=new Material(Shader.Find("Hushwake/OriginalArt")){name=name,color=Color.white};m.SetTexture("_MainTex",Resources.Load<Texture2D>("Fidelity/"+diffuse));m.SetTexture("_NormalMap",Resources.Load<Texture2D>("Fidelity/"+normal));m.SetTexture("_RoughnessMap",Resources.Load<Texture2D>("Fidelity/"+rough));m.SetFloat("_HasNormal",1);m.SetFloat("_HasRoughness",1);m.SetFloat("_Cull",0);return m;}
+  static Material Surface(string name,string diffuse,string normal,string rough){var m=new Material(Shader.Find("Hushwake/OriginalArt")){name=name,color=Color.white};m.SetTexture("_MainTex",Resources.Load<Texture2D>("Fidelity/"+diffuse));m.SetTexture("_NormalMap",Resources.Load<Texture2D>("Fidelity/"+normal));m.SetTexture("_RoughnessMap",Resources.Load<Texture2D>("Fidelity/"+rough));m.SetFloat("_HasNormal",1);m.SetFloat("_HasRoughness",1);m.SetFloat("_Cull",2);return m;}
   public static void Run(){
    FidelityImport.ConfigureTextures();System.IO.Directory.CreateDirectory(Folder);AssetDatabase.Refresh();
    var asset=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Editor/ArtSource/tree_small_02.fbx");var filter=asset.GetComponentInChildren<MeshFilter>();var renderer=filter.GetComponent<Renderer>();var source=filter.sharedMesh;var bounds=renderer.bounds;Debug.Log("FOREST_SOURCE_BOUNDS "+bounds);
    var branch=Surface("Photographed fine branches","tree_small_02_branch_diff","tree_small_02_branch_nor_gl","tree_small_02_branch_rough");
-   var leaf=Surface("Photographed foliage","tree_small_02_leaves_diff","tree_small_02_leaves_nor_gl","tree_small_02_leaves_rough");leaf.SetTexture("_AlphaMap",Resources.Load<Texture2D>("Fidelity/tree_small_02_leaves_alpha"));leaf.SetFloat("_HasAlpha",1);leaf.SetFloat("_Wind",1);leaf.color=new Color(.95f,1,.91f);leaf.SetColor("_EmissionColor",new Color(.012f,.019f,.008f));
+   var leaf=Surface("Photographed foliage","tree_small_02_leaves_diff","tree_small_02_leaves_nor_gl","tree_small_02_leaves_rough");leaf.SetTexture("_AlphaMap",Resources.Load<Texture2D>("Fidelity/tree_small_02_leaves_alpha"));leaf.SetFloat("_HasAlpha",1);leaf.SetFloat("_Wind",1);leaf.SetFloat("_Cull",0);leaf.color=new Color(.95f,1,.91f);leaf.SetColor("_EmissionColor",new Color(.012f,.019f,.008f));
    var trunk=Surface("Photographed mature trunk","tree_small_02_Diffuse","bark_brown_02_nor_gl","bark_brown_02_Rough");
    Save(branch,Folder+"/branch.mat");Save(leaf,Folder+"/leaf.mat");Save(trunk,Folder+"/trunk.mat");AssetDatabase.SaveAssets();
    var root=new GameObject("Mature woodland tree");var lods=new LOD[2];int total=0;
    for(int lod=0;lod<2;lod++){
     var renderers=new List<Renderer>();for(int part=0;part<source.subMeshCount;part++){
      string type=renderer.sharedMaterials[part].name.Contains("leaves")?"leaf":renderer.sharedMaterials[part].name.Contains("trunk")?"trunk":"branch";string path=Folder+"/"+type+"-lod"+lod+".asset";
-     Mesh reduced;if(lod==0){var original=Part(source,part,filter.transform.localToWorldMatrix,bounds);int target=type=="leaf"?18000:type=="trunk"?3500:2500;Debug.Log("FOREST_REDUCE "+type+" sourceTriangles="+original.triangles.Length/3);reduced=Reduce(original,target);UnityEngine.Object.DestroyImmediate(original);}
-     else reduced=Reduce(AssetDatabase.LoadAssetAtPath<Mesh>(Folder+"/"+type+"-lod0.asset"),type=="leaf"?5000:type=="trunk"?850:650);
-     int leafBudget=lod==0?18000:5000;if(type=="leaf"&&reduced.triangles.Length/3>leafBudget){var thinned=LeafBudget(reduced,leafBudget,lod==0?4:1.8f);UnityEngine.Object.DestroyImmediate(reduced);reduced=thinned;}
+     Mesh reduced;if(lod==0){var original=Part(source,part,filter.transform.localToWorldMatrix,bounds);int target=type=="leaf"?30000:type=="trunk"?3500:2500;Debug.Log("FOREST_REDUCE "+type+" sourceTriangles="+original.triangles.Length/3);reduced=Reduce(original,target);UnityEngine.Object.DestroyImmediate(original);}
+     else reduced=Reduce(AssetDatabase.LoadAssetAtPath<Mesh>(Folder+"/"+type+"-lod0.asset"),type=="leaf"?7000:type=="trunk"?850:650);
+     int leafBudget=lod==0?30000:7000;if(type=="leaf"&&reduced.triangles.Length/3>leafBudget){var thinned=LeafBudget(reduced,leafBudget,lod==0?2.5f:1.6f);UnityEngine.Object.DestroyImmediate(reduced);reduced=thinned;}
      int count=reduced.triangles.Length/3;Debug.Log("FOREST_LOD "+lod+" "+type+" triangles="+count);if(count==0||count>50000)throw new Exception("Unbounded or empty forest mesh");if(lod==0)total+=count;reduced.name=type+" forest LOD "+lod;Save(reduced,path);AssetDatabase.SaveAssets();
      var child=new GameObject(type+" canopy LOD "+lod,typeof(MeshFilter),typeof(MeshRenderer));child.transform.SetParent(root.transform,false);child.GetComponent<MeshFilter>().sharedMesh=AssetDatabase.LoadAssetAtPath<Mesh>(path);var r=child.GetComponent<MeshRenderer>();r.sharedMaterial=AssetDatabase.LoadAssetAtPath<Material>(Folder+"/"+type+".mat");r.shadowCastingMode=type=="leaf"?ShadowCastingMode.Off:ShadowCastingMode.On;renderers.Add(r);
-    }lods[lod]=new LOD(lod==0?.28f:.025f,renderers.ToArray());
+    }lods[lod]=new LOD(lod==0?.32f:.025f,renderers.ToArray());
    }
-   var group=root.AddComponent<LODGroup>();group.SetLODs(lods);group.RecalculateBounds();PrefabUtility.SaveAsPrefabAsset(root,Folder+"/mature-tree.prefab");UnityEngine.Object.DestroyImmediate(root);AssetDatabase.SaveAssets();if(total>45000)throw new Exception("Forest near mesh exceeds budget");Debug.Log("FOREST_IMPORT_SUCCEEDED nearTriangles="+total);
+   var group=root.AddComponent<LODGroup>();group.SetLODs(lods);group.RecalculateBounds();PrefabUtility.SaveAsPrefabAsset(root,Folder+"/mature-tree.prefab");UnityEngine.Object.DestroyImmediate(root);AssetDatabase.SaveAssets();if(total>55000)throw new Exception("Forest near mesh exceeds budget");Debug.Log("FOREST_IMPORT_SUCCEEDED nearTriangles="+total);
   }
  }
 }

@@ -23,4 +23,3 @@ Shader "Hushwake/Landscape" {
     }
     Fallback "Diffuse"
 }
-
