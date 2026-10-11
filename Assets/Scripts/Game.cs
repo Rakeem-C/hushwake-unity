@@ -228,7 +228,7 @@ namespace Hushwake
             frameCount++; frameTime += Time.unscaledDeltaTime; if (frameTime >= 1) { fps = frameCount / frameTime; frameCount = 0; frameTime = 0;
                 if(detailedLighting&&started&&string.IsNullOrEmpty(panel)&&Application.isFocused&&Time.unscaledTime>lightingWarmup&&Time.unscaledDeltaTime<.2f){slowLightingWindows=fps<25?slowLightingWindows+1:0;if(slowLightingWindows>=3)ConfigureGraphics("balanced");}
             }
-            foreach (var label in labels) if (label != null) { label.rotation = view.transform.rotation; label.gameObject.SetActive(Vector3.Distance(player.position, label.position) < 13); }
+            foreach (var label in labels) if (label != null) {bool visible=Vector3.Distance(player.position,label.position)<13;if(label.gameObject.activeSelf!=visible)label.gameObject.SetActive(visible);if(visible)label.rotation=view.transform.rotation;}
             if (!started || dead || !string.IsNullOrEmpty(panel)) { if (started && Input.GetKeyDown(KeyCode.Escape)) panel = ""; FollowCamera(); return; }
             if (Input.GetKeyDown(KeyCode.Escape)) { panel = "pause"; return; }
             if (Input.GetKeyDown(KeyCode.M)) { panel = "map"; return; }

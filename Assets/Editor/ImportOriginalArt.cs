@@ -14,6 +14,11 @@ namespace Hushwake.Editor {
   static Mesh[] meshes;static Material[] mats;
   static Vector3 V(float[] a)=>new Vector3(a[0],a[1],a[2]);
   static Color C(float[] a)=>new Color(a[0],a[1],a[2],1);
+  [Serializable]public class ProfileIndex {public int[] unlit;public Opacity[] translucent;}
+  [Serializable]public class Opacity {public int id;public float opacity;}
+  static Shader ProfileShader(MatDef d)=>Shader.Find(d.unlit?"Hushwake/OriginalUnlit":d.opacity<.99f?"Hushwake/OriginalTransparent":"Hushwake/OriginalArt");
+  static void ProfileManifest(Manifest data){var unlit=new System.Collections.Generic.List<int>();var translucent=new System.Collections.Generic.List<Opacity>();for(int i=0;i<data.materials.Length;i++){if(data.materials[i].unlit)unlit.Add(i);if(data.materials[i].opacity<.99f)translucent.Add(new Opacity{id=i,opacity=data.materials[i].opacity});}File.WriteAllText("Assets/Resources/OriginalArt/material-profiles.json",JsonUtility.ToJson(new ProfileIndex{unlit=unlit.ToArray(),translucent=translucent.ToArray()},true));}
+  public static void UpdateMaterialProfiles(){var data=JsonUtility.FromJson<Manifest>(File.ReadAllText(".art-import/manifest.json"));if(data.sourceCommit!="ac071c727210da99b34d654be92b38311698c58d")throw new Exception("Unexpected material provenance");for(int i=0;i<data.materials.Length;i++){var d=data.materials[i];var m=AssetDatabase.LoadAssetAtPath<Material>($"Assets/Resources/OriginalArt/material-{i}.mat");if(m==null||ProfileShader(d)==null)throw new Exception("Missing material profile");m.shader=ProfileShader(d);var tint=C(d.color).gamma;tint.a=d.opacity;m.color=tint;EditorUtility.SetDirty(m);}ProfileManifest(data);AssetDatabase.SaveAssets();AssetDatabase.Refresh();ArtAudit.Run();Debug.Log("HUSHWAKE_MATERIAL_PROFILES_SUCCEEDED");}
   public static void Run(){
    var input=Path.GetFullPath(".art-import");var data=JsonUtility.FromJson<Manifest>(File.ReadAllText(Path.Combine(input,"manifest.json")));
    if(data.version!=1||data.sourceCommit!="ac071c727210da99b34d654be92b38311698c58d")throw new Exception("Unexpected art provenance");
@@ -27,7 +32,7 @@ namespace Hushwake.Editor {
    }
    mats=new Material[data.materials.Length];var shader=Shader.Find("Hushwake/OriginalArt");if(shader==null)throw new Exception("Art shader absent");
    for(int i=0;i<mats.Length;i++){
-    var d=data.materials[i];var m=new Material(shader){name=d.name,color=C(d.color).gamma};m.SetFloat("_Glossiness",1-d.roughness);m.SetFloat("_Metallic",d.metallic);m.SetFloat("_Cull",d.doubleSided?0:2);m.SetFloat("_Cutoff",d.alphaCutoff);
+    var d=data.materials[i];var tint=C(d.color).gamma;tint.a=d.opacity;var m=new Material(ProfileShader(d)){name=d.name,color=tint};m.SetFloat("_Glossiness",1-d.roughness);m.SetFloat("_Metallic",d.metallic);m.SetFloat("_Cull",d.doubleSided?0:2);m.SetFloat("_Cutoff",d.alphaCutoff);
     m.SetColor("_EmissionColor",C(d.emission)*d.emissionIntensity);m.SetFloat("_Wind",d.name.Contains("leaf")?1:0);
     if(d.map>=0){m.SetTexture("_MainTex",textures[d.map]);m.mainTextureScale=new Vector2(data.textures[d.map].repeat[0],data.textures[d.map].repeat[1]);}
     if(d.normal>=0){m.SetTexture("_NormalMap",textures[d.normal]);m.SetFloat("_HasNormal",1);}
@@ -47,7 +52,7 @@ namespace Hushwake.Editor {
     var name=data.textures[i].file.Replace("-albedo.rgba","");var m=new Material(shader){name=name};m.SetTexture("_MainTex",textures[i]);m.SetTexture("_NormalMap",textures[i+1]);m.SetFloat("_HasNormal",1);m.SetTexture("_RoughnessMap",textures[i+2]);m.SetFloat("_HasRoughness",1);AssetDatabase.CreateAsset(m,$"{folder}/{name}.mat");
    }
    var sky=new Cubemap(32,TextureFormat.RGBA32,true){name="Hushwake sky reflection"};foreach(CubemapFace face in new[]{CubemapFace.PositiveX,CubemapFace.NegativeX,CubemapFace.PositiveY,CubemapFace.NegativeY,CubemapFace.PositiveZ,CubemapFace.NegativeZ}){var colors=new Color[1024];for(int y=0;y<32;y++)for(int x=0;x<32;x++){float height=face==CubemapFace.PositiveY?1:face==CubemapFace.NegativeY?-1:(y/31f*2-1);colors[y*32+x]=Color.Lerp(new Color(.20f,.25f,.20f),new Color(.65f,.75f,.78f),(height+1)*.5f);}sky.SetPixels(colors,face);}sky.Apply(true);AssetDatabase.CreateAsset(sky,$"{folder}/SkyReflection.asset");
-   AssetDatabase.SaveAssets();Debug.Log($"HUSHWAKE_ART_IMPORT_SUCCEEDED models={data.models.Length} meshes={meshes.Length} textures={textures.Length}");
+   ProfileManifest(data);AssetDatabase.SaveAssets();AssetDatabase.Refresh();Debug.Log($"HUSHWAKE_ART_IMPORT_SUCCEEDED models={data.models.Length} meshes={meshes.Length} textures={textures.Length}");
   }
   static GameObject Build(Node d,Transform parent){var obj=new GameObject(d.name);obj.transform.SetParent(parent,false);obj.transform.localPosition=V(d.position);obj.transform.localRotation=new Quaternion(d.rotation[0],d.rotation[1],d.rotation[2],d.rotation[3]);obj.transform.localScale=V(d.scale);
    if(d.mesh>=0){obj.AddComponent<MeshFilter>().sharedMesh=meshes[d.mesh];var renderer=obj.AddComponent<MeshRenderer>();renderer.sharedMaterial=mats[d.material];renderer.shadowCastingMode=ShadowCastingMode.On;renderer.receiveShadows=true;}

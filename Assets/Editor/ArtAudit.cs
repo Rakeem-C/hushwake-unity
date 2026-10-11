@@ -23,6 +23,10 @@ namespace Hushwake.Editor {
    }
    test(CameraVisibility.Blocks(new Bounds(new Vector3(0,2,-4),Vector3.one*2),new Vector3(0,3,-10),new Vector3(0,1,0)),"foreground facade triggers camera cutaway");
    test(!CameraVisibility.Blocks(new Bounds(new Vector3(0,2,4),Vector3.one*2),new Vector3(0,3,-10),new Vector3(0,1,0)),"background facade remains visible");
+   test(!CameraVisibility.Blocks(new Bounds(new Vector3(5,2,-4),Vector3.one),new Vector3(0,3,-10),new Vector3(0,1,0)),"off-axis scenery remains visible");
+   var profiles=JsonUtility.FromJson<ImportOriginalArt.ProfileIndex>(Resources.Load<TextAsset>("OriginalArt/material-profiles").text);test(profiles.unlit.Length==65&&profiles.translucent.Length==2,"complete original material profiles");
+   foreach(int id in profiles.unlit)test(Resources.Load<Material>("OriginalArt/material-"+id).shader.name=="Hushwake/OriginalUnlit","original unlit glow "+id);
+   foreach(var entry in profiles.translucent){var m=Resources.Load<Material>("OriginalArt/material-"+entry.id);test(m.shader.name=="Hushwake/OriginalTransparent"&&Mathf.Abs(m.color.a-entry.opacity)<.001f,"original translucency "+entry.id);}
    Debug.Log("HUSHWAKE_ART_AUDIT_SUCCEEDED checks="+checks);
   }
  }
