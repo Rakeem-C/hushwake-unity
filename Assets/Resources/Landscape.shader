@@ -14,7 +14,7 @@ Shader "Hushwake/Landscape" {
             float3 grass=tex2D(_Grass,uv).rgb,stone=tex2D(_Rock,uv*.8).rgb;
             float macro=.88+.12*sin(IN.worldPos.x*.051+sin(IN.worldPos.z*.047));
             float2 ground=tex2D(_GroundShade,(IN.worldPos.xz+125)/250).rg;
-            o.Albedo=lerp(grass*float3(.68,.86,.58),stone,rock)*macro*ground.g;o.Occlusion=ground.r;
+            o.Albedo=lerp(grass*float3(.45,1.2,.45),stone,rock)*macro*ground.g;o.Occlusion=ground.r;
             float3 gn=tex2D(_GrassNormal,uv).xyz*2-1,rn=tex2D(_RockNormal,uv*.8).xyz*2-1;
             o.Normal=normalize(lerp(float3(0,0,1),lerp(gn,rn,rock),.65));
             o.Smoothness=1-lerp(tex2D(_GrassRough,uv).r,tex2D(_RockRough,uv*.8).r,rock);o.Alpha=1;
@@ -23,3 +23,4 @@ Shader "Hushwake/Landscape" {
     }
     Fallback "Diffuse"
 }
+
