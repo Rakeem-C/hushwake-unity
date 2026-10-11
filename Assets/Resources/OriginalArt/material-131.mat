@@ -23,16 +23,20 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b077d1eb562177d4eb63618e3db81ce1, type: 2}
+    - _AlphaMap:
+        m_Texture: {fileID: 2800000, guid: db79e1249612d0642a402cd4e2ffc7e1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 0f242a794d84c9449bfff21523dc3d02, type: 3}
+        m_Scale: {x: 0.195, y: 0.14}
+        m_Offset: {x: 0.02, y: 0.705}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: ce16fb1664085d547aaae3a107e1fac5, type: 2}
+        m_Texture: {fileID: 2800000, guid: 59482dc457465e2479160377a6ac244b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: 87b5de165d3d4c443bac208de3c28fb6, type: 2}
+        m_Texture: {fileID: 2800000, guid: c303607272c223c44a2b6a9bb1d963aa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -40,12 +44,13 @@ Material:
     - _Cull: 0
     - _Cutoff: 0
     - _Glossiness: 0.120000005
+    - _HasAlpha: 1
     - _HasNormal: 1
     - _HasRoughness: 1
     - _Metallic: 0
     - _Wind: 1
     m_Colors:
-    - _Color: {r: 0.43529406, g: 0.5921568, b: 0.45490193, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.85, g: 0.96, b: 0.78, a: 1}
+    - _EmissionColor: {r: 0.015, g: 0.025, b: 0.008, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

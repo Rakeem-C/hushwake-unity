@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 namespace Hushwake.Editor {
@@ -10,15 +11,23 @@ namespace Hushwake.Editor {
    AssetDatabase.Refresh();
    names=JsonUtility.FromJson<Names>(Resources.Load<TextAsset>("Fidelity/material-names").text).names;
    int enhanced=0;
-   foreach(var path in Directory.GetFiles("Assets/Resources/Fidelity","*.jpg")){
-    var importer=(TextureImporter)AssetImporter.GetAtPath(path);importer.sRGBTexture=path.Contains("Diffuse");
+   foreach(var path in Directory.GetFiles("Assets/Resources/Fidelity").Where(p=>p.EndsWith(".jpg")||p.EndsWith(".png"))){
+    var importer=(TextureImporter)AssetImporter.GetAtPath(path);importer.sRGBTexture=path.Contains("Diffuse")||path.Contains("_diff.");
     // Preserve RGB OpenGL normal encoding for the custom surface shaders.
-    importer.textureType=TextureImporterType.Default;importer.mipmapEnabled=true;importer.wrapMode=TextureWrapMode.Repeat;importer.filterMode=FilterMode.Trilinear;importer.anisoLevel=8;importer.maxTextureSize=path.Contains("Diffuse")?2048:1024;importer.textureCompression=TextureImporterCompression.CompressedHQ;importer.SaveAndReimport();
+    importer.textureType=TextureImporterType.Default;importer.mipmapEnabled=true;importer.wrapMode=TextureWrapMode.Repeat;importer.filterMode=FilterMode.Trilinear;importer.anisoLevel=8;importer.maxTextureSize=importer.sRGBTexture?2048:1024;importer.textureCompression=TextureImporterCompression.CompressedHQ;importer.SaveAndReimport();
    }
    foreach(var guid in AssetDatabase.FindAssets("t:Material",new[]{"Assets/Resources/OriginalArt"})){
     var material=AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));if(material.shader.name!="Hushwake/OriginalArt")continue;
     var name=AuthoredName(material);
-    if(name.Contains("bark")){Apply(material,"bark_brown_02",1.7f);enhanced++;}
+    if(name.Contains("bark")){Apply(material,"bark_brown_02",1.7f);material.color=new Color(.8f,.75f,.68f);enhanced++;}
+    else if(name=="hushwake-authored:leaf"){
+     material.SetTexture("_MainTex",Resources.Load<Texture2D>("Fidelity/tree_small_02_leaves_diff"));material.SetTexture("_AlphaMap",Resources.Load<Texture2D>("Fidelity/tree_small_02_leaves_alpha"));material.SetTexture("_NormalMap",Resources.Load<Texture2D>("Fidelity/tree_small_02_leaves_nor_gl"));material.SetTexture("_RoughnessMap",Resources.Load<Texture2D>("Fidelity/tree_small_02_leaves_rough"));material.SetFloat("_HasAlpha",1);material.SetFloat("_HasNormal",1);material.SetFloat("_HasRoughness",1);material.SetFloat("_Wind",1);material.SetFloat("_Cull",0);material.color=new Color(.85f,.96f,.78f);material.SetColor("_EmissionColor",new Color(.015f,.025f,.008f));material.mainTextureScale=new Vector2(.195f,.14f);material.mainTextureOffset=new Vector2(.02f,.705f);enhanced++;
+    }
+    else if(name=="hushwake:settlement-finish:plaster"){Apply(material,"white_plaster_02",2);enhanced++;}
+    else if(name.Contains("character:")&&name.Contains("cloth")){
+     // Preserve each resident's costume palette; add fine weave relief without dyeing everyone blue.
+     material.SetTexture("_NormalMap",Resources.Load<Texture2D>("Fidelity/denim_fabric_nor_gl"));material.SetTexture("_RoughnessMap",Resources.Load<Texture2D>("Fidelity/denim_fabric_Rough"));material.SetFloat("_HasNormal",1);material.SetFloat("_HasRoughness",1);enhanced++;
+    }
     else if(name=="cobble"||name=="courtstone"){Apply(material,"cobblestone_floor_02",1);enhanced++;}
     else if(name.Contains("fieldstone")||name=="limestone"){Apply(material,"rock_ground_02",1.2f);enhanced++;}
     EditorUtility.SetDirty(material);

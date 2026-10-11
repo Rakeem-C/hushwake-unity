@@ -1,15 +1,15 @@
 Shader "Hushwake/OriginalArt" {
- Properties { _Color("Tint",Color)=(1,1,1,1) _MainTex("Albedo",2D)="white"{} _NormalMap("Normal",2D)="bump"{} _RoughnessMap("Roughness",2D)="white"{} _Glossiness("Smoothness",Range(0,1))=.15 _Metallic("Metallic",Range(0,1))=0 _EmissionColor("Emission",Color)=(0,0,0,0) _Cutoff("Cutout",Range(0,1))=0 _HasNormal("Normal present",Float)=0 _HasRoughness("Roughness present",Float)=0 _Cull("Cull",Float)=2 _Wind("Leaf movement",Float)=0 }
+ Properties { _Color("Tint",Color)=(1,1,1,1) _MainTex("Albedo",2D)="white"{} _NormalMap("Normal",2D)="bump"{} _RoughnessMap("Roughness",2D)="white"{} _AlphaMap("Leaf silhouette",2D)="white"{} _HasAlpha("Separate alpha present",Float)=0 _Glossiness("Smoothness",Range(0,1))=.15 _Metallic("Metallic",Range(0,1))=0 _EmissionColor("Emission",Color)=(0,0,0,0) _Cutoff("Cutout",Range(0,1))=0 _HasNormal("Normal present",Float)=0 _HasRoughness("Roughness present",Float)=0 _Cull("Cull",Float)=2 _Wind("Leaf movement",Float)=0 }
  SubShader {
  Tags {"RenderType"="Opaque"} Cull [_Cull]
  CGPROGRAM
  #pragma surface surf Standard fullforwardshadows addshadow vertex:vert
  #pragma target 3.0
  struct Input { float2 uv_MainTex; float4 color:COLOR; };
- sampler2D _MainTex,_NormalMap,_RoughnessMap; fixed4 _Color,_EmissionColor; half _Glossiness,_Metallic,_Cutoff,_HasNormal,_HasRoughness;
+ sampler2D _MainTex,_NormalMap,_RoughnessMap,_AlphaMap; fixed4 _Color,_EmissionColor; half _Glossiness,_Metallic,_Cutoff,_HasNormal,_HasRoughness,_HasAlpha;
  float _Wind;void vert(inout appdata_full v){float3 w=mul(unity_ObjectToWorld,v.vertex).xyz;v.vertex.x+=sin(_Time.y+w.x*.19+w.z*.16)*max(0,v.vertex.y-2)*.006*_Wind;}
  void surf(Input IN,inout SurfaceOutputStandard o){
- fixed4 tex=tex2D(_MainTex,IN.uv_MainTex);clip(tex.a-_Cutoff);
+ fixed4 tex=tex2D(_MainTex,IN.uv_MainTex);clip(tex.a-_Cutoff);if(_HasAlpha>.5)clip(tex2D(_AlphaMap,IN.uv_MainTex).r-.45);
  o.Albedo=tex.rgb*_Color.rgb*IN.color.rgb; o.Alpha=1;
  o.Metallic=_Metallic; o.Smoothness=lerp(_Glossiness,1-tex2D(_RoughnessMap,IN.uv_MainTex).g,_HasRoughness);
  // Avoid excessive normal relief on small characters and curved surfaces.
