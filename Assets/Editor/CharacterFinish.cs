@@ -66,7 +66,7 @@ namespace Hushwake.Editor {
   }
   static Vector3 Bezier(Vector3[] p,float t){float a=1-t;return a*a*a*p[0]+3*a*a*t*p[1]+3*a*t*t*p[2]+t*t*t*p[3];}
   static Mesh HairCap(float front){var p=new List<Vector3>();var uv=new List<Vector2>();var c=new List<Color>();var tris=new List<int>();const int sides=64,rows=20;
-   for(int j=0;j<=rows;j++)for(int i=0;i<=sides;i++){float a=i/(float)sides*Mathf.PI*2;float facing=Mathf.Max(0,Mathf.Sin(a));float theta=Mathf.Lerp(.012f,1.80f-facing*.67f,j/(float)rows);p.Add(new Vector3(Mathf.Cos(a)*Mathf.Sin(theta)*.248f,Mathf.Cos(theta)*.318f,front*(Mathf.Sin(a)*Mathf.Sin(theta)*.228f-.018f)));uv.Add(new Vector2(i/(float)sides,j/(float)rows));c.Add(Color.white);if(j>0&&i<sides){int b=j*(sides+1)+i,h=b-sides-1;if(front>0)tris.AddRange(new[]{h,h+1,b,b,h+1,b+1});else tris.AddRange(new[]{h,b,h+1,b,b+1,h+1});}}
+   for(int j=0;j<=rows;j++)for(int i=0;i<=sides;i++){float a=i/(float)sides*Mathf.PI*2;float facing=Mathf.Max(0,Mathf.Sin(a));float theta=Mathf.Lerp(.012f,1.80f-facing*.67f,j/(float)rows);p.Add(new Vector3(Mathf.Cos(a)*Mathf.Sin(theta)*.262f,Mathf.Cos(theta)*.338f,front*(Mathf.Sin(a)*Mathf.Sin(theta)*.250f-.018f)));uv.Add(new Vector2(i/(float)sides,j/(float)rows));c.Add(Color.white);if(j>0&&i<sides){int b=j*(sides+1)+i,h=b-sides-1;if(front>0)tris.AddRange(new[]{h,h+1,b,b,h+1,b+1});else tris.AddRange(new[]{h,b,h+1,b,b+1,h+1});}}
    var mesh=new Mesh{name="Continuous coiffure shell"};mesh.SetVertices(p);mesh.SetUVs(0,uv);mesh.SetColors(c);mesh.SetTriangles(tris,0);mesh.RecalculateNormals();mesh.RecalculateTangents();mesh.RecalculateBounds();return mesh;
   }
   static void SculptHair(Transform face,string key,float front,Color color,int seed){var hair=Material(key+"-sculpted-hair",color,.30f);hair.shader=Shader.Find("Hushwake/Hair");EditorUtility.SetDirty(hair);var shine=Material(key+"-hair-highlight",Color.Lerp(color,Hex(0xa8b8bc),.13f),.34f);shine.shader=Shader.Find("Hushwake/Hair");EditorUtility.SetDirty(shine);
@@ -120,4 +120,3 @@ namespace Hushwake.Editor {
   }
  }
 }
-
