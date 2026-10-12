@@ -10,7 +10,7 @@ namespace Hushwake
     {
         sealed class Piece { public Mesh mesh; public Material material; public int[] pivot; }
         static readonly Dictionary<string, Piece[]> cache = new Dictionary<string, Piece[]>();
-        public static bool AnimatedPivot(Transform t) => t.name.Contains(":hip:") || t.name == "leftLeg" || t.name == "rightLeg" || t.name.StartsWith("rig:") || t.name.Contains(":arm:") || t.name.Contains(":sole:");
+        public static bool AnimatedPivot(Transform t) => t.name.Contains(":hip:") || t.name == "leftLeg" || t.name == "rightLeg" || t.name.StartsWith("rig:") || t.name.EndsWith(":face") || t.name.Contains(":eye:") || t.name.Contains(":eyelid:") || t.name.Contains(":arm:") || t.name.Contains(":sole:");
         static void PrepareRig(Transform root){
             foreach(var f in root.GetComponentsInChildren<MeshFilter>()){
                 string n=f.name;string joint=null;
@@ -27,12 +27,14 @@ namespace Hushwake
             // Room walls stay individually cullable for the camera cutaway.
             if (key.StartsWith("room-")) return;
             PrepareRig(root);
-            var filters = root.GetComponentsInChildren<MeshFilter>();
+            var filters = root.GetComponentsInChildren<MeshFilter>(true);
             if (!cache.TryGetValue(key, out var pieces))
             {
                 var groups = new Dictionary<(Transform, Material), List<MeshFilter>>();
                 foreach (var filter in filters)
                 {
+                    // Retired source hair/facial pieces stay hidden; blink lids keep their own inactive pivot.
+                    if(!filter.gameObject.activeInHierarchy){var ancestor=filter.transform;while(ancestor!=root&&!ancestor.name.Contains(":eyelid:"))ancestor=ancestor.parent;if(ancestor==root)continue;}
                     var renderer = filter.GetComponent<MeshRenderer>(); if (renderer == null || filter.sharedMesh == null) continue;
                     var pivot = filter.transform; while (pivot != root && !AnimatedPivot(pivot)) pivot = pivot.parent;
                     var group = (pivot, renderer.sharedMaterial);

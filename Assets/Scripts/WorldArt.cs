@@ -78,14 +78,14 @@ namespace Hushwake
         }
         public static Transform Character(Transform parent, Vector3 position, Color coat, string name,string artKey="")
         {
-            var model=Original(string.IsNullOrEmpty(artKey)?"nera":artKey,parent,position);model.name=name;model.localScale=Vector3.one*.82f;model.gameObject.AddComponent<ArtMotion>();ContactShadow(model);return model;
+            var model=Original(string.IsNullOrEmpty(artKey)?"nera":artKey,parent,position);model.name=name;model.localScale=Vector3.one*.82f;model.gameObject.AddComponent<ArtMotion>();model.gameObject.AddComponent<CharacterExpression>();ContactShadow(model);return model;
         }
         static Mesh shadowMesh;static Material shadowMaterial;
         static void ContactShadow(Transform model){
             if(shadowMesh==null){shadowMesh=new Mesh{name="Soft character contact"};shadowMesh.vertices=new[]{new Vector3(-.85f,0,-.85f),new Vector3(.85f,0,-.85f),new Vector3(-.85f,0,.85f),new Vector3(.85f,0,.85f)};shadowMesh.uv=new[]{Vector2.zero,Vector2.right,Vector2.up,Vector2.one};shadowMesh.triangles=new[]{0,2,1,1,2,3};shadowMesh.RecalculateBounds();shadowMaterial=new Material(Shader.Find("Hushwake/ContactShadow"));}
             var obj=new GameObject("Soft foot contact",typeof(MeshFilter),typeof(MeshRenderer));obj.transform.SetParent(model,false);obj.transform.localPosition=Vector3.up*.025f;obj.GetComponent<MeshFilter>().sharedMesh=shadowMesh;var renderer=obj.GetComponent<MeshRenderer>();renderer.sharedMaterial=shadowMaterial;renderer.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;renderer.receiveShadows=false;
         }
-        public static Transform Original(string key,Transform parent,Vector3 position){var prefab=Resources.Load<GameObject>("OriginalArt/"+key);if(prefab==null)throw new System.InvalidOperationException("Missing original art: "+key);var result=Object.Instantiate(prefab,parent).transform;result.localPosition=position;ModelBatching.Optimize(key,result);return result;}
+        public static Transform Original(string key,Transform parent,Vector3 position){var prefab=Resources.Load<GameObject>("Characters/"+key)??Resources.Load<GameObject>("OriginalArt/"+key);if(prefab==null)throw new System.InvalidOperationException("Missing original art: "+key);var result=Object.Instantiate(prefab,parent).transform;result.localPosition=position;ModelBatching.Optimize(key,result);return result;}
         public static Transform Label(Transform parent, Vector3 position, string text, Color color)
         {
             var obj = new GameObject("label", typeof(TextMesh)); obj.transform.SetParent(parent, false); obj.transform.localPosition = position;

@@ -282,7 +282,7 @@ namespace Hushwake
         void CameraSnap() { view.transform.position = player.position + new Vector3(0, cameraDistance * (dungeon==null?.42f:.66f), -cameraDistance); view.transform.LookAt(player.position + Vector3.up*1.2f); }
         void FollowCamera()
         {
-            cameraDistance = Mathf.Clamp(cameraDistance - Input.mouseScrollDelta.y * 1.2f, 7, 26);
+            cameraDistance = Mathf.Clamp(cameraDistance - Input.mouseScrollDelta.y * 1.2f, 4.5f, 26);
             view.transform.position = Vector3.Lerp(view.transform.position, player.position + new Vector3(0, cameraDistance * (dungeon==null?.42f:.66f), -cameraDistance), Time.unscaledDeltaTime * 6);
             view.transform.LookAt(player.position + Vector3.up*1.2f);
         }

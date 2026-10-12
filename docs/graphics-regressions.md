@@ -17,3 +17,9 @@ A foreground crown can contain the camera, making the generic slab entry distanc
 
 ## Health at defeat
 Browser combat exposed health below zero after a finishing hit. Damage must use the bounded Progress.TakeDamage transition; the HUD and death condition must share the same state. Audit covers ordinary damage, an overshooting finishing hit, additional damage at zero, and negative damage. Replay a defeat in the fresh browser player, confirm 0 health, then use Rest and try again and confirm 100 health.
+
+## Character surfaces and expression pivots
+
+Imported Three.js art mirrors Z. New face/hair/crest geometry must match the imported eye-plane sign (Nera positive Z, residents negative Z), not the original source sign. Keep face, eye and blink-lid pivots independent during batching; retired source pieces must not be promoted into visible root batches. The resting eyelids must stay inactive, opening between brief blinks. Generated curved geometry must have finite vertices at both endpoints; clamp trigonometric taper inputs before fractional powers. ArtAudit checks handedness, finite geometry, bounded triangle counts, applied skin texture, resting lids, preserved joints and blink closure. Render front/three-quarter portraits, then replay close zoom, both realms, movement, dialogue and save/reload in a fresh Web player before release.
+
+Files: CharacterFinish.cs, CharacterPortraits.cs, CharacterExpression.cs, ModelBatching.cs, WorldArt.cs, ArtAudit.cs.
